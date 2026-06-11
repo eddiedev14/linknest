@@ -77,9 +77,12 @@ export default function Hero() {
               className="bg-transparent text-sm font-semibold text-primary outline-none flex-1 min-w-0"
               aria-label="Choose your username"
             />
-            <button className="text-xs font-semibold text-primary-foreground bg-primary px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap">
+            <a
+              href="/register"
+              className="text-xs font-semibold text-primary-foreground bg-primary px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap"
+            >
               Claim it
-            </button>
+            </a>
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
