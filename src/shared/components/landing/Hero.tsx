@@ -1,32 +1,7 @@
 import { TygerAvatar } from "tyger-avatar";
-import {
-  BsFillGlobeAmericasFill,
-  BsTwitterX,
-  BsInstagram,
-  BsLinkedin,
-} from "react-icons/bs";
-import {
-  FaCartShopping,
-  FaArrowRight,
-  FaLink,
-  FaChartBar,
-  FaPalette,
-} from "react-icons/fa6";
+import { FaArrowRight, FaLink, FaChartBar, FaPalette } from "react-icons/fa6";
 import { Badge } from "../shadcn/badge";
-
-const MOCK_LINKS = [
-  { icon: BsFillGlobeAmericasFill, label: "My Portfolio", clicks: 142 },
-  { icon: BsTwitterX, label: "Twitter / X", clicks: 89 },
-  { icon: BsInstagram, label: "Instagram", clicks: 211 },
-  { icon: BsLinkedin, label: "LinkedIn", clicks: 57 },
-  { icon: FaCartShopping, label: "My Store", clicks: 33 },
-];
-
-const MOCK_ANALYTICS = [
-  { label: "Portfolio", w: "w-full", val: "142" },
-  { label: "Instagram", w: "w-4/5", val: "211" },
-  { label: "Twitter", w: "w-3/5", val: "89" },
-];
+import { mockAnalytics, mockLinks } from "@/data/landing.data";
 
 export default function Hero() {
   return (
@@ -136,7 +111,7 @@ export default function Hero() {
 
               {/* Links */}
               <div className="mt-4 w-full flex flex-col gap-3">
-                {MOCK_LINKS.map((link, i) => {
+                {mockLinks.map((link, i) => {
                   const Icon = link.icon;
 
                   return (
@@ -172,7 +147,7 @@ export default function Hero() {
                 This week
               </span>
             </div>
-            {MOCK_ANALYTICS.map((bar) => (
+            {mockAnalytics.map((bar) => (
               <div key={bar.label} className="flex flex-col gap-0.5">
                 <div className="flex justify-between items-center">
                   <span className="text-[9px] text-muted-foreground">

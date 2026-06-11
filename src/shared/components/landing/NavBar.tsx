@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import Logo from "@/assets/logo.png";
 import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp } from "react-icons/io5";
-
-const navMenuItems: string[] = ["Features", "How it works"];
+import { navMenuItems } from "@/data/landing.data";
+import Logo from "@/assets/logo.png";
 
 export default function Navbar() {
   //* States
