@@ -11,12 +11,13 @@ import {
   FaPalette,
   FaShield,
 } from "react-icons/fa6";
-import { GoZap } from "react-icons/go";
+import { BiSolidZap } from "react-icons/bi";
 
 import type {
   IFeatureItem,
   IHeroAnalytic,
   IHeroLink,
+  IStepItem,
 } from "@/shared/interfaces/landing.interfaces";
 
 //* Navbar
@@ -70,11 +71,39 @@ const features: IFeatureItem[] = [
       "We never sell your data. Analytics are yours alone — no third-party tracking on visitor activity.",
   },
   {
-    icon: GoZap,
+    icon: BiSolidZap,
     title: "Instant Setup",
     description:
       "Register, add your links, and go live in under 2 minutes. No technical knowledge required.",
   },
 ];
 
-export { navMenuItems, mockLinks, mockAnalytics, features };
+//* How It Works
+const steps: IStepItem[] = [
+  {
+    number: "01",
+    title: "Create your account",
+    description:
+      "Sign up with just an email and password (or using Google). Choose your unique username — this becomes your public URL.",
+  },
+  {
+    number: "02",
+    title: "Customize your profile",
+    description:
+      "Set your avatar, write a short bio, choose your banner color. Make it look unmistakably yours.",
+  },
+  {
+    number: "03",
+    title: "Add your links",
+    description:
+      "Add any URL — Instagram, portfolio, GitHub, Shopify store, Calendly — with a label and icon.",
+  },
+  {
+    number: "04",
+    title: "Share & track",
+    description:
+      "Share your page link everywhere. Come back to your dashboard to see click analytics per link, updated daily.",
+  },
+];
+
+export { navMenuItems, mockLinks, mockAnalytics, features, steps };

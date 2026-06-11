@@ -20,4 +20,11 @@ interface IFeatureItem {
   description: string;
 }
 
-export type { IHeroLink, IHeroAnalytic, IFeatureItem };
+//* How It Works
+interface IStepItem {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export type { IHeroLink, IHeroAnalytic, IFeatureItem, IStepItem };
