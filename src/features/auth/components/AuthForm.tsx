@@ -1,17 +1,34 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
-import { FormField } from "@/shared/components/forms/FormField";
 
 import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { FaArrowRight } from "react-icons/fa6";
+
+import { FormField } from "@/shared/components/forms/FormField";
+import { useAuthForm } from "../hooks/useAuthForm";
 
 interface Props {
   isSignup: boolean;
 }
 
 export const AuthForm = ({ isSignup }: Props) => {
+  const {
+    formRef,
+    formErrors,
+    handleBlurEmail,
+    handleBlurUsername,
+    handleBlurPassword,
+  } = useAuthForm(isSignup);
+
+  const {
+    email: emailError,
+    username: usernameError,
+    password: passwordError,
+  } = formErrors;
+
   return (
     <form
+      ref={formRef}
       className="flex flex-col gap-5"
       noValidate
       aria-label={isSignup ? "Registration Form" : "Login Form"}
@@ -24,22 +41,28 @@ export const AuthForm = ({ isSignup }: Props) => {
           id="email"
           type="email"
           placeholder="you@example.com"
+          errorMsg={emailError}
+          onBlur={handleBlurEmail}
         />
       </div>
 
       {/* Username */}
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="username">Username</Label>
-        <FormField
-          Icon={CiUser}
-          id="username"
-          type="text"
-          placeholder="Your Username"
-        />
-        <p className="text-xs text-muted-foreground">
-          This will be your public profile URL.
-        </p>
-      </div>
+      {isSignup && (
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="username">Username</Label>
+          <FormField
+            Icon={CiUser}
+            id="username"
+            type="text"
+            placeholder="Your Username"
+            errorMsg={usernameError}
+            onBlur={handleBlurUsername}
+          />
+          <p className="text-xs text-muted-foreground">
+            This will be your public profile URL.
+          </p>
+        </div>
+      )}
 
       {/* Password */}
       <div className="flex flex-col gap-2">
@@ -48,7 +71,8 @@ export const AuthForm = ({ isSignup }: Props) => {
           Icon={CiLock}
           id="password"
           type="password"
-          placeholder="At least 8 characters"
+          errorMsg={passwordError}
+          onBlur={handleBlurPassword}
         />
       </div>
 
