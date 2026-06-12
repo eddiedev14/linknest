@@ -2,6 +2,7 @@ import { TygerAvatar } from "tyger-avatar";
 import { FaArrowRight, FaLink, FaChartBar, FaPalette } from "react-icons/fa6";
 import { Badge } from "../shadcn/badge";
 import { mockAnalytics, mockLinks } from "@/data/landing.data";
+import { Input } from "../shadcn/input";
 
 export default function Hero() {
   return (
@@ -46,11 +47,11 @@ export default function Hero() {
             <span className="text-sm text-muted-foreground font-mono whitespace-nowrap select-none">
               linknest.app/u/
             </span>
-            <input
+            <Input
               type="text"
               defaultValue="yourname"
-              className="bg-transparent text-sm font-semibold text-primary outline-none flex-1 min-w-0"
               aria-label="Choose your username"
+              className="p-0 h-fit border-none font-mono font-semibold text-sm text-primary shadow-none"
             />
             <a
               href="/register"
