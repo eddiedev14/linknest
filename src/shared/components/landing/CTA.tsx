@@ -3,7 +3,7 @@ import { Input } from "../shadcn/input";
 
 export default function CTA() {
   return (
-    <section className="py-16 bg-muted/40" aria-label="Call to action">
+    <section className="pt-16 pb-24 bg-muted/40" aria-label="Call to action">
       <div className="max-w-6xl mx-auto px-6 flex flex-col items-center text-center gap-8">
         <div className="flex flex-col items-center gap-4">
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
@@ -33,7 +33,7 @@ export default function CTA() {
         </div>
 
         <a
-          href="#"
+          href="/register"
           className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors shadow-xl shadow-primary/20 text-base"
         >
           Claim your free page
