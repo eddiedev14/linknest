@@ -1,0 +1,66 @@
+import { Button } from "@/shared/components/shadcn/button";
+import { Label } from "@/shared/components/shadcn/label";
+import { FormField } from "@/shared/components/forms/FormField";
+
+import { CiLock, CiMail, CiUser } from "react-icons/ci";
+import { FaArrowRight } from "react-icons/fa6";
+
+interface Props {
+  isSignup: boolean;
+}
+
+export const AuthForm = ({ isSignup }: Props) => {
+  return (
+    <form
+      className="flex flex-col gap-5"
+      noValidate
+      aria-label={isSignup ? "Registration Form" : "Login Form"}
+    >
+      {/* Email */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email</Label>
+        <FormField
+          Icon={CiMail}
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      {/* Username */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="username">Username</Label>
+        <FormField
+          Icon={CiUser}
+          id="username"
+          type="text"
+          placeholder="Your Username"
+        />
+        <p className="text-xs text-muted-foreground">
+          This will be your public profile URL.
+        </p>
+      </div>
+
+      {/* Password */}
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="password">Password</Label>
+        <FormField
+          Icon={CiLock}
+          id="password"
+          type="password"
+          placeholder="At least 8 characters"
+        />
+      </div>
+
+      {/* Submit */}
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full h-11 font-semibold shadow-md shadow-primary/20 gap-2"
+      >
+        Create my free account
+        <FaArrowRight data-icon="inline-end" size={15} aria-hidden="true" />
+      </Button>
+    </form>
+  );
+};

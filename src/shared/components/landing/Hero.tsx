@@ -54,7 +54,7 @@ export default function Hero() {
               className="p-0 h-fit border-none font-mono font-semibold text-sm text-primary shadow-none"
             />
             <a
-              href="/register"
+              href="/signup"
               className="text-xs font-semibold text-primary-foreground bg-primary px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap"
             >
               Claim it
@@ -63,7 +63,7 @@ export default function Hero() {
 
           <div className="flex flex-wrap items-center gap-4">
             <a
-              href="/register"
+              href="/signup"
               className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold text-sm px-6 py-3 rounded-full hover:bg-primary/90 transition-colors shadow-md shadow-primary/20"
             >
               Get started free

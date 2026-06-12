@@ -55,7 +55,7 @@ export default function Navbar() {
             Log in
           </a>
           <a
-            href="/register"
+            href="/signup"
             className="text-sm font-semibold bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-sm"
           >
             Get started free
@@ -94,7 +94,7 @@ export default function Navbar() {
             Log in
           </a>
           <a
-            href="/register"
+            href="/signup"
             className="text-sm font-semibold bg-primary text-primary-foreground px-4 py-2.5 rounded-full text-center hover:bg-primary/90 transition-colors"
           >
             Get started free

@@ -33,7 +33,7 @@ export default function CTA() {
         </div>
 
         <a
-          href="/register"
+          href="/signup"
           className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors shadow-xl shadow-primary/20 text-base"
         >
           Claim your free page
