@@ -22,7 +22,7 @@ export default function CTA() {
         {/* URL claim */}
         <div className="flex items-center bg-white rounded-2xl border border-border px-5 py-3.5 shadow-sm max-w-sm w-full">
           <span className="text-sm text-muted-foreground font-mono whitespace-nowrap select-none">
-            linknest.app/u/
+            getlinknest.vercel.app/u/
           </span>
           <Input
             type="text"

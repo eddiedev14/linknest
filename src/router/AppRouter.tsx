@@ -3,6 +3,7 @@ import { AuthPage, Landing, Profile } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PageLoader } from "@/shared/components/app/PageLoader";
+import { PageLayout } from "@/shared/components/app/PageLayout";
 
 export const AppRouter = () => {
   // * Esperar a que se compruebe si hay una sesión activa en toda la app.
@@ -19,7 +20,10 @@ export const AppRouter = () => {
 
       {/* Rutas Privadas */}
       <Route element={<PrivateRoute />}>
-        <Route path="/profile" element={<Profile />} />
+        {/* Layout común para todas las rutas privadas */}
+        <Route element={<PageLayout />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Route>
     </Routes>
   );

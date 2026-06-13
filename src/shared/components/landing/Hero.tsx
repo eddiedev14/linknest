@@ -45,7 +45,7 @@ export default function Hero() {
           {/* URL preview input */}
           <div className="flex items-center bg-muted rounded-xl border border-border px-4 py-3 max-w-sm">
             <span className="text-sm text-muted-foreground font-mono whitespace-nowrap select-none">
-              linknest.app/u/
+              getlinknest.vercel.app/u/
             </span>
             <Input
               type="text"
@@ -169,7 +169,7 @@ export default function Hero() {
           <Badge className="absolute -left-4 bottom-1/4 bg-white rounded-xl shadow-lg border border-border p-3 flex items-center gap-2">
             <FaLink size={12} className="text-primary" />
             <span className="text-[10px] font-semibold text-foreground">
-              linknest.app/u/alex
+              getlinknest.vercel.app/u/alex
             </span>
           </Badge>
 

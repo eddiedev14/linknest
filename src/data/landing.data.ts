@@ -62,7 +62,7 @@ const features: IFeatureItem[] = [
     icon: BsFillGlobeAmericasFill,
     title: "Shareable Public URL",
     description:
-      "Get a clean link like linknest.app/u/yourname to share on any social network or business card.",
+      "Get a clean link like getlinknest.vercel.app/u/yourname to share on any social network or business card.",
   },
   {
     icon: FaShield,
