@@ -119,7 +119,7 @@ export const useAuthForm = (isSignup: boolean) => {
 
     toast.success("User created successfully");
     setTimeout(() => {
-      navigate("/complete-profile", { replace: true });
+      navigate("/profile", { replace: true });
     }, 2000);
   };
 
