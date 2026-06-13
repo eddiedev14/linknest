@@ -40,6 +40,7 @@ export const FormField = ({
           aria-hidden="true"
         />
         <Input
+          className={errorMsg ? "border-destructive" : "border-input"}
           type={inputType}
           id={id}
           name={id}
