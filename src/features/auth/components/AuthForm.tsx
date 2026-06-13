@@ -18,6 +18,7 @@ export const AuthForm = ({ isSignup }: Props) => {
     handleBlurEmail,
     handleBlurUsername,
     handleBlurPassword,
+    handleSubmit,
   } = useAuthForm(isSignup);
 
   const {
@@ -29,6 +30,7 @@ export const AuthForm = ({ isSignup }: Props) => {
   return (
     <form
       ref={formRef}
+      onSubmit={handleSubmit}
       className="flex flex-col gap-5"
       noValidate
       aria-label={isSignup ? "Registration Form" : "Login Form"}
@@ -82,7 +84,7 @@ export const AuthForm = ({ isSignup }: Props) => {
         size="lg"
         className="w-full h-11 font-semibold shadow-md shadow-primary/20 gap-2"
       >
-        Create my free account
+        Create my account
         <FaArrowRight data-icon="inline-end" size={15} aria-hidden="true" />
       </Button>
     </form>
