@@ -5,8 +5,8 @@ import {
   BsLinkedin,
 } from "react-icons/bs";
 import {
-  FaCartShopping,
   FaChartBar,
+  FaGithub,
   FaLink,
   FaPalette,
   FaShield,
@@ -29,7 +29,7 @@ const mockLinks: IHeroLink[] = [
   { icon: BsTwitterX, label: "Twitter / X", clicks: 89 },
   { icon: BsInstagram, label: "Instagram", clicks: 211 },
   { icon: BsLinkedin, label: "LinkedIn", clicks: 57 },
-  { icon: FaCartShopping, label: "My Store", clicks: 33 },
+  { icon: FaGithub, label: "Github", clicks: 33 },
 ];
 
 const mockAnalytics: IHeroAnalytic[] = [
@@ -42,39 +42,39 @@ const mockAnalytics: IHeroAnalytic[] = [
 const features: IFeatureItem[] = [
   {
     icon: FaLink,
-    title: "10 Links per Account",
+    title: "Professional Links",
     description:
-      "Add as many links as you need (max 10.) — social profiles, portfolio, store, booking page, and more.",
+      "Connect your GitHub, LinkedIn, portfolio, resume, coding platforms, social profiles, and more from a single page.",
   },
   {
     icon: FaChartBar,
     title: "Transparent Analytics",
     description:
-      "See exactly how many clicks each link got in the last 7 days. Your data, always visible from your dashboard.",
+      "Track clicks across all your links and understand what recruiters, collaborators, and visitors engage with most.",
   },
   {
     icon: FaPalette,
     title: "Visual Customization",
     description:
-      "Choose your banner color, upload an avatar, write your bio. Your page reflects your personal brand.",
+      "Personalize your profile with an avatar, banner, bio, professional status, and tech stack to showcase who you are.",
   },
   {
     icon: BsFillGlobeAmericasFill,
     title: "Shareable Public URL",
     description:
-      "Get a clean link like getlinknest.vercel.app/u/yourname to share on any social network or business card.",
+      "Get a unique profile link like getlinknest.vercel.app/u/yourname and share it anywhere online.",
   },
   {
     icon: FaShield,
-    title: "Privacy Focused",
+    title: "Privacy First",
     description:
-      "We never sell your data. Analytics are yours alone — no third-party tracking on visitor activity.",
+      "Your analytics belong to you. We never sell your data or track visitors beyond the interactions you choose to measure.",
   },
   {
     icon: BiSolidZap,
-    title: "Instant Setup",
+    title: "Ready in Minutes",
     description:
-      "Register, add your links, and go live in under 2 minutes. No technical knowledge required.",
+      "Create your profile, add your platforms, and start sharing your professional presence in just a few minutes.",
   },
 ];
 
@@ -84,25 +84,25 @@ const steps: IStepItem[] = [
     number: "01",
     title: "Create your account",
     description:
-      "Sign up with just an email and password (or using Google). Choose your unique username — this becomes your public URL.",
+      "Sign up with email, Google or Github and choose your unique username. This becomes your public LinkNest profile.",
   },
   {
     number: "02",
-    title: "Customize your profile",
+    title: "Build your profile",
     description:
-      "Set your avatar, write a short bio, choose your banner color. Make it look unmistakably yours.",
+      "Add your avatar, bio, professional status, tech stack, and other details that help people understand who you are.",
   },
   {
     number: "03",
-    title: "Add your links",
+    title: "Connect your platforms",
     description:
-      "Add any URL — Instagram, portfolio, GitHub, Shopify store, Calendly — with a label and icon.",
+      "Add your GitHub, LinkedIn, portfolio, coding platforms, social profiles, and contact channels from a single dashboard.",
   },
   {
     number: "04",
     title: "Share & track",
     description:
-      "Share your page link everywhere. Come back to your dashboard to see click analytics per link, updated daily.",
+      "Share your profile anywhere and monitor link performance through built-in analytics designed to help you understand visitor engagement.",
   },
 ];
 

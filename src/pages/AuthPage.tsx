@@ -5,6 +5,7 @@ import { AuthForm } from "@/features/auth/components/AuthForm";
 
 import Logo from "@/assets/logo.png";
 import GoogleIcon from "@/assets/google-icon.svg";
+import GithubIcon from "@/assets/github-icon.svg";
 import AuthIllustration from "@/assets/auth-illustration.png";
 
 interface Props {
@@ -40,15 +41,26 @@ export const AuthPage = ({ isSignup }: Props) => {
             </p>
           </div>
 
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full h-11 rounded-xl font-medium text-foreground border-border gap-3"
-            aria-label="Sign in with Google"
-          >
-            <img src={GoogleIcon} alt="Google Icon" />
-            Sign up with Google
-          </Button>
+          <div className="flex flex-col gap-4 *:w-full *:h-11 *:rounded-xl *:font-medium *:text-foreground *:border-border *:gap-3">
+            <Button
+              variant="outline"
+              size="lg"
+              className=""
+              aria-label="Sign in with Google"
+            >
+              <img src={GoogleIcon} alt="Google Icon" />
+              Sign up with Google
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              aria-label="Sign in with Github"
+            >
+              <img src={GithubIcon} alt="Github Icon" />
+              Sign up with Github
+            </Button>
+          </div>
 
           <div className="flex items-center gap-3">
             <Separator className="flex-1" />
@@ -78,11 +90,11 @@ export const AuthPage = ({ isSignup }: Props) => {
 
         <div className="text-center flex flex-col gap-3 max-w-md">
           <h2 className="font-heading text-2xl font-bold text-foreground leading-snug text-balance">
-            One link for everything you create
+            One profile. Every platform.
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Share your portfolio, socials, store and more — and see exactly
-            which links your audience clicks.
+            Centralize your GitHub, LinkedIn, coding platforms, content, and
+            contact channels in a professional developer profile.
           </p>
           <span className="text-sm text-muted-foreground leading-relaxed">
             Illustration by{" "}

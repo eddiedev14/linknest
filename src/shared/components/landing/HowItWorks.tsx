@@ -14,11 +14,11 @@ export default function HowItWorks() {
             How it works
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground text-balance">
-            Live in <span className="text-primary">4 simple steps</span>
+            Your profile in <span className="text-primary">4 simple steps</span>
           </h2>
           <p className="text-muted-foreground max-w-md leading-relaxed text-balance">
-            From signup to sharing your link page — it takes less than 2
-            minutes.
+            Create your developer profile, connect your platforms, and start
+            sharing it in minutes.
           </p>
         </div>
 

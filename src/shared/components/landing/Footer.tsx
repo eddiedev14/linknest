@@ -18,7 +18,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              The smarter link-in-bio tool with transparent analytics.
+              The smarter link-in-bio tool with transparent analytics for
+              developers.
             </p>
           </div>
 

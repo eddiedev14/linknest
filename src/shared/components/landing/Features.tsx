@@ -11,12 +11,12 @@ export default function Features() {
             Features
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground text-balance">
-            Everything you need,{" "}
+            Everything developers need,{" "}
             <span className="text-primary">in one place</span>
           </h2>
-          <p className="text-muted-foreground max-w-md leading-relaxed text-balance">
-            Built for creators, freelancers, and anyone who wants to share their
-            online presence in one place.
+          <p className="text-muted-foreground max-w-lg leading-relaxed text-balance">
+            Centralize your professional links, coding platforms, content, and
+            contact channels from a single developer profile.
           </p>
         </div>
 

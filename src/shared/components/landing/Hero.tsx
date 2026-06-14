@@ -27,19 +27,19 @@ export default function Hero() {
           {/* Badge */}
           <Badge className="inline-flex items-center gap-2 self-start bg-accent text-accent-foreground text-xs font-semibold p-3 rounded-full border border-primary/20">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-            The smarter way to manage your links
+            Built for developers
           </Badge>
 
           <h1 className="font-heading text-5xl md:text-6xl font-bold leading-[1.1] text-foreground text-balance">
-            All your links. <span className="text-primary">One page.</span>
+            Your dev profile. <span className="text-primary">One page.</span>
             <br />
             Real analytics.
           </h1>
 
           <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
-            Create your personalized public page in minutes. Share your
-            portfolio, socials, store and more — and actually know which links
-            your audience clicks.
+            Centralize your professional presence in one place. Share your
+            developer profile, coding platforms, social links, and contact
+            channels with a single link.
           </p>
 
           {/* URL preview input */}
@@ -107,7 +107,7 @@ export default function Hero() {
                 Alex Johnson
               </p>
               <p className="text-xs text-muted-foreground mt-0.5">
-                Designer & Creator
+                Frontend Developer
               </p>
 
               {/* Links */}
