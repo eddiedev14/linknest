@@ -7,7 +7,9 @@ import {
   isInvalidPassword,
   isInvalidUsername,
 } from "../utils/form.helper";
-import type { User, UserRegister } from "../types/user.type";
+import { createBaseNewUser } from "../utils/firebase.helper";
+
+import type { UserRegister } from "../types/user.type";
 import { useAuth } from "./useAuth";
 
 type AuthFields = "email" | "username" | "password";
@@ -98,19 +100,10 @@ export const useAuthForm = (isSignup: boolean) => {
       return;
     }
 
-    // Create base document
-    const baseUser: User = {
-      email,
-      username,
-      displayName: "",
-      bio: "",
-      avatarUrl: "",
-      bannerStyle: "",
-      password,
-    };
-
-    // Register the base user
-    const errorMessage = await registerWithEmailAndPassword(baseUser);
+    // Register the new base user
+    const errorMessage = await registerWithEmailAndPassword(
+      createBaseNewUser(email, username, password),
+    );
 
     if (errorMessage) {
       toast.error(errorMessage);

@@ -41,4 +41,27 @@ const getUserWithoutPassword = (user: User) => {
   return userWithoutPassword;
 };
 
-export { getAuthErrorMessage, getUserWithoutPassword };
+// Función para crear un usuario base a partir del email, username y password
+const createBaseNewUser = (
+  email: string,
+  username: string,
+  password: string,
+): User => {
+  return {
+    email,
+    username,
+    password,
+    displayName: "",
+    bio: "",
+    professionalRole: "",
+    professionalStatus: "",
+    location: "",
+    techStack: [],
+    experienceYears: null,
+    languages: [],
+    avatarUrl: "",
+    bannerStyle: "",
+  };
+};
+
+export { getAuthErrorMessage, getUserWithoutPassword, createBaseNewUser };
