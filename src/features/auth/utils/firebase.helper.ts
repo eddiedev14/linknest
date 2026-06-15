@@ -60,7 +60,7 @@ const createBaseNewUser = (
     experienceYears: null,
     languages: [],
     avatarUrl: "",
-    bannerStyle: "",
+    bannerStyle: "bg-primary",
   };
 };
 

@@ -4,27 +4,48 @@ import type { IconType } from "react-icons";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import { Input } from "../shadcn/input";
+import { Textarea } from "../shadcn/textarea";
 import { Button } from "../shadcn/button";
 
 import { FormFieldError } from "./FormFieldError";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../shadcn/select";
 
+// ? Types and Interfaces
+type FieldVariant = "input" | "textarea" | "select";
 type InputType = "text" | "number" | "email" | "password";
+
+export interface SelectOption {
+  label: string;
+  value: string;
+}
 
 interface Props {
   Icon: IconType;
   id: string;
-  type: InputType;
+  variant?: FieldVariant;
+  type?: InputType;
   placeholder?: string;
   errorMsg: string;
-  onBlur?: (e: FocusEvent<HTMLInputElement, Element>) => void;
+  hint?: string;
+  options?: SelectOption[];
+  onBlur?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 export const FormField = ({
   Icon,
   id,
-  type,
+  variant = "input",
+  type = "text",
   placeholder,
   errorMsg,
+  hint = "",
+  options = [],
   onBlur,
 }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -34,37 +55,71 @@ export const FormField = ({
   return (
     <>
       <div className="relative">
-        <Icon
-          size={15}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-          aria-hidden="true"
-        />
-        <Input
-          className={errorMsg ? "border-destructive" : "border-input"}
-          type={inputType}
-          id={id}
-          name={id}
-          placeholder={placeholder}
-          onBlur={onBlur}
-        />
+        {/* Icon */}
+        {variant !== "textarea" && (
+          <Icon
+            size={15}
+            className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none"
+          />
+        )}
 
-        {/* For a password field */}
-        {type === "password" && (
+        {/* Field */}
+        {variant === "input" && (
+          <Input
+            id={id}
+            name={id}
+            type={inputType}
+            placeholder={placeholder}
+            onBlur={onBlur}
+            className={errorMsg ? "border-destructive pl-8" : "pl-8"}
+          />
+        )}
+
+        {variant === "textarea" && (
+          <Textarea
+            id={id}
+            name={id}
+            placeholder={placeholder}
+            onBlur={onBlur}
+            className={errorMsg ? "border-destructive" : ""}
+          />
+        )}
+
+        {variant === "select" && (
+          <Select name={id}>
+            <SelectTrigger
+              className={errorMsg ? "border-destructive pl-8" : "pl-8"}
+            >
+              <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+
+            <SelectContent>
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
+        {/* Button to show password */}
+        {variant === "input" && type === "password" && (
           <Button
             type="button"
-            className="absolute right-3 top-1/2 bg-white hover:bg-white -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            variant="ghost"
+            size="icon"
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onClick={() => setIsPasswordVisible((prev) => !prev)}
           >
-            {!isPasswordVisible ? (
-              <FiEye size={15} aria-hidden="true" />
-            ) : (
-              <FiEyeOff size={15} aria-hidden="true" />
-            )}
+            {isPasswordVisible ? <FiEyeOff /> : <FiEye />}
           </Button>
         )}
       </div>
 
+      {/* Error message and hint */}
       {errorMsg && <FormFieldError message={errorMsg} />}
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
     </>
   );
 };

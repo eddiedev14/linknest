@@ -58,11 +58,9 @@ export const AuthForm = ({ isSignup }: Props) => {
             type="text"
             placeholder="Your Username"
             errorMsg={usernameError}
+            hint="This will be your public profile URL."
             onBlur={handleBlurUsername}
           />
-          <p className="text-xs text-muted-foreground">
-            This will be your public profile URL.
-          </p>
         </div>
       )}
 

@@ -34,7 +34,9 @@ export const useAuthForm = (isSignup: boolean) => {
   //* Handlers
 
   // ? Blur validations
-  const handleBlurEmail = (e: FocusEvent<HTMLInputElement, Element>) => {
+  const handleBlurEmail = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     if (isInvalidEmail(e.target.value)) {
       setFormErrors((prev) => ({
         ...prev,
@@ -49,7 +51,9 @@ export const useAuthForm = (isSignup: boolean) => {
     }));
   };
 
-  const handleBlurUsername = (e: FocusEvent<HTMLInputElement, Element>) => {
+  const handleBlurUsername = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     if (isInvalidUsername(e.target.value)) {
       setFormErrors((prev) => ({
         ...prev,
@@ -65,7 +69,9 @@ export const useAuthForm = (isSignup: boolean) => {
     }));
   };
 
-  const handleBlurPassword = (e: FocusEvent<HTMLInputElement, Element>) => {
+  const handleBlurPassword = (
+    e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     if (isInvalidPassword(e.target.value)) {
       setFormErrors((prev) => ({
         ...prev,
