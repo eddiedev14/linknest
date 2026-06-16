@@ -1,5 +1,19 @@
 import type { SelectOption } from "@/shared/components/forms/FormField";
 
+const BANNER_PRESETS = [
+  "banner-primary",
+  "banner-ocean",
+  "banner-sunset",
+  "banner-forest",
+  "banner-lavender",
+  "banner-rose",
+  "banner-aurora",
+  "banner-midnight",
+  "banner-gold",
+  "banner-cherry",
+  "banner-sky",
+];
+
 const PROFESSIONAL_STATUS_OPTIONS: SelectOption[] = [
   {
     label: "Available",
@@ -15,4 +29,4 @@ const PROFESSIONAL_STATUS_OPTIONS: SelectOption[] = [
   },
 ];
 
-export { PROFESSIONAL_STATUS_OPTIONS };
+export { BANNER_PRESETS, PROFESSIONAL_STATUS_OPTIONS };

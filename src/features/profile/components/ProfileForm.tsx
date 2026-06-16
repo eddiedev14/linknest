@@ -8,11 +8,11 @@ import {
   FaSuitcase,
   FaUser,
 } from "react-icons/fa6";
+import { BiWorld } from "react-icons/bi";
 
 // components and more
 import { FormField } from "@/shared/components/forms/FormField";
-import { PROFESSIONAL_STATUS_OPTIONS } from "@/features/auth/constants/profile.constant";
-import { BiWorld } from "react-icons/bi";
+import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 
 export const ProfileForm = () => {
   return (
@@ -45,6 +45,7 @@ export const ProfileForm = () => {
 
       <div className="grid grid-cols-1 gap-y-8 gap-x-4 md:grid-cols-2">
         <div className="flex flex-col gap-2">
+          {/* Professional Role */}
           <Label htmlFor="professionalRole">Professional Role</Label>
           <FormField
             Icon={FaSuitcase}
@@ -54,6 +55,8 @@ export const ProfileForm = () => {
             errorMsg=""
           />
         </div>
+
+        {/* Professional Status */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="professionalStatus">Professional Status</Label>
           <FormField
@@ -65,6 +68,8 @@ export const ProfileForm = () => {
             errorMsg=""
           />
         </div>
+
+        {/* Country */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="country">Country</Label>
           <FormField
@@ -75,6 +80,8 @@ export const ProfileForm = () => {
             errorMsg=""
           />
         </div>
+
+        {/* City */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="city">City</Label>
           <FormField
@@ -88,14 +95,19 @@ export const ProfileForm = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-x-4 gap-y-8 mt-4 md:grid-cols-3">
+        {/* Tech Stack */}
         <div className="flex flex-col gap-2">
           <Label>Tech Stack</Label>
           <Button>Select Stack</Button>
         </div>
+
+        {/* Languages */}
         <div className="flex flex-col gap-2">
           <Label>Languages</Label>
           <Button>Set your Languages</Button>
         </div>
+
+        {/* Years of Experience */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="experienceYears">Years of Experience</Label>
           <FormField

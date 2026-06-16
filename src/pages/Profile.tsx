@@ -1,11 +1,9 @@
-import { Button } from "@/shared/components/shadcn/button";
 import { cn } from "@/lib/utils";
-
-import { FaCamera, FaPencil } from "react-icons/fa6";
 import AnonymousProfile from "@/assets/anonymous.png";
-
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ProfileForm } from "@/features/profile/components/ProfileForm";
+import { BannerDialog } from "@/features/profile/components/dialogs/banner/BannerDialog";
+import { AvatarDialog } from "@/features/profile/components/dialogs/avatar/AvatarDialog";
 
 export function Profile() {
   const { user } = useAuth();
@@ -32,13 +30,7 @@ export function Profile() {
             role="img"
             aria-label="Profile banner"
           >
-            <Button
-              type="button"
-              className="absolute top-3 right-3 size-8 rounded-lg bg-black/20 hover:bg-black/35 flex items-center justify-center text-white transition-colors backdrop-blur-sm"
-              aria-label="Edit banner color"
-            >
-              <FaPencil size={12} aria-hidden="true" />
-            </Button>
+            <BannerDialog />
 
             <div className="absolute left-1/2 -translate-x-1/2 -bottom-10">
               <div className="relative">
@@ -53,13 +45,7 @@ export function Profile() {
                   />
                 </div>
 
-                <Button
-                  type="button"
-                  className="absolute bottom-1 right-1 size-8 rounded-full bg-primary hover:bg-primary/90 flex items-center justify-center text-primary-foreground shadow-sm transition-colors ring-2 ring-background"
-                  aria-label="Change profile photo"
-                >
-                  <FaCamera size={11} aria-hidden="true" />
-                </Button>
+                <AvatarDialog />
               </div>
             </div>
           </div>
