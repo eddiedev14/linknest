@@ -7,6 +7,7 @@ import { AvatarDialog } from "@/features/profile/components/dialogs/avatar/Avata
 
 export function Profile() {
   const { user } = useAuth();
+  const isCustomColor = user?.bannerStyle?.startsWith("#");
 
   return (
     <main
@@ -26,7 +27,13 @@ export function Profile() {
         {/* Profile card */}
         <div className="bg-background rounded-2xl border border-border overflow-hidden shadow-sm">
           <div
-            className={cn("relative h-32 w-full", user?.bannerStyle)}
+            className={cn(
+              "relative h-32 w-full",
+              !isCustomColor && user?.bannerStyle,
+            )}
+            style={
+              isCustomColor ? { backgroundColor: user?.bannerStyle } : undefined
+            }
             role="img"
             aria-label="Profile banner"
           >

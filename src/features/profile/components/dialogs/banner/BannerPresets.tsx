@@ -3,19 +3,26 @@ import { cn } from "@/lib/utils";
 import { FaPencil } from "react-icons/fa6";
 import { BANNER_PRESETS } from "@/data/profile.data";
 import { useBannerDialog } from "../../../hooks/useBannerDialog";
+import { Loader } from "@/shared/components/app/Loader";
 
 export const BannerPresets = () => {
   const {
     selectedColor,
     colorInputRef,
     isCustomColor,
+    isPending,
     setSelectedColor,
     handleCustomColorClick,
+    handleBannerColorSubmit,
   } = useBannerDialog();
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <>
-      <form className="grid grid-cols-6 gap-4 justify-items-center">
+      <div className="grid grid-cols-6 gap-4 justify-items-center">
         {BANNER_PRESETS.map((preset) => (
           <Button
             key={preset}
@@ -48,12 +55,13 @@ export const BannerPresets = () => {
           >
             <FaPencil size={12} />
           </Button>
-
-          <input ref={colorInputRef} type="color" className="sr-only" />
         </div>
-      </form>
+      </div>
 
-      <Button className="mt-4">Save</Button>
+      <form onSubmit={handleBannerColorSubmit} className="flex">
+        <input ref={colorInputRef} type="color" className="sr-only" />
+        <Button className="mt-4 flex-1">Save</Button>
+      </form>
     </>
   );
 };

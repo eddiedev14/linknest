@@ -13,29 +13,30 @@ import { useCollection } from "@/firebase/hooks/useCollection";
 import type { UserDoc, User } from "../types/user.type";
 import {
   getAuthErrorMessage,
+  getUserId,
   getUserWithoutPassword,
 } from "../utils/firebase.helper";
 
 export default function useAuthState() {
   //* States
   const [user, setUser] = useState<UserDoc | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
 
   //* Custom hooks
-  const { setById, getById } = useCollection<UserDoc>("users");
+  const { setById, getById, update, isPending } =
+    useCollection<UserDoc>("users");
 
-  //* Effects
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (!firebaseUser) {
         setUser(null);
-        setLoading(false);
+        setUserLoading(false);
         return;
       }
 
       const userDoc = await getById(firebaseUser.uid);
       setUser(userDoc);
-      setLoading(false);
+      setUserLoading(false);
     });
 
     return unsubscribe;
@@ -62,9 +63,27 @@ export default function useAuthState() {
     }
   };
 
+  const updateUserProfile = async (
+    updatedUser: UserDoc,
+  ): Promise<string | null> => {
+    try {
+      const userId = getUserId();
+      if (!userId) return "The user ID could not be retrieved";
+
+      await update(userId, updatedUser);
+      setUser(updatedUser);
+      return null;
+    } catch (error) {
+      console.error(error);
+      return "An error occurred while updating your profile";
+    }
+  };
+
   return {
     user,
-    loading,
+    userLoading,
+    isPending,
     registerWithEmailAndPassword,
+    updateUserProfile,
   };
 }

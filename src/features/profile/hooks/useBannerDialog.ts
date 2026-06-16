@@ -1,11 +1,16 @@
+import { useState, useRef, useEffect, type SubmitEvent } from "react";
 import type { BANNER_PRESETS } from "@/data/profile.data";
-import { useState, useRef, useEffect } from "react";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { toast } from "react-toastify";
 
 export const useBannerDialog = () => {
+  //* Context
+  const { user, isPending, updateUserProfile } = useAuth();
+
   //* States
   const [selectedColor, setSelectedColor] = useState<
     (typeof BANNER_PRESETS)[number] | `#${string}`
-  >("banner-primary");
+  >(user?.bannerStyle || "banner-primary");
 
   //* Refs
   const colorInputRef = useRef<HTMLInputElement>(null);
@@ -27,7 +32,7 @@ export const useBannerDialog = () => {
     return () => {
       inputElement.removeEventListener("change", handleNativeChange);
     };
-  }, []);
+  }, [isPending]);
 
   //* Computed
   const isCustomColor = selectedColor.startsWith("#");
@@ -37,11 +42,30 @@ export const useBannerDialog = () => {
     colorInputRef.current?.click();
   };
 
+  const handleBannerColorSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user) return;
+
+    const updatedUser = {
+      ...user,
+      bannerStyle: selectedColor || "banner-primary",
+    };
+
+    const error = await updateUserProfile(updatedUser);
+    if (error) {
+      toast.error(error);
+    }
+
+    toast.success("Your banner style was updated");
+  };
+
   return {
     selectedColor,
     colorInputRef,
     isCustomColor,
+    isPending,
     setSelectedColor,
     handleCustomColorClick,
+    handleBannerColorSubmit,
   };
 };

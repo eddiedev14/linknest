@@ -1,3 +1,4 @@
+import { auth } from "@/firebase/config";
 import { FirebaseError } from "firebase/app";
 import type { User } from "../types/user.type";
 
@@ -64,4 +65,14 @@ const createBaseNewUser = (
   };
 };
 
-export { getAuthErrorMessage, getUserWithoutPassword, createBaseNewUser };
+// Función para obtener la id del usuario logueado
+const getUserId = (): string | undefined => {
+  return auth.currentUser?.uid;
+};
+
+export {
+  getAuthErrorMessage,
+  getUserWithoutPassword,
+  createBaseNewUser,
+  getUserId,
+};

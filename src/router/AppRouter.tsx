@@ -7,9 +7,9 @@ import { PageLayout } from "@/shared/components/app/PageLayout";
 
 export const AppRouter = () => {
   // * Esperar a que se compruebe si hay una sesión activa en toda la app.
-  const { loading } = useAuth();
+  const { userLoading } = useAuth();
 
-  if (loading) {
+  if (userLoading) {
     return <PageLoader />;
   }
 
