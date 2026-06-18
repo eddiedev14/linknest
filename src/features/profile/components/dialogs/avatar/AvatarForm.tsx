@@ -1,10 +1,20 @@
 /** biome-ignore-all lint/a11y/noRedundantAlt: <> */
-import { useAvatarDialog } from '@/features/profile/hooks/useAvatarForm';
 import { Button } from '@/shared/components/shadcn/button';
+import { Progress } from '@/shared/components/shadcn/progress';
 import { FaImage } from 'react-icons/fa6';
+import { useAvatarDialog } from '@/features/profile/hooks/useAvatarForm';
 
 export const AvatarForm = () => {
-  const { avatarPhoto, avatarPreviewURL, fileInputRef, handleFileClick, handleFileChange } = useAvatarDialog();
+  const {
+    avatarPhoto,
+    avatarPreviewURL,
+    fileInputRef,
+    isUploading,
+    progress,
+    handleFileClick,
+    handleFileChange,
+    handleAvatarSubmit,
+  } = useAvatarDialog();
 
   return (
     <>
@@ -29,7 +39,9 @@ export const AvatarForm = () => {
         </p>
       )}
 
-      <form className="flex">
+      {isUploading && <Progress value={progress} />}
+
+      <form className="flex" onSubmit={handleAvatarSubmit}>
         <input
           ref={fileInputRef}
           onChange={handleFileChange}
