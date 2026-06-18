@@ -23,7 +23,7 @@ export const useAuthForm = (isSignup: boolean) => {
   });
 
   //* Contexts
-  const { registerWithEmailAndPassword } = useAuth();
+  const { isPending, registerWithEmailAndPassword } = useAuth();
 
   //* References
   const formRef = useRef<HTMLFormElement>(null);
@@ -117,14 +117,13 @@ export const useAuthForm = (isSignup: boolean) => {
     }
 
     toast.success("User created successfully");
-    setTimeout(() => {
-      navigate("/profile", { replace: true });
-    }, 2000);
+    navigate("/profile", { replace: true });
   };
 
   return {
     formRef,
     formErrors,
+    isPending,
 
     handleBlurEmail,
     handleBlurUsername,

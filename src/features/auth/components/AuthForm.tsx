@@ -6,6 +6,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 import { FormField } from "@/shared/components/forms/FormField";
 import { useAuthForm } from "../hooks/useAuthForm";
+import { Loader } from "@/shared/components/app/Loader";
 
 interface Props {
   isSignup: boolean;
@@ -15,6 +16,7 @@ export const AuthForm = ({ isSignup }: Props) => {
   const {
     formRef,
     formErrors,
+    isPending,
     handleBlurEmail,
     handleBlurUsername,
     handleBlurPassword,
@@ -26,6 +28,10 @@ export const AuthForm = ({ isSignup }: Props) => {
     username: usernameError,
     password: passwordError,
   } = formErrors;
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <form
