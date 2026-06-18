@@ -1,22 +1,30 @@
 import { useState, useRef, useEffect, type SubmitEvent } from 'react';
 import { toast } from 'react-toastify';
+import { useAuth } from '@/features/auth/hooks/useAuth';
 import { validateAvatarImg } from '../utils/avatar.helper';
 import { useImageKitUpload } from './useImageKitUpload';
 
 export const useAvatarDialog = () => {
+  //* Context
+  const { user, isPending, updateUserProfile } = useAuth();
+
   //* States
   const [avatarPhoto, setAvatarPhoto] = useState<File | null>(null);
   const [avatarPreviewURL, setAvatarPreviewURL] = useState<string | null>(null);
 
   //* Custom hooks
-  const { isUploading, progress, uploadFile } = useImageKitUpload();
+  const { isUploading, uploadFile } = useImageKitUpload();
 
   //* Refs
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   //* Effects
   useEffect(() => {
-    if (!avatarPhoto) return;
+    if (!avatarPhoto) {
+      setAvatarPreviewURL(null);
+      return;
+    }
+
     const url = URL.createObjectURL(avatarPhoto);
     setAvatarPreviewURL(url);
     return () => URL.revokeObjectURL(url);
@@ -47,12 +55,20 @@ export const useAvatarDialog = () => {
 
   const handleAvatarSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!avatarPhoto) return;
+    if (!user || !avatarPhoto) return;
 
     try {
       const result = await uploadFile(avatarPhoto);
-      console.log('Imagen subida:', result.url);
-      alert('Upload exitoso!');
+      if (!result.url) throw new Error('Error retrieving the avatar URL');
+
+      const updatedUser = {
+        ...user,
+        avatarUrl: `${result.url}?v=${Date.now()}`,
+      };
+
+      const error = await updateUserProfile(updatedUser);
+      if (error) throw new Error(error);
+      toast.success('Your avatar photo was updated');
     } catch (error) {
       toast.error(`Error while uploading the photo: ${(error as Error).message}`);
     }
@@ -63,7 +79,7 @@ export const useAvatarDialog = () => {
     avatarPreviewURL,
     fileInputRef,
     isUploading,
-    progress,
+    isPending,
     handleFileClick,
     handleFileChange,
     handleAvatarSubmit,

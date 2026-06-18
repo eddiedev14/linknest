@@ -11,7 +11,6 @@ type AuthResponse = {
 
 export const useImageKitUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   // Function to request the image's authentication parameters from the backend
   const getAuth = async (): Promise<AuthResponse> => {
@@ -49,10 +48,7 @@ export const useImageKitUpload = () => {
         publicKey: auth.publicKey,
         folder: '/avatars',
         overwriteFile: true,
-        onProgress: (event) => {
-          const percent = (event.loaded / event.total) * 100;
-          setProgress(percent);
-        },
+        useUniqueFileName: false,
       });
 
       return result;
@@ -63,7 +59,6 @@ export const useImageKitUpload = () => {
 
   return {
     isUploading,
-    progress,
     uploadFile,
   };
 };

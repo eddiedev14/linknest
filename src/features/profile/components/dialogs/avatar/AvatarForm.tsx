@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/a11y/noRedundantAlt: <> */
 import { Button } from '@/shared/components/shadcn/button';
-import { Progress } from '@/shared/components/shadcn/progress';
 import { FaImage } from 'react-icons/fa6';
+import { Loader } from '@/shared/components/app/Loader';
 import { useAvatarDialog } from '@/features/profile/hooks/useAvatarForm';
 
 export const AvatarForm = () => {
@@ -10,11 +10,15 @@ export const AvatarForm = () => {
     avatarPreviewURL,
     fileInputRef,
     isUploading,
-    progress,
+    isPending,
     handleFileClick,
     handleFileChange,
     handleAvatarSubmit,
   } = useAvatarDialog();
+
+  if (isUploading || isPending) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -24,7 +28,11 @@ export const AvatarForm = () => {
       >
         <div className="size-16 bg-primary/20 text-primary text-xl flex items-center justify-center rounded-full transition-transform group-hover:-translate-y-2">
           {avatarPreviewURL ? (
-            <img src={avatarPreviewURL} alt="User profile photo" className="size-full rounded-full object-cover" />
+            <img
+              src={avatarPreviewURL}
+              alt={avatarPhoto?.name || 'User Profile Photo'}
+              className="size-full rounded-full object-cover"
+            />
           ) : (
             <FaImage className="size-7" />
           )}
@@ -38,8 +46,6 @@ export const AvatarForm = () => {
           Your current file: <span className="text-primary font-medium">{avatarPhoto.name}</span>
         </p>
       )}
-
-      {isUploading && <Progress value={progress} />}
 
       <form className="flex" onSubmit={handleAvatarSubmit}>
         <input
