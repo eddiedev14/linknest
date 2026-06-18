@@ -23,7 +23,7 @@ export const useAuthForm = (isSignup: boolean) => {
   });
 
   //* Contexts
-  const { loading, registerWithEmailAndPassword } = useAuth();
+  const { registerWithEmailAndPassword } = useAuth();
 
   //* References
   const formRef = useRef<HTMLFormElement>(null);
@@ -125,7 +125,6 @@ export const useAuthForm = (isSignup: boolean) => {
   return {
     formRef,
     formErrors,
-    loading,
 
     handleBlurEmail,
     handleBlurUsername,
