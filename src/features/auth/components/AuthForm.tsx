@@ -1,33 +1,22 @@
-import { Button } from "@/shared/components/shadcn/button";
-import { Label } from "@/shared/components/shadcn/label";
+import { Button } from '@/shared/components/shadcn/button';
+import { Label } from '@/shared/components/shadcn/label';
 
-import { CiLock, CiMail, CiUser } from "react-icons/ci";
-import { FaArrowRight } from "react-icons/fa6";
+import { CiLock, CiMail, CiUser } from 'react-icons/ci';
+import { FaArrowRight } from 'react-icons/fa6';
 
-import { FormField } from "@/shared/components/forms/FormField";
-import { useAuthForm } from "../hooks/useAuthForm";
-import { Loader } from "@/shared/components/app/Loader";
+import { FormField } from '@/shared/components/forms/FormField';
+import { useAuthForm } from '../hooks/useAuthForm';
+import { Loader } from '@/shared/components/app/Loader';
 
 interface Props {
   isSignup: boolean;
 }
 
 export const AuthForm = ({ isSignup }: Props) => {
-  const {
-    formRef,
-    formErrors,
-    isPending,
-    handleBlurEmail,
-    handleBlurUsername,
-    handleBlurPassword,
-    handleSubmit,
-  } = useAuthForm(isSignup);
+  const { formRef, formErrors, isPending, handleBlurEmail, handleBlurUsername, handleBlurPassword, handleSubmit } =
+    useAuthForm(isSignup);
 
-  const {
-    email: emailError,
-    username: usernameError,
-    password: passwordError,
-  } = formErrors;
+  const { email: emailError, username: usernameError, password: passwordError } = formErrors;
 
   if (isPending) {
     return <Loader />;
@@ -39,7 +28,7 @@ export const AuthForm = ({ isSignup }: Props) => {
       onSubmit={handleSubmit}
       className="flex flex-col gap-5"
       noValidate
-      aria-label={isSignup ? "Registration Form" : "Login Form"}
+      aria-label={isSignup ? 'Registration Form' : 'Login Form'}
     >
       {/* Email */}
       <div className="flex flex-col gap-2">
@@ -73,23 +62,13 @@ export const AuthForm = ({ isSignup }: Props) => {
       {/* Password */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="password">Password</Label>
-        <FormField
-          Icon={CiLock}
-          id="password"
-          type="password"
-          errorMsg={passwordError}
-          onBlur={handleBlurPassword}
-        />
+        <FormField Icon={CiLock} id="password" type="password" errorMsg={passwordError} onBlur={handleBlurPassword} />
       </div>
 
       {/* Submit */}
-      <Button
-        type="submit"
-        size="lg"
-        className="w-full h-11 font-semibold shadow-md shadow-primary/20 gap-2"
-      >
+      <Button type="submit" size="lg" className="w-full h-11 font-semibold shadow-md shadow-primary/20 gap-2">
         Create my account
-        <FaArrowRight data-icon="inline-end" size={15} aria-hidden="true" />
+        <FaArrowRight data-icon="inline-end" aria-hidden="true" />
       </Button>
     </form>
   );

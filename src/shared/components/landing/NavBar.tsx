@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { IoMdClose } from "react-icons/io";
-import { IoMenuSharp } from "react-icons/io5";
-import { navMenuItems } from "@/data/landing.data";
-import Logo from "@/assets/logo.png";
+import { useEffect, useState } from 'react';
+import { IoMdClose } from 'react-icons/io';
+import { IoMenuSharp } from 'react-icons/io5';
+import { navMenuItems } from '@/data/landing.data';
+import Logo from '@/assets/logo.png';
 
 export default function Navbar() {
   //* States
@@ -11,14 +11,14 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
@@ -31,14 +31,11 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Nav */}
-        <nav
-          className="hidden md:flex items-center gap-8"
-          aria-label="Main navigation"
-        >
+        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
           {navMenuItems.map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+              href={`#${item.toLowerCase().replace(/ /g, '-')}`}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
               {item}
@@ -48,10 +45,7 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href="/login"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
+          <a href="/login" className="text-sm font-medium text-foreground hover:text-primary transition-colors">
             Log in
           </a>
           <a
@@ -66,10 +60,10 @@ export default function Navbar() {
         <button
           className="md:hidden text-foreground p-2 rounded-lg hover:bg-muted transition-colors"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? <IoMdClose size={20} /> : <IoMenuSharp size={20} />}
+          {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
         </button>
       </div>
 
@@ -79,7 +73,7 @@ export default function Navbar() {
           {navMenuItems.map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+              href={`#${item.toLowerCase().replace(/ /g, '-')}`}
               className="text-sm font-medium text-foreground hover:text-primary transition-colors"
               onClick={() => setMenuOpen(false)}
             >
@@ -87,10 +81,7 @@ export default function Navbar() {
             </a>
           ))}
           <hr className="border-border" />
-          <a
-            href="/login"
-            className="text-sm font-medium text-muted-foreground"
-          >
+          <a href="/login" className="text-sm font-medium text-muted-foreground">
             Log in
           </a>
           <a

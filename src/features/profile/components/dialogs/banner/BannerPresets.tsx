@@ -1,9 +1,9 @@
-import { Button } from "@/shared/components/shadcn/button";
-import { cn } from "@/lib/utils";
-import { FaPencil } from "react-icons/fa6";
-import { BANNER_PRESETS } from "@/data/profile.data";
-import { useBannerDialog } from "../../../hooks/useBannerDialog";
-import { Loader } from "@/shared/components/app/Loader";
+import { Button } from '@/shared/components/shadcn/button';
+import { cn } from '@/lib/utils';
+import { FaPencil } from 'react-icons/fa6';
+import { BANNER_PRESETS } from '@/data/profile.data';
+import { useBannerDialog } from '../../../hooks/useBannerDialog';
+import { Loader } from '@/shared/components/app/Loader';
 
 export const BannerPresets = () => {
   const {
@@ -29,10 +29,10 @@ export const BannerPresets = () => {
             onClick={() => setSelectedColor(preset)}
             type="button"
             className={cn(
-              "h-10 w-10 rounded-full",
+              'h-10 w-10 rounded-full',
               preset,
               preset === selectedColor &&
-                "scale-105 border-primary-foreground/80 ring-2 ring-primary ring-offset-2 shadow-lg",
+                'scale-105 border-primary-foreground/80 ring-2 ring-primary ring-offset-2 shadow-lg',
             )}
             aria-label={preset}
           ></Button>
@@ -44,16 +44,15 @@ export const BannerPresets = () => {
             type="button"
             onClick={handleCustomColorClick}
             className={cn(
-              "h-10 w-10 rounded-full bg-gray-500 hover:bg-gray-700",
-              isCustomColor &&
-                "scale-105 border-primary-foreground/80 ring-2 ring-primary ring-offset-2 shadow-lg",
+              'h-10 w-10 rounded-full bg-gray-500 hover:bg-gray-700',
+              isCustomColor && 'scale-105 border-primary-foreground/80 ring-2 ring-primary ring-offset-2 shadow-lg',
             )}
             style={{
               backgroundColor: isCustomColor ? selectedColor : undefined,
             }}
             aria-label="Custom Color"
           >
-            <FaPencil size={12} />
+            <FaPencil />
           </Button>
         </div>
       </div>

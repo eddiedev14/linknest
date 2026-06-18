@@ -1,4 +1,4 @@
-import { Button } from "@/shared/components/shadcn/button";
+import { Button } from '@/shared/components/shadcn/button';
 import {
   Dialog,
   DialogContent,
@@ -6,9 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/shared/components/shadcn/dialog";
-import { FaCamera } from "react-icons/fa6";
-import { AvatarForm } from "./AvatarForm";
+} from '@/shared/components/shadcn/dialog';
+import { FaCamera } from 'react-icons/fa6';
+import { AvatarForm } from './AvatarForm';
 
 export const AvatarDialog = () => {
   return (
@@ -19,16 +19,13 @@ export const AvatarDialog = () => {
           className="absolute bottom-1 right-1 size-8 rounded-full bg-primary hover:bg-primary/90 flex items-center justify-center text-primary-foreground shadow-sm transition-colors ring-2 ring-background"
           aria-label="Change profile photo"
         >
-          <FaCamera size={11} aria-hidden="true" />
+          <FaCamera aria-hidden="true" />
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl">Upload your avatar</DialogTitle>
-          <DialogDescription>
-            Upload the public avatar photo that will appear on your Linknest
-            page
-          </DialogDescription>
+          <DialogDescription>Upload the public avatar photo that will appear on your Linknest page</DialogDescription>
 
           <AvatarForm />
         </DialogHeader>

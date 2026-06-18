@@ -1,21 +1,17 @@
-import { FaArrowRight } from "react-icons/fa6";
-import { Input } from "../shadcn/input";
+import { FaArrowRight } from 'react-icons/fa6';
+import { Input } from '../shadcn/input';
 
 export default function CTA() {
   return (
     <section className="pt-16 pb-24 bg-muted/40" aria-label="Call to action">
       <div className="max-w-6xl mx-auto px-6 flex flex-col items-center text-center gap-8">
         <div className="flex flex-col items-center gap-4">
-          <span className="text-xs font-semibold uppercase tracking-widest text-primary">
-            Create your profile
-          </span>
+          <span className="text-xs font-semibold uppercase tracking-widest text-primary">Create your profile</span>
           <h2 className="font-heading text-4xl md:text-6xl font-bold text-foreground text-balance max-w-3xl">
-            Your developer profile deserves its{" "}
-            <span className="text-primary">own place</span>
+            Your developer profile deserves its <span className="text-primary">own place</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-md leading-relaxed text-balance">
-            Create your free developer profile, connect your platforms, and
-            share everything from a single link.
+            Create your free developer profile, connect your platforms, and share everything from a single link.
           </p>
         </div>
 
@@ -37,7 +33,7 @@ export default function CTA() {
           className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors shadow-xl shadow-primary/20 text-base"
         >
           Create your free profile
-          <FaArrowRight size={18} />
+          <FaArrowRight />
         </a>
       </div>
     </section>
