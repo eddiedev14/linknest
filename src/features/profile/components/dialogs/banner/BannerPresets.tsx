@@ -5,7 +5,11 @@ import { BANNER_PRESETS } from '@/data/profile.data';
 import { useBannerDialog } from '../../../hooks/useBannerDialog';
 import { Loader } from '@/shared/components/app/Loader';
 
-export const BannerPresets = () => {
+interface Props {
+  onSuccess: () => void;
+}
+
+export const BannerPresets = ({ onSuccess }: Props) => {
   const {
     selectedColor,
     colorInputRef,
@@ -57,7 +61,7 @@ export const BannerPresets = () => {
         </div>
       </div>
 
-      <form onSubmit={handleBannerColorSubmit} className="flex">
+      <form onSubmit={(e) => handleBannerColorSubmit(e, onSuccess)} className="flex">
         <input ref={colorInputRef} type="color" className="sr-only" />
         <Button className="mt-4 flex-1">Save</Button>
       </form>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/shared/components/shadcn/button';
 import {
   Dialog,
@@ -11,8 +12,10 @@ import { FaCamera } from 'react-icons/fa6';
 import { AvatarForm } from './AvatarForm';
 
 export const AvatarDialog = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           type="button"
@@ -27,7 +30,7 @@ export const AvatarDialog = () => {
           <DialogTitle className="text-2xl">Upload your avatar</DialogTitle>
           <DialogDescription>Upload the public avatar photo that will appear on your Linknest page</DialogDescription>
 
-          <AvatarForm />
+          <AvatarForm onSuccess={() => setOpen(false)} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

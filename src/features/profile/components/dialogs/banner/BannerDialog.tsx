@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Button } from '@/shared/components/shadcn/button';
 import {
   Dialog,
@@ -11,8 +12,10 @@ import { FaPencil } from 'react-icons/fa6';
 import { BannerPresets } from './BannerPresets';
 
 export const BannerDialog = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           type="button"
@@ -29,7 +32,7 @@ export const BannerDialog = () => {
 
           {/* Presets */}
           <div className="flex flex-col gap-2 mt-4">
-            <BannerPresets />
+            <BannerPresets onSuccess={() => setOpen(false)} />
           </div>
         </DialogHeader>
       </DialogContent>

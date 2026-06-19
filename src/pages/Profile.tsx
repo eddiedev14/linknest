@@ -35,10 +35,10 @@ export function Profile() {
                   className="size-28 rounded-full border-4 border-background bg-muted flex items-center justify-center overflow-hidden shadow-md"
                   aria-label="Profile photo"
                 >
-                  {user?.avatarUrl ? (
+                  {user?.avatar.url ? (
                     <Image
                       urlEndpoint={urlEndpoint}
-                      src={user.avatarUrl}
+                      src={user.avatar.url}
                       transformation={[
                         {
                           width: 300,
@@ -49,7 +49,7 @@ export function Profile() {
                         },
                       ]}
                       loading="lazy"
-                      alt={user.displayName ? `${user.displayName} profile image` : 'Your profile image'}
+                      alt={`${user.username} profile image`}
                     />
                   ) : (
                     <img src={AnonymousProfile} className="object-cover" alt="Your profile image" />

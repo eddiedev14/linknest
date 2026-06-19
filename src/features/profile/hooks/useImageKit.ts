@@ -9,8 +9,9 @@ type AuthResponse = {
   publicKey: string;
 };
 
-export const useImageKitUpload = () => {
+export const useImageKit = () => {
   const [isUploading, setIsUploading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Function to request the image's authentication parameters from the backend
   const getAuth = async (): Promise<AuthResponse> => {
@@ -57,8 +58,37 @@ export const useImageKitUpload = () => {
     }
   };
 
+  // Function to delete an image
+  const deleteFile = async (fileId: string) => {
+    setIsDeleting(true);
+
+    try {
+      const idToken = await getFirebaseToken();
+      if (!idToken) {
+        throw new Error('The Firebase token could not be obtained');
+      }
+
+      const res = await fetch('/api/imagekit-file', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({ fileId }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Unable to delete ImageKit file');
+      }
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return {
     isUploading,
+    isDeleting,
     uploadFile,
+    deleteFile,
   };
 };

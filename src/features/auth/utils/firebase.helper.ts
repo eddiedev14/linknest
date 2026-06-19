@@ -56,7 +56,7 @@ const createBaseNewUser = (email: string, username: string, password: string): U
     techStack: [],
     experienceYears: null,
     languages: [],
-    avatarUrl: '',
+    avatar: { url: '', fileId: '' },
     bannerStyle: 'bg-primary',
   };
 };
