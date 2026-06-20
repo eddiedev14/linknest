@@ -13,9 +13,7 @@ interface Props {
 }
 
 export const AuthForm = ({ isSignup }: Props) => {
-  const { formRef, formErrors, isPending, handleBlurEmail, handleBlurUsername, handleBlurPassword, handleSubmit } =
-    useAuthForm(isSignup);
-
+  const { formRef, formErrors, isPending, handleBlur, handleSubmit } = useAuthForm(isSignup);
   const { email: emailError, username: usernameError, password: passwordError } = formErrors;
 
   if (isPending) {
@@ -39,7 +37,7 @@ export const AuthForm = ({ isSignup }: Props) => {
           type="email"
           placeholder="you@example.com"
           errorMsg={emailError}
-          onBlur={handleBlurEmail}
+          onBlur={handleBlur}
         />
       </div>
 
@@ -54,7 +52,7 @@ export const AuthForm = ({ isSignup }: Props) => {
             placeholder="Your Username"
             errorMsg={usernameError}
             hint="This will be your public profile URL."
-            onBlur={handleBlurUsername}
+            onBlur={handleBlur}
           />
         </div>
       )}
@@ -62,7 +60,7 @@ export const AuthForm = ({ isSignup }: Props) => {
       {/* Password */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="password">Password</Label>
-        <FormField Icon={CiLock} id="password" type="password" errorMsg={passwordError} onBlur={handleBlurPassword} />
+        <FormField Icon={CiLock} id="password" type="password" errorMsg={passwordError} onBlur={handleBlur} />
       </div>
 
       {/* Submit */}

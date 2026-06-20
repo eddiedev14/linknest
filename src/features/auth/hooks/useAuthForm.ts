@@ -1,10 +1,11 @@
-import { useRef, useState, type FocusEvent, type SubmitEvent } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { isInvalidEmail, isInvalidPassword, isInvalidUsername } from '../utils/form.helper';
 import { createBaseNewUser } from '../utils/firebase.helper';
 
+import { loginScheme, registerScheme } from '../schemes/auth.scheme';
+import { validateField } from '@/shared/utils/zod.helper';
 import type { UserRegister } from '../types/user.type';
 import { useAuth } from './useAuth';
 
@@ -26,71 +27,35 @@ export const useAuthForm = (isSignup: boolean) => {
 
   //* Navigate
   const navigate = useNavigate();
+  const scheme = isSignup ? registerScheme : loginScheme;
 
   //* Handlers
-
-  // ? Blur validations
-  const handleBlurEmail = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (isInvalidEmail(e.target.value)) {
-      setFormErrors((prev) => ({
-        ...prev,
-        email: 'Please enter a valid email address.',
-      }));
-      return;
-    }
-
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    const error = validateField(scheme, name, value);
     setFormErrors((prev) => ({
       ...prev,
-      email: '',
-    }));
-  };
-
-  const handleBlurUsername = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (isInvalidUsername(e.target.value)) {
-      setFormErrors((prev) => ({
-        ...prev,
-        username: 'Username must be 3–20 characters long and contain only lowercase letters, numbers, and underscores.',
-      }));
-      return;
-    }
-
-    setFormErrors((prev) => ({
-      ...prev,
-      username: '',
-    }));
-  };
-
-  const handleBlurPassword = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (isInvalidPassword(e.target.value)) {
-      setFormErrors((prev) => ({
-        ...prev,
-        password:
-          'Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.',
-      }));
-      return;
-    }
-
-    setFormErrors((prev) => ({
-      ...prev,
-      password: '',
+      [name]: error,
     }));
   };
 
   // ? Submit methods
-  const handleRegister = async (e: SubmitEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formRef.current) return;
 
     // Data validation
-    const { email, username, password } = Object.fromEntries(new FormData(formRef.current)) as UserRegister;
+    const data = Object.fromEntries(new FormData(formRef.current)) as UserRegister;
+    const validationResult = registerScheme.safeParse(data);
 
-    if (isInvalidEmail(email) || isInvalidUsername(username) || isInvalidPassword(password)) {
+    if (!validationResult.success) {
       toast.error('There are invalid fields');
       return;
     }
 
     // Register the new base user
-    const errorMessage = await registerWithEmailAndPassword(createBaseNewUser(email, username, password));
+    const user: UserRegister = validationResult.data;
+    const errorMessage = await registerWithEmailAndPassword(createBaseNewUser(user));
 
     if (errorMessage) {
       toast.error(errorMessage);
@@ -105,10 +70,7 @@ export const useAuthForm = (isSignup: boolean) => {
     formRef,
     formErrors,
     isPending,
-
-    handleBlurEmail,
-    handleBlurUsername,
-    handleBlurPassword,
+    handleBlur,
     handleSubmit: isSignup ? handleRegister : () => {},
   };
 };
