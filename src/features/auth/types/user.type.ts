@@ -1,6 +1,8 @@
-type LanguageLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2' | 'Native';
+import type { Timestamp } from "firebase/firestore";
 
-export type ProfessionalStatus = 'available' | 'open_to_opportunities' | 'currently_employed';
+type LanguageLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Native";
+
+export type ProfessionalStatus = "available" | "open_to_opportunities" | "currently_employed";
 
 export type Languages = {
   language: string;
@@ -19,7 +21,7 @@ export type User = {
   displayName: string;
   bio: string;
   professionalRole: string;
-  professionalStatus: ProfessionalStatus | '';
+  professionalStatus: ProfessionalStatus | "";
   location: string;
   techStack: string[];
   experienceYears: number | null;
@@ -28,8 +30,13 @@ export type User = {
   bannerStyle: string;
 };
 
-export type UserDoc = Omit<User, 'password'>;
+export type BaseDoc = {
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
+};
+
+export type UserDoc = Omit<User, "password"> & BaseDoc;
 
 // Forms
-export type UserRegister = Pick<User, 'email' | 'username' | 'password'>;
-export type UserLogin = Pick<User, 'email' | 'password'>;
+export type UserRegister = Pick<User, "email" | "username" | "password">;
+export type UserLogin = Pick<User, "email" | "password">;

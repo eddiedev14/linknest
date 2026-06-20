@@ -1,32 +1,32 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
 
-import {
-  FaCalendar,
-  FaCity,
-  FaFileLines,
-  FaSuitcase,
-  FaUser,
-} from "react-icons/fa6";
+import { FaCalendar, FaCity, FaFileLines, FaSuitcase, FaUser } from "react-icons/fa6";
 import { BiWorld } from "react-icons/bi";
 
 // components and more
 import { FormField } from "@/shared/components/forms/FormField";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
+import { useProfileForm } from "../hooks/useProfileForm";
 
 export const ProfileForm = () => {
+  const { form, handleFieldChange, handleProfileFormSubmit } = useProfileForm();
+  const { displayName, bio, professionalRole, professionalStatus, country, city, experienceYears } =
+    form;
+
   return (
-    <form className="flex flex-col gap-6" noValidate>
+    <form onSubmit={handleProfileFormSubmit} className="flex flex-col gap-6" noValidate>
       {/* Display Name */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="display-name">Display Name</Label>
         <FormField
           Icon={FaUser}
-          id="display-name"
+          id="displayName"
           type="text"
+          value={displayName}
           placeholder="e.g. Alex Rivera"
-          errorMsg=""
           hint="This is the name shown at the top of your public page."
+          onChange={handleFieldChange}
         />
       </div>
 
@@ -37,9 +37,10 @@ export const ProfileForm = () => {
           Icon={FaFileLines}
           id="bio"
           variant="textarea"
+          value={bio}
           placeholder="Tell your audience a little about yourself…"
-          errorMsg=""
           hint="A short description shown below your name on your public page."
+          onChange={handleFieldChange}
         />
       </div>
 
@@ -51,8 +52,9 @@ export const ProfileForm = () => {
             Icon={FaSuitcase}
             id="professionalRole"
             type="text"
+            value={professionalRole}
             placeholder="e.g. Front-end Developer"
-            errorMsg=""
+            onChange={handleFieldChange}
           />
         </div>
 
@@ -62,10 +64,11 @@ export const ProfileForm = () => {
           <FormField
             Icon={FaSuitcase}
             variant="select"
+            value={professionalStatus}
             id="professionalStatus"
             options={PROFESSIONAL_STATUS_OPTIONS}
             placeholder="Select your status"
-            errorMsg=""
+            onChange={handleFieldChange}
           />
         </div>
 
@@ -75,9 +78,10 @@ export const ProfileForm = () => {
           <FormField
             Icon={BiWorld}
             variant="select"
+            value={country}
             id="country"
             placeholder="Select your country"
-            errorMsg=""
+            onChange={handleFieldChange}
           />
         </div>
 
@@ -87,9 +91,10 @@ export const ProfileForm = () => {
           <FormField
             Icon={FaCity}
             variant="select"
+            value={city}
             id="city"
             placeholder="Select your city"
-            errorMsg=""
+            onChange={handleFieldChange}
           />
         </div>
       </div>
@@ -114,9 +119,10 @@ export const ProfileForm = () => {
             Icon={FaCalendar}
             id="experienceYears"
             type="number"
+            value={String(experienceYears)}
             placeholder="e.g. 10"
             hint="Just enter the number of years"
-            errorMsg=""
+            onChange={handleFieldChange}
           />
         </div>
       </div>

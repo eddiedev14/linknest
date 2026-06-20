@@ -1,22 +1,21 @@
-import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { createBaseNewUser } from "../utils/firebase.helper";
+import { loginScheme, registerScheme } from "../schemes/auth.scheme";
+import { validateField } from "@/shared/utils/zod.helper";
+import type { UserRegister } from "../types/user.type";
+import { useAuth } from "./useAuth";
 
-import { createBaseNewUser } from '../utils/firebase.helper';
-
-import { loginScheme, registerScheme } from '../schemes/auth.scheme';
-import { validateField } from '@/shared/utils/zod.helper';
-import type { UserRegister } from '../types/user.type';
-import { useAuth } from './useAuth';
-
-type AuthFields = 'email' | 'username' | 'password';
+type AuthFields = "email" | "username" | "password";
 
 export const useAuthForm = (isSignup: boolean) => {
   //* States
+  const [registered, setRegistered] = useState(false);
   const [formErrors, setFormErrors] = useState<Record<AuthFields, string>>({
-    email: '',
-    username: '',
-    password: '',
+    email: "",
+    username: "",
+    password: "",
   });
 
   //* Contexts
@@ -24,10 +23,17 @@ export const useAuthForm = (isSignup: boolean) => {
 
   //* References
   const formRef = useRef<HTMLFormElement>(null);
+  const scheme = isSignup ? registerScheme : loginScheme;
 
   //* Navigate
   const navigate = useNavigate();
-  const scheme = isSignup ? registerScheme : loginScheme;
+
+  //* Effects
+  useEffect(() => {
+    if (registered) {
+      navigate("/profile", { replace: true });
+    }
+  }, [registered]);
 
   //* Handlers
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,7 +55,7 @@ export const useAuthForm = (isSignup: boolean) => {
     const validationResult = registerScheme.safeParse(data);
 
     if (!validationResult.success) {
-      toast.error('There are invalid fields');
+      toast.error("There are invalid fields");
       return;
     }
 
@@ -62,8 +68,8 @@ export const useAuthForm = (isSignup: boolean) => {
       return;
     }
 
-    toast.success('User created successfully');
-    navigate('/profile', { replace: true });
+    setRegistered(true);
+    toast.success("User created successfully");
   };
 
   return {
