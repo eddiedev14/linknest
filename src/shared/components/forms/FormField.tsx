@@ -25,6 +25,7 @@ interface Props {
   variant?: FieldVariant;
   type?: InputType;
   placeholder?: string;
+  disabled?: boolean;
   value?: string;
   errorMsg?: string;
   hint?: string;
@@ -39,6 +40,7 @@ export const FormField = ({
   variant = "input",
   type = "text",
   placeholder,
+  disabled = false,
   value,
   errorMsg,
   hint = "",
@@ -64,6 +66,7 @@ export const FormField = ({
             name={id}
             type={inputType}
             value={value}
+            disabled={disabled}
             placeholder={placeholder}
             onBlur={onBlur}
             onChange={(e) => onChange?.(e.target.value, id)}
@@ -76,6 +79,7 @@ export const FormField = ({
             id={id}
             name={id}
             value={value}
+            disabled={disabled}
             placeholder={placeholder}
             onBlur={onBlur}
             onChange={(e) => onChange?.(e.target.value, id)}
@@ -84,7 +88,12 @@ export const FormField = ({
         )}
 
         {variant === "select" && (
-          <Select name={id} value={value} onValueChange={(val) => onChange?.(val, id)}>
+          <Select
+            name={id}
+            value={value}
+            disabled={disabled}
+            onValueChange={(val) => onChange?.(val, id)}
+          >
             <SelectTrigger className={errorMsg ? "border-destructive pl-8" : "pl-8"}>
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>

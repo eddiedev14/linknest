@@ -10,7 +10,8 @@ import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 import { useProfileForm } from "../hooks/useProfileForm";
 
 export const ProfileForm = () => {
-  const { form, handleFieldChange, handleProfileFormSubmit } = useProfileForm();
+  const { form, countriesOptions, citiesOptions, handleFieldChange, handleProfileFormSubmit } =
+    useProfileForm();
   const { displayName, bio, professionalRole, professionalStatus, country, city, experienceYears } =
     form;
 
@@ -80,6 +81,7 @@ export const ProfileForm = () => {
             variant="select"
             value={country}
             id="country"
+            options={countriesOptions}
             placeholder="Select your country"
             onChange={handleFieldChange}
           />
@@ -93,6 +95,8 @@ export const ProfileForm = () => {
             variant="select"
             value={city}
             id="city"
+            disabled={!country}
+            options={citiesOptions}
             placeholder="Select your city"
             onChange={handleFieldChange}
           />

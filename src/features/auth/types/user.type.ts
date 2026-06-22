@@ -14,6 +14,11 @@ export type Avatar = {
   fileId: string;
 };
 
+export type Location = {
+  country: string;
+  city: string;
+};
+
 export type User = {
   email: string;
   username: string;
@@ -22,7 +27,7 @@ export type User = {
   bio: string;
   professionalRole: string;
   professionalStatus: ProfessionalStatus | "";
-  location: string;
+  location: Location;
   techStack: string[];
   experienceYears: number | null;
   languages: Languages[];
