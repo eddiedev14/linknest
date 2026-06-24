@@ -1,17 +1,13 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
-
-import { FaCalendar, FaCity, FaFileLines, FaSuitcase, FaUser } from "react-icons/fa6";
+import { FaCalendar, FaCity, FaSuitcase, FaUser } from "react-icons/fa6";
 import { BiWorld } from "react-icons/bi";
-
-// components and more
-import { FormField } from "@/shared/components/forms/FormField";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
+import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
 import { useProfileForm } from "../hooks/useProfileForm";
 
 export const ProfileForm = () => {
-  const { form, countriesOptions, citiesOptions, handleFieldChange, handleProfileFormSubmit } =
-    useProfileForm();
+  const { form, countriesOptions, citiesOptions, handleProfileFormSubmit } = useProfileForm();
   const { displayName, bio, professionalRole, professionalStatus, country, city, experienceYears } =
     form;
 
@@ -20,28 +16,22 @@ export const ProfileForm = () => {
       {/* Display Name */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="display-name">Display Name</Label>
-        <FormField
+        <InputField
           Icon={FaUser}
-          id="displayName"
           type="text"
           value={displayName}
           placeholder="e.g. Alex Rivera"
           hint="This is the name shown at the top of your public page."
-          onChange={handleFieldChange}
         />
       </div>
 
       {/* Bio */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="bio">Bio</Label>
-        <FormField
-          Icon={FaFileLines}
-          id="bio"
-          variant="textarea"
+        <TextareaField
           value={bio}
           placeholder="Tell your audience a little about yourself…"
           hint="A short description shown below your name on your public page."
-          onChange={handleFieldChange}
         />
       </div>
 
@@ -49,56 +39,45 @@ export const ProfileForm = () => {
         <div className="flex flex-col gap-2">
           {/* Professional Role */}
           <Label htmlFor="professionalRole">Professional Role</Label>
-          <FormField
+          <InputField
             Icon={FaSuitcase}
-            id="professionalRole"
             type="text"
             value={professionalRole}
             placeholder="e.g. Front-end Developer"
-            onChange={handleFieldChange}
           />
         </div>
 
         {/* Professional Status */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="professionalStatus">Professional Status</Label>
-          <FormField
+          <SelectField
             Icon={FaSuitcase}
-            variant="select"
             value={professionalStatus}
-            id="professionalStatus"
             options={PROFESSIONAL_STATUS_OPTIONS}
             placeholder="Select your status"
-            onChange={handleFieldChange}
           />
         </div>
 
         {/* Country */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="country">Country</Label>
-          <FormField
+          <SelectField
             Icon={BiWorld}
-            variant="select"
             value={country}
-            id="country"
             options={countriesOptions}
             placeholder="Select your country"
-            onChange={handleFieldChange}
           />
         </div>
 
         {/* City */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="city">City</Label>
-          <FormField
+          <SelectField
             Icon={FaCity}
-            variant="select"
             value={city}
-            id="city"
             disabled={!country}
             options={citiesOptions}
             placeholder="Select your city"
-            onChange={handleFieldChange}
           />
         </div>
       </div>
@@ -119,14 +98,12 @@ export const ProfileForm = () => {
         {/* Years of Experience */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="experienceYears">Years of Experience</Label>
-          <FormField
+          <InputField
             Icon={FaCalendar}
-            id="experienceYears"
             type="number"
             value={String(experienceYears)}
             placeholder="e.g. 10"
             hint="Just enter the number of years"
-            onChange={handleFieldChange}
           />
         </div>
       </div>
