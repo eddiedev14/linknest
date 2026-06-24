@@ -1,8 +1,14 @@
 import type { Timestamp } from "firebase/firestore";
 
 type LanguageLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Native";
+export const LANGUAGE_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2", "Native"] as const;
 
 export type ProfessionalStatus = "available" | "open_to_opportunities" | "currently_employed";
+export const PROFESSIONAL_STATUS_VALUES = [
+  "available",
+  "open_to_opportunities",
+  "currently_employed",
+] as const;
 
 export type Languages = {
   language: string;
@@ -26,7 +32,7 @@ export type User = {
   displayName: string;
   bio: string;
   professionalRole: string;
-  professionalStatus: ProfessionalStatus | "";
+  professionalStatus: ProfessionalStatus | undefined;
   location: Location;
   techStack: string[];
   experienceYears: number | null;

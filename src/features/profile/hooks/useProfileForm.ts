@@ -1,32 +1,42 @@
 /* eslint-disable react-hooks/set-state-in-effect */
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 import { useEffect, useState } from "react";
+import type { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import type { SelectOption } from "@/shared/components/forms/FormField";
-import type { ProfileForm } from "../types/profileForm.type";
+import { profileFormScheme } from "../validations/profile.scheme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 import { getAllCountries, getCitiesFromCountry } from "../actions/countriesNow.actions";
 
 export const useProfileForm = () => {
   //* States
-  const [form, setForm] = useState<ProfileForm>({
-    displayName: "",
-    bio: "",
-    professionalRole: "",
-    professionalStatus: "",
-    country: "",
-    city: "",
-    techStack: [],
-    languages: [],
-    experienceYears: null,
-  });
-
-  //? States for dinamically selects
   const [countriesOptions, setCountriesOptions] = useState<SelectOption[]>([]);
   const [citiesOptions, setCitiesOptions] = useState<SelectOption[]>([]);
 
   //* Context
   const { user, updateUserProfile } = useAuth();
+
+  //* React Hook Form
+  type FormData = z.input<typeof profileFormScheme>;
+
+  const {
+    formState: { errors },
+    control,
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    setValue,
+    watch,
+  } = useForm<FormData>({
+    resolver: zodResolver(profileFormScheme),
+    mode: "onBlur",
+  });
+
+  const country = watch("country");
 
   //* Navigate
   const navigate = useNavigate();
@@ -35,19 +45,22 @@ export const useProfileForm = () => {
   useEffect(() => {
     if (!user) return;
 
-    setForm({
+    reset({
       displayName: user.displayName ?? "",
       bio: user.bio ?? "",
       professionalRole: user.professionalRole ?? "",
-      professionalStatus: user.professionalStatus ?? "",
-      country: user.location.country ?? "",
-      city: user.location.city ?? "",
+      professionalStatus: user.professionalStatus,
+      country: user.location?.country ?? "",
+      city: user.location?.city ?? "",
       techStack: user.techStack ?? [],
       languages: user.languages ?? [],
-      experienceYears: user.experienceYears ?? null,
+      experienceYears: user.experienceYears !== null ? String(user.experienceYears) : "",
     });
+
+    console.log(watch());
   }, [user]);
 
+  /*
   useEffect(() => {
     const getCountriesOptions = async () => {
       const countriesNames = await getAllCountries();
@@ -58,56 +71,38 @@ export const useProfileForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!form.country) {
+    if (!getValues("country")) {
       setCitiesOptions([]);
       return;
     }
 
     const getCitiesOptions = async () => {
-      const citiesNames = await getCitiesFromCountry(form.country);
+      const citiesNames = await getCitiesFromCountry(getValues("country") as string);
       setCitiesOptions(citiesNames);
     };
 
     getCitiesOptions();
-  }, [form.country]);
+  }, []);
+  */
 
   //* Handlers
-  const handleFieldChange = (value: string, name: string) => {
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleProfileFormSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleProfileFormSubmit = async (data: FormData) => {
     if (!user) return;
-
-    const {
-      displayName,
-      bio,
-      professionalRole,
-      professionalStatus,
-      country,
-      city,
-      techStack,
-      languages,
-      experienceYears,
-    } = form;
 
     const updatedUser = {
       ...user,
-      displayName: displayName,
-      bio: bio,
-      professionalRole: professionalRole,
-      professionalState: professionalStatus,
+      displayName: data.displayName ?? "",
+      bio: data.bio ?? "",
+      professionalRole: data.professionalRole ?? "",
+      professionalStatus: data.professionalStatus,
       location: {
-        country: country,
-        city: city,
+        country: data.country ?? "",
+        city: data.city ?? "",
       },
-      techStack: techStack,
-      languages: languages,
-      experienceYears: experienceYears,
+      techStack: data.techStack ?? [],
+      languages: data.languages ?? [],
+      experienceYears:
+        data.experienceYears && data.experienceYears !== "" ? Number(data.experienceYears) : null,
     };
 
     try {
@@ -121,10 +116,14 @@ export const useProfileForm = () => {
   };
 
   return {
-    form,
     countriesOptions,
     citiesOptions,
-    handleFieldChange,
-    handleProfileFormSubmit,
+    errors,
+    control,
+    country,
+    register,
+    setValue,
+    onSubmit: handleSubmit(handleProfileFormSubmit),
+    watch,
   };
 };

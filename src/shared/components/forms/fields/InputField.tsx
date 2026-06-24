@@ -13,7 +13,6 @@ interface Props {
   type?: InputType;
   placeholder?: string;
   disabled?: boolean;
-  value?: string;
   errorMsg?: string;
   hint?: string;
   registration?: UseFormRegisterReturn;
@@ -24,7 +23,6 @@ export const InputField = ({
   type = "text",
   placeholder,
   disabled = false,
-  value,
   errorMsg,
   hint = "",
   registration,
@@ -38,7 +36,6 @@ export const InputField = ({
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <Input
           type={inputType}
-          value={value}
           disabled={disabled}
           placeholder={placeholder}
           className={errorMsg ? "border-destructive pl-8" : "pl-8"}

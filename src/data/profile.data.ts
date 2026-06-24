@@ -1,4 +1,4 @@
-import type { SelectOption } from "@/shared/components/forms/FormField";
+import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 
 const BANNER_PRESETS = [
   "banner-primary",

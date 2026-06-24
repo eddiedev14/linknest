@@ -5,23 +5,24 @@ import { BiWorld } from "react-icons/bi";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
 import { useProfileForm } from "../hooks/useProfileForm";
+import { Controller } from "react-hook-form";
 
 export const ProfileForm = () => {
-  const { form, countriesOptions, citiesOptions, handleProfileFormSubmit } = useProfileForm();
-  const { displayName, bio, professionalRole, professionalStatus, country, city, experienceYears } =
-    form;
+  const { countriesOptions, citiesOptions, errors, control, country, register, onSubmit, watch } =
+    useProfileForm();
 
   return (
-    <form onSubmit={handleProfileFormSubmit} className="flex flex-col gap-6" noValidate>
+    <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
       {/* Display Name */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="display-name">Display Name</Label>
         <InputField
           Icon={FaUser}
           type="text"
-          value={displayName}
           placeholder="e.g. Alex Rivera"
           hint="This is the name shown at the top of your public page."
+          errorMsg={errors.displayName?.message}
+          registration={register("displayName")}
         />
       </div>
 
@@ -29,9 +30,10 @@ export const ProfileForm = () => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="bio">Bio</Label>
         <TextareaField
-          value={bio}
           placeholder="Tell your audience a little about yourself…"
           hint="A short description shown below your name on your public page."
+          errorMsg={errors.bio?.message}
+          registration={register("bio")}
         />
       </div>
 
@@ -42,19 +44,29 @@ export const ProfileForm = () => {
           <InputField
             Icon={FaSuitcase}
             type="text"
-            value={professionalRole}
             placeholder="e.g. Front-end Developer"
+            errorMsg={errors.professionalRole?.message}
+            registration={register("professionalRole")}
           />
         </div>
 
         {/* Professional Status */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="professionalStatus">Professional Status</Label>
-          <SelectField
-            Icon={FaSuitcase}
-            value={professionalStatus}
-            options={PROFESSIONAL_STATUS_OPTIONS}
-            placeholder="Select your status"
+          <Controller
+            name="professionalStatus"
+            control={control}
+            render={({ field }) => (
+              <SelectField
+                key={field.value}
+                Icon={FaSuitcase}
+                placeholder="Select your status"
+                options={PROFESSIONAL_STATUS_OPTIONS}
+                value={field.value ?? ""}
+                onChange={(value) => field.onChange(value === "" ? undefined : value)}
+                errorMsg={errors.professionalStatus?.message}
+              />
+            )}
           />
         </div>
 
@@ -63,9 +75,11 @@ export const ProfileForm = () => {
           <Label htmlFor="country">Country</Label>
           <SelectField
             Icon={BiWorld}
-            value={country}
             options={countriesOptions}
             placeholder="Select your country"
+            errorMsg={errors.country?.message}
+            value=""
+            onChange={() => {}}
           />
         </div>
 
@@ -74,10 +88,12 @@ export const ProfileForm = () => {
           <Label htmlFor="city">City</Label>
           <SelectField
             Icon={FaCity}
-            value={city}
             disabled={!country}
             options={citiesOptions}
             placeholder="Select your city"
+            value=""
+            onChange={() => {}}
+            errorMsg={errors.city?.message}
           />
         </div>
       </div>
@@ -101,9 +117,10 @@ export const ProfileForm = () => {
           <InputField
             Icon={FaCalendar}
             type="number"
-            value={String(experienceYears)}
             placeholder="e.g. 10"
             hint="Just enter the number of years"
+            errorMsg={errors.experienceYears?.message}
+            registration={register("experienceYears")}
           />
         </div>
       </div>
