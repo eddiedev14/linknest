@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
 import { useEffect, useState } from "react";
 import type z from "zod";
 import { useForm } from "react-hook-form";
@@ -38,7 +37,7 @@ export const useAuthForm = (isSignup: boolean) => {
     if (registered) {
       navigate("/profile", { replace: true });
     }
-  }, [registered]);
+  }, [registered, navigate]);
 
   // ? Submit methods
   const handleRegister = async (data: FormData) => {

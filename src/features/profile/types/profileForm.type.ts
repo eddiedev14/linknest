@@ -1,4 +1,5 @@
-import type { Languages, ProfessionalStatus } from "@/features/auth/types/user.type";
+import type { ProfessionalStatus } from "@/features/auth/types/professionalStatus.type";
+import type { Languages } from "@/features/auth/types/languages.type";
 
 export interface ProfileForm {
   displayName: string;
@@ -9,5 +10,4 @@ export interface ProfileForm {
   city: string;
   techStack: string[];
   languages: Languages[];
-  experienceYears: number | null;
 }

@@ -1,5 +1,6 @@
 import * as z from "zod";
-import { LANGUAGE_LEVELS, PROFESSIONAL_STATUS_VALUES } from "@/features/auth/types/user.type";
+import { LANGUAGE_LEVELS } from "@/features/auth/constants/languages.constant";
+import { PROFESSIONAL_STATUS_VALUES } from "@/features/auth/constants/professionalStatus.constant";
 
 const languageSchema = z.object({
   language: z.string(),
@@ -15,18 +16,4 @@ export const profileFormScheme = z.object({
   city: z.string().optional(),
   techStack: z.array(z.string()).optional(),
   languages: z.array(languageSchema).optional(),
-  experienceYears: z
-    .string()
-    .nullable()
-    .refine((val) => {
-      if (!val || val === "") return true;
-      const num = Number(val);
-      return !Number.isNaN(num);
-    }, "Must be a number")
-    .refine((val) => {
-      if (!val || val === "") return true;
-
-      const num = Number(val);
-      return num >= 0 && num <= 100;
-    }, "Must be between 0 and 100"),
 });

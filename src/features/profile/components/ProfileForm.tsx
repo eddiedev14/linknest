@@ -1,6 +1,6 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
-import { FaCalendar, FaCity, FaSuitcase, FaUser } from "react-icons/fa6";
+import { FaCity, FaSuitcase, FaUser } from "react-icons/fa6";
 import { BiWorld } from "react-icons/bi";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
@@ -8,7 +8,7 @@ import { useProfileForm } from "../hooks/useProfileForm";
 import { Controller } from "react-hook-form";
 
 export const ProfileForm = () => {
-  const { countriesOptions, citiesOptions, errors, control, country, register, onSubmit, watch } =
+  const { countriesOptions, citiesOptions, errors, control, country, register, onSubmit } =
     useProfileForm();
 
   return (
@@ -109,19 +109,6 @@ export const ProfileForm = () => {
         <div className="flex flex-col gap-2">
           <Label>Languages</Label>
           <Button>Set your Languages</Button>
-        </div>
-
-        {/* Years of Experience */}
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="experienceYears">Years of Experience</Label>
-          <InputField
-            Icon={FaCalendar}
-            type="number"
-            placeholder="e.g. 10"
-            hint="Just enter the number of years"
-            errorMsg={errors.experienceYears?.message}
-            registration={register("experienceYears")}
-          />
         </div>
       </div>
 

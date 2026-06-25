@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/** biome-ignore-all lint/correctness/useExhaustiveDependencies: <> */
+/* eslint-disable react-hooks/incompatible-library */
 import { useEffect, useState } from "react";
 import type { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -9,12 +8,11 @@ import { toast } from "react-toastify";
 import { profileFormScheme } from "../validations/profile.scheme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
-import { getAllCountries, getCitiesFromCountry } from "../actions/countriesNow.actions";
 
 export const useProfileForm = () => {
   //* States
-  const [countriesOptions, setCountriesOptions] = useState<SelectOption[]>([]);
-  const [citiesOptions, setCitiesOptions] = useState<SelectOption[]>([]);
+  const [countriesOptions] = useState<SelectOption[]>([]);
+  const [citiesOptions] = useState<SelectOption[]>([]);
 
   //* Context
   const { user, updateUserProfile } = useAuth();
@@ -28,7 +26,6 @@ export const useProfileForm = () => {
     register,
     handleSubmit,
     reset,
-    getValues,
     setValue,
     watch,
   } = useForm<FormData>({
@@ -54,11 +51,8 @@ export const useProfileForm = () => {
       city: user.location?.city ?? "",
       techStack: user.techStack ?? [],
       languages: user.languages ?? [],
-      experienceYears: user.experienceYears !== null ? String(user.experienceYears) : "",
     });
-
-    console.log(watch());
-  }, [user]);
+  }, [user, reset]);
 
   /*
   useEffect(() => {
@@ -101,8 +95,6 @@ export const useProfileForm = () => {
       },
       techStack: data.techStack ?? [],
       languages: data.languages ?? [],
-      experienceYears:
-        data.experienceYears && data.experienceYears !== "" ? Number(data.experienceYears) : null,
     };
 
     try {
@@ -124,6 +116,5 @@ export const useProfileForm = () => {
     register,
     setValue,
     onSubmit: handleSubmit(handleProfileFormSubmit),
-    watch,
   };
 };

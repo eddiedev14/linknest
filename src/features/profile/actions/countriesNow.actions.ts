@@ -1,4 +1,4 @@
-import type { SelectOption } from "@/shared/components/forms/FormField";
+import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 import type { CitiesResponse, CountriesResponse } from "../types/countriesNow.response.type";
 
 const citiesCache = new Map<string, SelectOption[]>();
