@@ -42,8 +42,6 @@ export default function useAuthState() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Ahora se guarda en la colección "users", el usuario con esa misma id (para referencias) con los datos propios
       await setById(userCredential.user.uid, getUserWithoutPassword(user));
       return null;
     } catch (err) {

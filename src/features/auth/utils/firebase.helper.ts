@@ -57,7 +57,7 @@ const createBaseNewUser = ({ email, username, password }: CreateBaseUserParams):
     displayName: "",
     bio: "",
     professionalRole: "",
-    professionalStatus: undefined,
+    professionalStatus: null,
     location: { country: "", city: "" },
     techStack: [],
     languages: [],
