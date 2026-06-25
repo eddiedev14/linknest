@@ -1,5 +1,6 @@
+import type { UseFormRegisterReturn } from "react-hook-form";
 import type { IconType } from "react-icons";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../shadcn/select";
+import { NativeSelect, NativeSelectOption } from "../../shadcn/native-select";
 import { FormFieldError } from "../FieldError";
 
 export interface SelectOption {
@@ -14,6 +15,7 @@ interface Props {
   errorMsg?: string;
   hint?: string;
   options: SelectOption[];
+  registration?: UseFormRegisterReturn;
   value: string;
   onChange: (value: string) => void;
 }
@@ -32,19 +34,22 @@ export const SelectField = ({
     <>
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
-        <Select value={value ?? ""} onValueChange={onChange} disabled={disabled}>
-          <SelectTrigger className={errorMsg ? "border-destructive pl-8" : "pl-8"}>
-            <SelectValue placeholder={placeholder} />
-          </SelectTrigger>
-
-          <SelectContent>
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <NativeSelect
+          value={value ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+        >
+          {(!value || value === "") && (
+            <NativeSelectOption value="" disabled>
+              {placeholder}
+            </NativeSelectOption>
+          )}
+          {options.map((option) => (
+            <NativeSelectOption key={option.value} value={option.value}>
+              {option.label}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
       </div>
 
       {/* Error message and hint */}

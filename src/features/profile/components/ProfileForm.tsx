@@ -58,12 +58,11 @@ export const ProfileForm = () => {
             control={control}
             render={({ field }) => (
               <SelectField
-                key={field.value}
                 Icon={FaSuitcase}
                 placeholder="Select your status"
                 options={PROFESSIONAL_STATUS_OPTIONS}
                 value={field.value ?? ""}
-                onChange={(value) => field.onChange(value === "" ? undefined : value)}
+                onChange={(value) => field.onChange(value === "" ? null : value)}
                 errorMsg={errors.professionalStatus?.message}
               />
             )}
@@ -73,20 +72,20 @@ export const ProfileForm = () => {
         {/* Country */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="country">Country</Label>
-          <SelectField
+          {/* <SelectField
             Icon={BiWorld}
             options={countriesOptions}
             placeholder="Select your country"
             errorMsg={errors.country?.message}
             value=""
             onChange={() => {}}
-          />
+          /> */}
         </div>
 
         {/* City */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="city">City</Label>
-          <SelectField
+          {/* <SelectField
             Icon={FaCity}
             disabled={!country}
             options={citiesOptions}
@@ -94,7 +93,7 @@ export const ProfileForm = () => {
             value=""
             onChange={() => {}}
             errorMsg={errors.city?.message}
-          />
+          /> */}
         </div>
 
         {/* Tech Stack */}

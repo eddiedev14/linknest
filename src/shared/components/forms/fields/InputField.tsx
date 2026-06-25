@@ -38,7 +38,7 @@ export const InputField = ({
           type={inputType}
           disabled={disabled}
           placeholder={placeholder}
-          className={errorMsg ? "border-destructive pl-8" : "pl-8"}
+          className={errorMsg && "border-destructive"}
           {...registration}
         />
 

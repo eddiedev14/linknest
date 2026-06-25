@@ -88,7 +88,7 @@ export const useProfileForm = () => {
       displayName: data.displayName ?? "",
       bio: data.bio ?? "",
       professionalRole: data.professionalRole ?? "",
-      professionalStatus: data.professionalStatus,
+      professionalStatus: data.professionalStatus ?? null,
       location: {
         country: data.country ?? "",
         city: data.city ?? "",
