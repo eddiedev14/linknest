@@ -1,29 +1,7 @@
 import type { Timestamp } from "firebase/firestore";
-
-type LanguageLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "Native";
-export const LANGUAGE_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2", "Native"] as const;
-
-export type ProfessionalStatus = "available" | "open_to_opportunities" | "currently_employed";
-export const PROFESSIONAL_STATUS_VALUES = [
-  "available",
-  "open_to_opportunities",
-  "currently_employed",
-] as const;
-
-export type Languages = {
-  language: string;
-  level: LanguageLevel;
-};
-
-export type Avatar = {
-  url: string;
-  fileId: string;
-};
-
-export type Location = {
-  country: string;
-  city: string;
-};
+import type { Avatar } from "./avatar.type";
+import type { Languages } from "./languages.type";
+import type { ProfessionalStatus } from "./professionalStatus.type";
 
 export type User = {
   email: string;
@@ -35,7 +13,6 @@ export type User = {
   professionalStatus: ProfessionalStatus | undefined;
   location: Location;
   techStack: string[];
-  experienceYears: number | null;
   languages: Languages[];
   avatar: Avatar;
   bannerStyle: string;
