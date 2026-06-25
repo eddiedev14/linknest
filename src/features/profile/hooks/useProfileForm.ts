@@ -46,7 +46,7 @@ export const useProfileForm = () => {
       displayName: user.displayName ?? "",
       bio: user.bio ?? "",
       professionalRole: user.professionalRole ?? "",
-      professionalStatus: user.professionalStatus,
+      professionalStatus: user.professionalStatus ?? null,
       country: user.location?.country ?? "",
       city: user.location?.city ?? "",
       techStack: user.techStack ?? [],

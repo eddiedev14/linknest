@@ -96,9 +96,7 @@ export const ProfileForm = () => {
             errorMsg={errors.city?.message}
           />
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 gap-x-4 gap-y-8 mt-4 md:grid-cols-3">
         {/* Tech Stack */}
         <div className="flex flex-col gap-2">
           <Label>Tech Stack</Label>
