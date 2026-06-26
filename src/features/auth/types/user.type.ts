@@ -11,7 +11,7 @@ export type User = {
   displayName: string;
   bio: string;
   professionalRole: string;
-  professionalStatus: ProfessionalStatus | null;
+  professionalStatus: ProfessionalStatus;
   location: Location;
   techStack: string[];
   languages: Languages[];

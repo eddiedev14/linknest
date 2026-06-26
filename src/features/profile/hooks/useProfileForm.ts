@@ -46,7 +46,7 @@ export const useProfileForm = () => {
       displayName: user.displayName ?? "",
       bio: user.bio ?? "",
       professionalRole: user.professionalRole ?? "",
-      professionalStatus: user.professionalStatus ?? null,
+      professionalStatus: user.professionalStatus,
       country: user.location?.country ?? "",
       city: user.location?.city ?? "",
       techStack: user.techStack ?? [],
@@ -88,7 +88,7 @@ export const useProfileForm = () => {
       displayName: data.displayName ?? "",
       bio: data.bio ?? "",
       professionalRole: data.professionalRole ?? "",
-      professionalStatus: data.professionalStatus ?? null,
+      professionalStatus: data.professionalStatus,
       location: {
         country: data.country ?? "",
         city: data.city ?? "",
