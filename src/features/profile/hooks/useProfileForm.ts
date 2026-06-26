@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/incompatible-library */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { profileFormScheme } from "../validations/profile.scheme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -25,83 +23,36 @@ export const useProfileForm = () => {
     control,
     register,
     handleSubmit,
-    reset,
     setValue,
-    watch,
   } = useForm<FormData>({
     resolver: zodResolver(profileFormScheme),
     mode: "onBlur",
+    values: user // Default values
+      ? {
+          displayName: user.displayName,
+          bio: user.bio,
+          professionalRole: user.professionalRole,
+          professionalStatus: user.professionalStatus,
+        }
+      : undefined,
   });
-
-  const country = watch("country");
-
-  //* Navigate
-  const navigate = useNavigate();
-
-  //* Effects
-  useEffect(() => {
-    if (!user) return;
-
-    reset({
-      displayName: user.displayName ?? "",
-      bio: user.bio ?? "",
-      professionalRole: user.professionalRole ?? "",
-      professionalStatus: user.professionalStatus,
-      country: user.location?.country ?? "",
-      city: user.location?.city ?? "",
-      techStack: user.techStack ?? [],
-      languages: user.languages ?? [],
-    });
-  }, [user, reset]);
-
-  /*
-  useEffect(() => {
-    const getCountriesOptions = async () => {
-      const countriesNames = await getAllCountries();
-      setCountriesOptions(countriesNames);
-    };
-
-    getCountriesOptions();
-  }, []);
-
-  useEffect(() => {
-    if (!getValues("country")) {
-      setCitiesOptions([]);
-      return;
-    }
-
-    const getCitiesOptions = async () => {
-      const citiesNames = await getCitiesFromCountry(getValues("country") as string);
-      setCitiesOptions(citiesNames);
-    };
-
-    getCitiesOptions();
-  }, []);
-  */
 
   //* Handlers
   const handleProfileFormSubmit = async (data: FormData) => {
     if (!user) return;
+    console.log("DATA", data);
 
-    const updatedUser = {
-      ...user,
-      displayName: data.displayName ?? "",
-      bio: data.bio ?? "",
-      professionalRole: data.professionalRole ?? "",
+    const updatedFields = {
+      displayName: data.displayName,
+      bio: data.bio,
+      professionalRole: data.professionalRole,
       professionalStatus: data.professionalStatus,
-      location: {
-        country: data.country ?? "",
-        city: data.city ?? "",
-      },
-      techStack: data.techStack ?? [],
-      languages: data.languages ?? [],
     };
 
     try {
-      const error = await updateUserProfile(updatedUser);
+      const error = await updateUserProfile(updatedFields);
       if (error) throw new Error(error);
       toast.success("Your profile info was updated");
-      navigate("/links");
     } catch {
       toast.error("Error updating your profile info");
     }
@@ -112,7 +63,6 @@ export const useProfileForm = () => {
     citiesOptions,
     errors,
     control,
-    country,
     register,
     setValue,
     onSubmit: handleSubmit(handleProfileFormSubmit),

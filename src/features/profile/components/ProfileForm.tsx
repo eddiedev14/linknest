@@ -1,15 +1,13 @@
+import { FaSuitcase, FaUser } from "react-icons/fa6";
+import { Controller } from "react-hook-form";
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
-import { FaCity, FaSuitcase, FaUser } from "react-icons/fa6";
-import { BiWorld } from "react-icons/bi";
-import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
 import { useProfileForm } from "../hooks/useProfileForm";
-import { Controller } from "react-hook-form";
+import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 
 export const ProfileForm = () => {
-  const { countriesOptions, citiesOptions, errors, control, country, register, onSubmit } =
-    useProfileForm();
+  const { errors, control, register, onSubmit } = useProfileForm();
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
@@ -61,8 +59,8 @@ export const ProfileForm = () => {
                 Icon={FaSuitcase}
                 placeholder="Select your status"
                 options={PROFESSIONAL_STATUS_OPTIONS}
-                value={field.value ?? ""}
-                onChange={(value) => field.onChange(value === "" ? null : value)}
+                value={field.value}
+                onChange={field.onChange}
                 errorMsg={errors.professionalStatus?.message}
               />
             )}

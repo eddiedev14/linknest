@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 //* React
 import { useEffect, useState } from "react";
 
@@ -10,7 +9,6 @@ import { useCollection } from "@/firebase/hooks/useCollection";
 // * Types & utils
 import type { UserDoc, User } from "../types/user.type";
 import { getAuthErrorMessage, getUserId, getUserWithoutPassword } from "../utils/firebase.helper";
-import { serverTimestamp } from "firebase/firestore";
 
 export default function useAuthState() {
   //* States
@@ -49,19 +47,21 @@ export default function useAuthState() {
     }
   };
 
-  const updateUserProfile = async (updatedUser: UserDoc): Promise<string | null> => {
+  const updateUserProfile = async (updatedFields: Partial<UserDoc>): Promise<string | null> => {
     try {
       const userId = getUserId();
       if (!userId) return "The user ID could not be retrieved";
 
-      const { createdAt, ...safeUser } = updatedUser;
+      await update(userId, updatedFields);
+      setUser((prev) =>
+        prev
+          ? {
+              ...prev,
+              ...updatedFields,
+            }
+          : prev,
+      );
 
-      await update(userId, {
-        ...safeUser,
-        updatedAt: serverTimestamp(),
-      });
-
-      setUser(updatedUser);
       return null;
     } catch (error) {
       console.error(error);
