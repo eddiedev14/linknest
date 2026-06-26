@@ -1,4 +1,5 @@
-import { FaSuitcase, FaUser } from "react-icons/fa6";
+import { FaCity, FaSuitcase, FaUser } from "react-icons/fa6";
+import { BiWorld } from "react-icons/bi";
 import { Controller } from "react-hook-form";
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
@@ -7,7 +8,8 @@ import { useProfileForm } from "../hooks/useProfileForm";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 
 export const ProfileForm = () => {
-  const { errors, control, register, onSubmit } = useProfileForm();
+  const { errors, control, countriesOptions, citiesOptions, country, register, onSubmit } =
+    useProfileForm();
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
@@ -70,28 +72,40 @@ export const ProfileForm = () => {
         {/* Country */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="country">Country</Label>
-          {/* <SelectField
-            Icon={BiWorld}
-            options={countriesOptions}
-            placeholder="Select your country"
-            errorMsg={errors.country?.message}
-            value=""
-            onChange={() => {}}
-          /> */}
+          <Controller
+            name="country"
+            control={control}
+            render={({ field }) => (
+              <SelectField
+                Icon={BiWorld}
+                placeholder="Select your country"
+                options={countriesOptions}
+                value={field.value}
+                onChange={field.onChange}
+                errorMsg={errors.country?.message}
+              />
+            )}
+          />
         </div>
 
         {/* City */}
         <div className="flex flex-col gap-2">
           <Label htmlFor="city">City</Label>
-          {/* <SelectField
-            Icon={FaCity}
-            disabled={!country}
-            options={citiesOptions}
-            placeholder="Select your city"
-            value=""
-            onChange={() => {}}
-            errorMsg={errors.city?.message}
-          /> */}
+          <Controller
+            name="city"
+            control={control}
+            render={({ field }) => (
+              <SelectField
+                Icon={FaCity}
+                placeholder="Select your city"
+                options={citiesOptions}
+                disabled={!country}
+                value={field.value}
+                onChange={field.onChange}
+                errorMsg={errors.city?.message}
+              />
+            )}
+          />
         </div>
 
         {/* Tech Stack */}

@@ -13,9 +13,9 @@ export const profileFormScheme = z.object({
   bio: z.string().max(100, "Your bio must be less than 100 characters long"),
   professionalRole: z.string(),
   professionalStatus: z.enum(PROFESSIONAL_STATUS_VALUES),
-  /*
   country: z.string(),
   city: z.string(),
+  /*
   techStack: z.array(z.string()),
   languages: z.array(languageSchema),
   */

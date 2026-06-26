@@ -1,5 +1,6 @@
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 import type { CitiesResponse, CountriesResponse } from "../types/countriesNow.response.type";
+import { normalizeUniqueAndSort } from "../utils/countriesNow.helper";
 
 const citiesCache = new Map<string, SelectOption[]>();
 
@@ -24,7 +25,8 @@ const getCitiesFromCountry = async (country: string): Promise<SelectOption[]> =>
   });
 
   const data: CitiesResponse = await res.json();
-  const citiesOptions: SelectOption[] = data.data.map((city) => ({
+  const normalizedData = normalizeUniqueAndSort(data.data);
+  const citiesOptions: SelectOption[] = normalizedData.map((city) => ({
     label: city,
     value: city,
   }));

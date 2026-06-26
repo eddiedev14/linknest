@@ -1,16 +1,18 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/incompatible-library */
+import { useState, useEffect } from "react";
 import type { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { profileFormScheme } from "../validations/profile.scheme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { getAllCountries, getCitiesFromCountry } from "../actions/countriesNow.actions";
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 
 export const useProfileForm = () => {
   //* States
-  const [countriesOptions] = useState<SelectOption[]>([]);
-  const [citiesOptions] = useState<SelectOption[]>([]);
+  const [countriesOptions, setCountriesOptions] = useState<SelectOption[]>([]);
+  const [citiesOptions, setCitiesOptions] = useState<SelectOption[]>([]);
 
   //* Context
   const { user, updateUserProfile } = useAuth();
@@ -24,6 +26,7 @@ export const useProfileForm = () => {
     register,
     handleSubmit,
     setValue,
+    watch,
   } = useForm<FormData>({
     resolver: zodResolver(profileFormScheme),
     mode: "onBlur",
@@ -33,9 +36,39 @@ export const useProfileForm = () => {
           bio: user.bio,
           professionalRole: user.professionalRole,
           professionalStatus: user.professionalStatus,
+          country: user.location.country,
+          city: user.location.city,
         }
       : undefined,
   });
+
+  const country = watch("country");
+
+  //* Effects
+  useEffect(() => {
+    const getCountriesOptions = async () => {
+      const countriesNames = await getAllCountries();
+      setCountriesOptions(countriesNames);
+    };
+
+    getCountriesOptions();
+  }, []);
+
+  useEffect(() => {
+    if (!country) {
+      setCitiesOptions([]);
+      return;
+    }
+
+    setValue("city", "");
+
+    const getCitiesOptions = async () => {
+      const citiesNames = await getCitiesFromCountry(country);
+      setCitiesOptions(citiesNames);
+    };
+
+    getCitiesOptions();
+  }, [country, setValue]);
 
   //* Handlers
   const handleProfileFormSubmit = async (data: FormData) => {
@@ -47,6 +80,10 @@ export const useProfileForm = () => {
       bio: data.bio,
       professionalRole: data.professionalRole,
       professionalStatus: data.professionalStatus,
+      location: {
+        country: data.country,
+        city: data.city,
+      },
     };
 
     try {
@@ -63,6 +100,7 @@ export const useProfileForm = () => {
     citiesOptions,
     errors,
     control,
+    country,
     register,
     setValue,
     onSubmit: handleSubmit(handleProfileFormSubmit),
