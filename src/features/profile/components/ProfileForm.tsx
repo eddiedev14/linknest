@@ -4,20 +4,13 @@ import { Controller } from "react-hook-form";
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
 import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
+import { MultipleCombo } from "@/shared/components/forms/fields/MultipleCombo";
 import { useProfileForm } from "../hooks/useProfileForm";
-import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
+import { PROFESSIONAL_STATUS_OPTIONS, TECH_STACK_OPTIONS } from "@/data/profile.data";
 
 export const ProfileForm = () => {
-  const {
-    errors,
-    control,
-    countriesOptions,
-    citiesOptions,
-    country,
-    register,
-    setValue,
-    onSubmit,
-  } = useProfileForm();
+  const { control, countriesOptions, citiesOptions, country, register, setValue, onSubmit } =
+    useProfileForm();
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
@@ -30,7 +23,6 @@ export const ProfileForm = () => {
           type="text"
           placeholder="e.g. Alex Rivera"
           hint="This is the name shown at the top of your public page."
-          errorMsg={errors.displayName?.message}
           registration={register("displayName")}
         />
       </div>
@@ -42,7 +34,6 @@ export const ProfileForm = () => {
           id="bio"
           placeholder="Tell your audience a little about yourself…"
           hint="A short description shown below your name on your public page."
-          errorMsg={errors.bio?.message}
           registration={register("bio")}
         />
       </div>
@@ -56,7 +47,6 @@ export const ProfileForm = () => {
             id="professionalRole"
             type="text"
             placeholder="e.g. Front-end Developer"
-            errorMsg={errors.professionalRole?.message}
             registration={register("professionalRole")}
           />
         </div>
@@ -75,7 +65,6 @@ export const ProfileForm = () => {
                 options={PROFESSIONAL_STATUS_OPTIONS}
                 value={field.value}
                 onChange={field.onChange}
-                errorMsg={errors.professionalStatus?.message}
               />
             )}
           />
@@ -98,7 +87,6 @@ export const ProfileForm = () => {
                   field.onChange(country);
                   setValue("city", "");
                 }}
-                errorMsg={errors.country?.message}
               />
             )}
           />
@@ -119,7 +107,6 @@ export const ProfileForm = () => {
                 disabled={!country}
                 value={field.value}
                 onChange={field.onChange}
-                errorMsg={errors.city?.message}
               />
             )}
           />
@@ -127,8 +114,21 @@ export const ProfileForm = () => {
 
         {/* Tech Stack */}
         <div className="flex flex-col gap-2">
-          <Label>Tech Stack</Label>
-          <Button>Select Stack</Button>
+          <Label id="techStack">Tech Stack</Label>
+          <Controller
+            name="techStack"
+            control={control}
+            render={({ field }) => (
+              <MultipleCombo
+                id="techStack"
+                items={TECH_STACK_OPTIONS}
+                value={field.value}
+                onValueChange={field.onChange}
+                maxSelections={5}
+                hint="Select up to 5 technologies"
+              />
+            )}
+          />
         </div>
 
         {/* Languages */}

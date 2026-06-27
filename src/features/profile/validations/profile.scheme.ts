@@ -1,13 +1,6 @@
 import * as z from "zod";
 import { PROFESSIONAL_STATUS_VALUES } from "@/features/auth/constants/professionalStatus.constant";
 
-/*
-const languageSchema = z.object({
-  language: z.string(),
-  level: z.enum(LANGUAGE_LEVELS),
-});
-*/
-
 export const profileFormScheme = z.object({
   displayName: z.string(),
   bio: z.string().max(100, "Your bio must be less than 100 characters long"),
@@ -15,8 +8,8 @@ export const profileFormScheme = z.object({
   professionalStatus: z.enum(PROFESSIONAL_STATUS_VALUES),
   country: z.string(),
   city: z.string(),
-  /*
   techStack: z.array(z.string()),
+  /*
   languages: z.array(languageSchema),
   */
 });

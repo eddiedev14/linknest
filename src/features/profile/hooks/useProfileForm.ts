@@ -20,14 +20,7 @@ export const useProfileForm = () => {
   //* React Hook Form
   type FormData = z.input<typeof profileFormScheme>;
 
-  const {
-    formState: { errors },
-    control,
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-  } = useForm<FormData>({
+  const { control, register, handleSubmit, setValue, watch } = useForm<FormData>({
     resolver: zodResolver(profileFormScheme),
     mode: "onBlur",
     values: user // Default values
@@ -38,6 +31,7 @@ export const useProfileForm = () => {
           professionalStatus: user.professionalStatus,
           country: user.location.country,
           city: user.location.city,
+          techStack: user.techStack,
         }
       : undefined,
   });
@@ -82,6 +76,7 @@ export const useProfileForm = () => {
         country: data.country,
         city: data.city,
       },
+      techStack: data.techStack,
     };
 
     try {
@@ -96,7 +91,6 @@ export const useProfileForm = () => {
   return {
     countriesOptions,
     citiesOptions,
-    errors,
     control,
     country,
     register,
