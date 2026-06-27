@@ -10,6 +10,7 @@ export interface SelectOption {
 
 interface Props {
   Icon: IconType;
+  id: string;
   placeholder?: string;
   disabled?: boolean;
   errorMsg?: string;
@@ -22,6 +23,7 @@ interface Props {
 
 export const SelectField = ({
   Icon,
+  id,
   placeholder,
   disabled = false,
   errorMsg,
@@ -35,6 +37,7 @@ export const SelectField = ({
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <NativeSelect
+          id={id}
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}

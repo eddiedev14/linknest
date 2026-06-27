@@ -60,8 +60,6 @@ export const useProfileForm = () => {
       return;
     }
 
-    setValue("city", "");
-
     const getCitiesOptions = async () => {
       const citiesNames = await getCitiesFromCountry(country);
       setCitiesOptions(citiesNames);

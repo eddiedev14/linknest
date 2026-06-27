@@ -8,16 +8,25 @@ import { useProfileForm } from "../hooks/useProfileForm";
 import { PROFESSIONAL_STATUS_OPTIONS } from "@/data/profile.data";
 
 export const ProfileForm = () => {
-  const { errors, control, countriesOptions, citiesOptions, country, register, onSubmit } =
-    useProfileForm();
+  const {
+    errors,
+    control,
+    countriesOptions,
+    citiesOptions,
+    country,
+    register,
+    setValue,
+    onSubmit,
+  } = useProfileForm();
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
       {/* Display Name */}
       <div className="flex flex-col gap-2">
-        <Label htmlFor="display-name">Display Name</Label>
+        <Label htmlFor="displayName">Display Name</Label>
         <InputField
           Icon={FaUser}
+          id="displayName"
           type="text"
           placeholder="e.g. Alex Rivera"
           hint="This is the name shown at the top of your public page."
@@ -30,6 +39,7 @@ export const ProfileForm = () => {
       <div className="flex flex-col gap-2">
         <Label htmlFor="bio">Bio</Label>
         <TextareaField
+          id="bio"
           placeholder="Tell your audience a little about yourself…"
           hint="A short description shown below your name on your public page."
           errorMsg={errors.bio?.message}
@@ -43,6 +53,7 @@ export const ProfileForm = () => {
           <Label htmlFor="professionalRole">Professional Role</Label>
           <InputField
             Icon={FaSuitcase}
+            id="professionalRole"
             type="text"
             placeholder="e.g. Front-end Developer"
             errorMsg={errors.professionalRole?.message}
@@ -59,6 +70,7 @@ export const ProfileForm = () => {
             render={({ field }) => (
               <SelectField
                 Icon={FaSuitcase}
+                id="professionalStatus"
                 placeholder="Select your status"
                 options={PROFESSIONAL_STATUS_OPTIONS}
                 value={field.value}
@@ -78,10 +90,14 @@ export const ProfileForm = () => {
             render={({ field }) => (
               <SelectField
                 Icon={BiWorld}
+                id="country"
                 placeholder="Select your country"
                 options={countriesOptions}
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(country) => {
+                  field.onChange(country);
+                  setValue("city", "");
+                }}
                 errorMsg={errors.country?.message}
               />
             )}
@@ -97,6 +113,7 @@ export const ProfileForm = () => {
             render={({ field }) => (
               <SelectField
                 Icon={FaCity}
+                id="city"
                 placeholder="Select your city"
                 options={citiesOptions}
                 disabled={!country}

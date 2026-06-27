@@ -10,6 +10,7 @@ type InputType = "text" | "number" | "email" | "password";
 
 interface Props {
   Icon: IconType;
+  id: string;
   type?: InputType;
   placeholder?: string;
   disabled?: boolean;
@@ -20,6 +21,7 @@ interface Props {
 
 export const InputField = ({
   Icon,
+  id,
   type = "text",
   placeholder,
   disabled = false,
@@ -35,6 +37,7 @@ export const InputField = ({
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <Input
+          id={id}
           type={inputType}
           disabled={disabled}
           placeholder={placeholder}

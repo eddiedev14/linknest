@@ -3,6 +3,7 @@ import { Textarea } from "../../shadcn/textarea";
 import { FormFieldError } from "../FieldError";
 
 interface Props {
+  id: string;
   placeholder?: string;
   disabled?: boolean;
   errorMsg?: string;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const TextareaField = ({
+  id,
   placeholder,
   disabled = false,
   errorMsg,
@@ -21,6 +23,7 @@ export const TextareaField = ({
     <>
       <div className="relative">
         <Textarea
+          id={id}
           disabled={disabled}
           placeholder={placeholder}
           className={errorMsg ? "border-destructive" : ""}
