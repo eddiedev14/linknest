@@ -32,6 +32,7 @@ export const useProfileForm = () => {
           country: user.location.country,
           city: user.location.city,
           techStack: user.techStack,
+          languages: user.languages,
         }
       : undefined,
   });
@@ -77,6 +78,7 @@ export const useProfileForm = () => {
         city: data.city,
       },
       techStack: data.techStack,
+      languages: data.languages,
     };
 
     try {

@@ -89,4 +89,25 @@ const TECH_STACK_OPTIONS: SelectOption[] = [
   { label: "n8n", value: "n8n" },
 ];
 
-export { BANNER_PRESETS, PROFESSIONAL_STATUS_OPTIONS, TECH_STACK_OPTIONS };
+const LANGUAGES_OPTIONS: SelectOption[] = [
+  { label: "Arabic", value: "ar" },
+  { label: "Chinese", value: "zh" },
+  { label: "Danish", value: "da" },
+  { label: "Dutch", value: "nl" },
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Hindi", value: "hi" },
+  { label: "Indonesian", value: "id" },
+  { label: "Italian", value: "it" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Spanish", value: "es" },
+  { label: "Thai", value: "th" },
+  { label: "Turkish", value: "tr" },
+  { label: "Ukrainian", value: "uk" },
+];
+
+export { BANNER_PRESETS, PROFESSIONAL_STATUS_OPTIONS, TECH_STACK_OPTIONS, LANGUAGES_OPTIONS };

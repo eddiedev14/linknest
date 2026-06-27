@@ -6,7 +6,11 @@ import { Label } from "@/shared/components/shadcn/label";
 import { InputField, SelectField, TextareaField } from "@/shared/components/forms/fields";
 import { MultipleCombo } from "@/shared/components/forms/fields/MultipleCombo";
 import { useProfileForm } from "../hooks/useProfileForm";
-import { PROFESSIONAL_STATUS_OPTIONS, TECH_STACK_OPTIONS } from "@/data/profile.data";
+import {
+  LANGUAGES_OPTIONS,
+  PROFESSIONAL_STATUS_OPTIONS,
+  TECH_STACK_OPTIONS,
+} from "@/data/profile.data";
 
 export const ProfileForm = () => {
   const { control, countriesOptions, citiesOptions, country, register, setValue, onSubmit } =
@@ -133,8 +137,21 @@ export const ProfileForm = () => {
 
         {/* Languages */}
         <div className="flex flex-col gap-2">
-          <Label>Languages</Label>
-          <Button>Set your Languages</Button>
+          <Label id="languages">Languages</Label>
+          <Controller
+            name="languages"
+            control={control}
+            render={({ field }) => (
+              <MultipleCombo
+                id="languages"
+                items={LANGUAGES_OPTIONS}
+                value={field.value}
+                onValueChange={field.onChange}
+                maxSelections={3}
+                hint="Select up to 3 of your main languages"
+              />
+            )}
+          />
         </div>
       </div>
 

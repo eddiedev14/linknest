@@ -1,7 +1,6 @@
 import type { Timestamp } from "firebase/firestore";
 import type { ProfessionalStatus } from "./professionalStatus.type";
 import type { Location } from "./location.type";
-import type { Languages } from "./languages.type";
 import type { Avatar } from "./avatar.type";
 
 export type User = {
@@ -14,7 +13,7 @@ export type User = {
   professionalStatus: ProfessionalStatus;
   location: Location;
   techStack: string[];
-  languages: Languages[];
+  languages: string[];
   avatar: Avatar;
   bannerStyle: string;
 };

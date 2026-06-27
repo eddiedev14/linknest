@@ -9,7 +9,5 @@ export const profileFormScheme = z.object({
   country: z.string(),
   city: z.string(),
   techStack: z.array(z.string()),
-  /*
-  languages: z.array(languageSchema),
-  */
+  languages: z.array(z.string()),
 });
