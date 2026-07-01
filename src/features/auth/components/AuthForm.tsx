@@ -64,6 +64,20 @@ export const AuthForm = ({ isSignup }: Props) => {
         />
       </div>
 
+      {/* Confirm Password */}
+      {isSignup && (
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <InputField
+            Icon={CiLock}
+            id="confirmPassword"
+            type="password"
+            errorMsg={errors.confirmPassword?.message}
+            registration={register("confirmPassword")}
+          />
+        </div>
+      )}
+
       {/* Submit */}
       <Button
         type="submit"
