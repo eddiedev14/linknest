@@ -10,7 +10,7 @@ const authScheme = (isSignup: boolean) =>
             .string()
             .regex(
               USERNAME_REGEX,
-              "Username must be 3–20 characters long and contain only lowercase letters, numbers, and underscores.",
+              "Username must be 3–20 characters long and contain only lowercase letters (no diacritics), numbers, and underscores.",
             )
         : z.string(),
       password: z
