@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,10 +11,10 @@ import { useAuth } from "./useAuth";
 
 export const useAuthForm = (isSignup: boolean) => {
   //* States
-  const [registered, setRegistered] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   //* Contexts
-  const { isPending, registerWithEmailAndPassword } = useAuth();
+  const { registerWithEmailAndPassword } = useAuth();
 
   //* React Hook Form
   const schema = authScheme(isSignup);
@@ -32,30 +32,29 @@ export const useAuthForm = (isSignup: boolean) => {
   //* Navigate
   const navigate = useNavigate();
 
-  //* Effects
-  useEffect(() => {
-    if (registered) {
-      navigate("/profile", { replace: true });
-    }
-  }, [registered, navigate]);
-
-  // ? Submit methods
+  // * Functions
   const handleRegister = async (data: FormData) => {
-    // Register the new base user
-    const user = data as UserRegister;
-    const errorMessage = await registerWithEmailAndPassword(createBaseNewUser(user));
+    setSubmitting(true);
 
-    if (errorMessage) {
-      toast.error(errorMessage);
-      return;
+    try {
+      // Register the new base user
+      const user = data as UserRegister;
+      const errorMessage = await registerWithEmailAndPassword(createBaseNewUser(user));
+
+      if (errorMessage) {
+        toast.error(errorMessage);
+        return;
+      }
+
+      toast.success("User created successfully");
+      navigate("/profile", { replace: true });
+    } finally {
+      setSubmitting(false);
     }
-
-    setRegistered(true);
-    toast.success("User created successfully");
   };
 
   return {
-    isPending,
+    submitting,
     errors,
     register,
     onSubmit: handleSubmit(isSignup ? handleRegister : () => {}),

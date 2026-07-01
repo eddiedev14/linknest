@@ -14,6 +14,7 @@ import {
   type WhereFilterOp,
   getDoc,
   setDoc,
+  getDocs,
 } from "firebase/firestore";
 import type { Unsubscribe } from "firebase/firestore";
 
@@ -67,19 +68,14 @@ export const useCollection = <T>(table: string) => {
 
       return unsubscribe;
     } catch {
-      setError(
-        `Error al consultar los registros solicitados de la colección ${table}`,
-      );
+      setError(`Error al consultar los registros solicitados de la colección ${table}`);
       setIsPending(false);
       return () => {};
     }
   };
 
   //* 1. R -> READ by id (real-time)
-  const suscribeById = (
-    id: string,
-    callback: (doc: Doc<T> | null) => void,
-  ): Unsubscribe => {
+  const suscribeById = (id: string, callback: (doc: Doc<T> | null) => void): Unsubscribe => {
     setIsPending(true);
     setError(null);
 
@@ -126,9 +122,37 @@ export const useCollection = <T>(table: string) => {
       }
     } catch {
       setIsPending(false);
-      setError(
-        `Error al obtener el registro solcitado de la colección ${table}`,
-      );
+      setError(`Error al obtener el registro solcitado de la colección ${table}`);
+      return null;
+    }
+  };
+
+  //* 1. R -> READ
+  const find = async (filters: Filter[] = []): Promise<Doc<T> | null> => {
+    setIsPending(true);
+    setError(null);
+
+    try {
+      let q = query(collection(db, table));
+
+      filters.forEach(([field, op, value]) => {
+        q = query(q, where(field, op, value));
+      });
+
+      const snapshot = await getDocs(q);
+      setIsPending(false);
+
+      if (snapshot.empty) {
+        return null;
+      }
+
+      return {
+        id: snapshot.docs[0].id,
+        ...(snapshot.docs[0].data() as T),
+      };
+    } catch {
+      setIsPending(false);
+      setError(`Error al consultar el registro solicitado de la colección ${table}`);
       return null;
     }
   };
@@ -194,9 +218,7 @@ export const useCollection = <T>(table: string) => {
       return true;
     } catch {
       setIsPending(false);
-      setError(
-        `Error al actualizar el registro solicitado de la colección ${table}`,
-      );
+      setError(`Error al actualizar el registro solicitado de la colección ${table}`);
       return false;
     }
   };
@@ -211,9 +233,7 @@ export const useCollection = <T>(table: string) => {
       setIsPending(false);
       return true;
     } catch {
-      setError(
-        `Error al eliminar el registro solicitado de la colección ${table}`,
-      );
+      setError(`Error al eliminar el registro solicitado de la colección ${table}`);
       setIsPending(false);
       return false;
     }
@@ -226,6 +246,7 @@ export const useCollection = <T>(table: string) => {
     suscribe,
     suscribeById,
     getById,
+    find,
     add,
     setById,
     update,

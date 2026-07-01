@@ -11,9 +11,9 @@ interface Props {
 }
 
 export const AuthForm = ({ isSignup }: Props) => {
-  const { isPending, errors, register, onSubmit } = useAuthForm(isSignup);
+  const { submitting, errors, register, onSubmit } = useAuthForm(isSignup);
 
-  if (isPending) {
+  if (submitting) {
     return <Loader />;
   }
 

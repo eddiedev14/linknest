@@ -16,7 +16,7 @@ export default function useAuthState() {
   const [userLoading, setUserLoading] = useState(true);
 
   //* Custom hooks
-  const { setById, getById, update, isPending } = useCollection<UserDoc>("users");
+  const { setById, getById, find, update, isPending } = useCollection<UserDoc>("users");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -36,8 +36,13 @@ export default function useAuthState() {
 
   //* Functions
   const registerWithEmailAndPassword = async (user: User): Promise<string | null> => {
-    const { email, password } = user;
+    const { email, password, username } = user;
 
+    // Validate if the username is unique
+    const foundDocument = await find([["username", "==", username]]);
+    if (foundDocument) return "That username is already in use";
+
+    // Proceed with the register in Firebase Auth
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await setById(userCredential.user.uid, getUserWithoutPassword(user));
