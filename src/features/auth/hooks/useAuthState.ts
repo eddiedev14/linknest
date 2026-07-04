@@ -26,7 +26,7 @@ export default function useAuthState() {
   const isCreatingUserDoc = useRef(false);
 
   //* Custom hooks
-  const { setById, suscribeById, find, update } = useCollection<UserDoc>("users");
+  const { isPending, setById, suscribeById, find, update } = useCollection<UserDoc>("users");
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects
@@ -139,6 +139,7 @@ export default function useAuthState() {
   return {
     user,
     userLoading,
+    isPending,
     registerWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
     updateUserProfile,
