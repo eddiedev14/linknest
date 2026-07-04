@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { AuthPage, Landing, Profile } from "@/pages";
+import { AuthPage, Landing, Links, Profile } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -27,6 +27,7 @@ export const AppRouter = () => {
       <Route element={<PrivateRoute />}>
         {/* Layout común para todas las rutas privadas */}
         <Route element={<PageLayout />}>
+          <Route path="/links" element={<Links />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
