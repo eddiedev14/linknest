@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const AuthPage = ({ isSignup }: Props) => {
-  const { handleGoogleAuth } = useAuthProviders();
+  const { handleGoogleAuth, handleGithubAuth } = useAuthProviders();
   const { user, userLoading } = useAuth();
 
   if (userLoading) return <Loader />;
@@ -54,7 +54,12 @@ export const AuthPage = ({ isSignup }: Props) => {
               Sign up with Google
             </Button>
 
-            <Button variant="outline" size="lg" aria-label="Sign in with Github">
+            <Button
+              variant="outline"
+              size="lg"
+              aria-label="Sign in with Github"
+              onClick={handleGithubAuth}
+            >
               <img src={GithubIcon} alt="Github Icon" />
               Sign up with Github
             </Button>

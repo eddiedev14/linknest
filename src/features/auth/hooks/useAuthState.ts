@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 //* Firebase
-import { auth, googleProvider } from "@/firebase/config";
+import { auth, githubProvider, googleProvider } from "@/firebase/config";
 import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
@@ -142,6 +142,7 @@ export default function useAuthState() {
     isPending,
     registerWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
+    authWithGithub: () => authWithProvider(githubProvider),
     updateUserProfile,
   };
 }
