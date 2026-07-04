@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import { AuthPage, Landing, Profile } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
+import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { PageLayout } from "@/shared/components/app/PageLayout";
@@ -16,7 +17,11 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/signup" element={<AuthPage isSignup />} />
+
+      <Route element={<GuestOnlyRoute />}>
+        <Route path="/signup" element={<AuthPage isSignup />} />
+        <Route path="/login" element={<AuthPage />} />
+      </Route>
 
       {/* Rutas Privadas */}
       <Route element={<PrivateRoute />}>

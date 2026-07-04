@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   type AuthProvider,
@@ -14,7 +15,7 @@ import {
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
-import type { UserDoc, UserRegister } from "../types/user.type";
+import type { UserDoc, UserLogin, UserRegister } from "../types/user.type";
 import { createBaseNewUser, getAuthErrorMessage, getUserId } from "../utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
 
@@ -79,6 +80,15 @@ export default function useAuthState() {
       return getAuthErrorMessage(err);
     } finally {
       isCreatingUserDoc.current = false;
+    }
+  };
+
+  const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
+    try {
+      await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+      return null;
+    } catch (err) {
+      return getAuthErrorMessage(err);
     }
   };
 
@@ -150,6 +160,7 @@ export default function useAuthState() {
     userLoading,
     isPending,
     registerWithEmailAndPassword,
+    loginWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
     updateUserProfile,

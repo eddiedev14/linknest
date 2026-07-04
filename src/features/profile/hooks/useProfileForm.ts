@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import type { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { profileFormScheme } from "../validations/profile.scheme";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -16,6 +17,9 @@ export const useProfileForm = () => {
 
   //* Context
   const { user, updateUserProfile } = useAuth();
+
+  //* Navigate
+  const navigate = useNavigate();
 
   //* React Hook Form
   type FormData = z.input<typeof profileFormScheme>;
@@ -74,7 +78,6 @@ export const useProfileForm = () => {
   //* Handlers
   const handleProfileFormSubmit = async (data: FormData) => {
     if (!user) return;
-    console.log("DATA", data);
 
     const updatedFields = {
       username: data.username,
@@ -94,6 +97,7 @@ export const useProfileForm = () => {
       const error = await updateUserProfile(updatedFields);
       if (error) throw new Error(error);
       toast.success("Your profile info was updated");
+      navigate("/links");
     } catch {
       toast.error("Error updating your profile info");
     }

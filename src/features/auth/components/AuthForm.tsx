@@ -79,7 +79,7 @@ export const AuthForm = ({ isSignup }: Props) => {
         size="lg"
         className="w-full h-11 font-semibold shadow-md shadow-primary/20 gap-2"
       >
-        Create my account
+        {isSignup ? "Create my Account" : "Sign in"}
         <FaArrowRight data-icon="inline-end" aria-hidden="true" />
       </Button>
     </form>

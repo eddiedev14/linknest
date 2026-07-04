@@ -20,7 +20,7 @@ const getAuthErrorMessage = (error: unknown): string => {
         return "Password must be at least 6 characters long";
 
       case "auth/invalid-credential":
-        return "Incorrect email or password. If you signed up with Google, use Google to sign in.";
+        return "Incorrect email or password. If you signed up with Google/Github, use it to sign in.";
 
       case "auth/popup-closed-by-user":
         return "The authentication window was closed";
