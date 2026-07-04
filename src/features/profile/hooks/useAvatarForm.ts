@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { useState, useRef, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { useAuth } from '@/features/auth/hooks/useAuth';
-import { validateAvatarImg } from '../utils/avatar.helper';
-import { useImageKit } from './useImageKit';
+import { useState, useRef, useEffect } from "react";
+import { toast } from "react-toastify";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { validateAvatarImg } from "../utils/avatar.helper";
+import { useImageKit } from "./useImageKit";
 
 export const useAvatarDialog = () => {
   //* Context
@@ -63,18 +63,21 @@ export const useAvatarDialog = () => {
 
       const updatedUser = {
         ...user,
-        avatar: { url: '', fileId: '' },
+        avatar: { url: "", fileId: "" },
       };
 
       const error = await updateUserProfile(updatedUser);
       if (error) throw new Error(error);
-      toast.success('Your avatar photo was deleted');
+      toast.success("Your avatar photo was deleted");
     } catch (error) {
       toast.error(`Error while deleting the photo: ${(error as Error).message}`);
     }
   };
 
-  const handleAvatarSubmit = async (e: React.SubmitEvent<HTMLFormElement>, onSuccess?: () => void) => {
+  const handleAvatarSubmit = async (
+    e: React.SubmitEvent<HTMLFormElement>,
+    onSuccess?: () => void,
+  ) => {
     e.preventDefault();
     if (!user || !avatarPhoto) {
       onSuccess?.();
@@ -82,17 +85,17 @@ export const useAvatarDialog = () => {
     }
 
     try {
-      const result = await uploadFile(avatarPhoto);
-      if (!result.url || !result.fileId) throw new Error('Error retrieving the avatar URL');
+      const { url, fileId } = await uploadFile(avatarPhoto);
+      if (!url || !fileId) throw new Error("Error retrieving the avatar URL");
 
       const updatedUser = {
         ...user,
-        avatar: { url: `${result.url}?v=${Date.now()}`, fileId: result.fileId },
+        avatar: { url: `${url}?v=${Date.now()}`, fileId },
       };
 
       const error = await updateUserProfile(updatedUser);
       if (error) throw new Error(error);
-      toast.success('Your avatar photo was updated');
+      toast.success("Your avatar photo was updated");
       onSuccess?.();
     } catch (error) {
       toast.error(`Error while uploading the photo: ${(error as Error).message}`);

@@ -2,13 +2,14 @@ import { useState } from "react";
 import { upload } from "@imagekit/react";
 import { getFirebaseToken, getUserId } from "@/features/auth/utils/firebase.helper";
 import { deleteImageKitFile, getAuth } from "../actions/imageKit.actions";
+import type { Avatar } from "@/features/auth/types/avatar.type";
 
 export const useImageKit = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Function to upload profile photo
-  const uploadFile = async (file: File) => {
+  // Function to upload a local profile photo
+  const uploadFile = async (file: File): Promise<Avatar> => {
     setIsUploading(true);
 
     try {
@@ -27,7 +28,41 @@ export const useImageKit = () => {
         useUniqueFileName: false,
       });
 
-      return result;
+      return {
+        url: result.url || "",
+        fileId: result.fileId || "",
+      };
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Function to upload Google avatar
+  const uploadProviderAvatar = async (photoURL: string): Promise<Avatar> => {
+    setIsUploading(true);
+
+    try {
+      const idToken = await getFirebaseToken();
+      if (!idToken) {
+        throw new Error("The Firebase token could not be obtained");
+      }
+
+      const response = await fetch("/api/upload-provider-photo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          photoURL,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload Google avatar");
+      }
+
+      return await response.json();
     } finally {
       setIsUploading(false);
     }
@@ -53,6 +88,7 @@ export const useImageKit = () => {
     isUploading,
     isDeleting,
     uploadFile,
+    uploadProviderAvatar,
     deleteFile,
   };
 };

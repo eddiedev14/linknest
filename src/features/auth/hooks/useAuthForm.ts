@@ -1,18 +1,12 @@
-import { useState } from "react";
 import type z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { createBaseNewUser } from "../utils/firebase.helper";
 import { authScheme } from "../validations/auth.scheme";
 import type { UserRegister } from "../types/user.type";
 import { useAuth } from "./useAuth";
 
 export const useAuthForm = (isSignup: boolean) => {
-  //* States
-  const [submitting, setSubmitting] = useState(false);
-
   //* Contexts
   const { registerWithEmailAndPassword } = useAuth();
 
@@ -29,32 +23,20 @@ export const useAuthForm = (isSignup: boolean) => {
     mode: "onBlur",
   });
 
-  //* Navigate
-  const navigate = useNavigate();
-
   // * Functions
   const handleRegister = async (data: FormData) => {
-    setSubmitting(true);
+    const user = data as UserRegister;
+    const errorMessage = await registerWithEmailAndPassword(user);
 
-    try {
-      // Register the new base user
-      const user = data as UserRegister;
-      const errorMessage = await registerWithEmailAndPassword(createBaseNewUser(user));
-
-      if (errorMessage) {
-        toast.error(errorMessage);
-        return;
-      }
-
-      toast.success("User created successfully");
-      navigate("/profile", { replace: true });
-    } finally {
-      setSubmitting(false);
+    if (errorMessage) {
+      toast.error(errorMessage);
+      return;
     }
+
+    toast.success("User created successfully");
   };
 
   return {
-    submitting,
     errors,
     register,
     onSubmit: handleSubmit(isSignup ? handleRegister : () => {}),

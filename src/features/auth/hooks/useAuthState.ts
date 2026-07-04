@@ -1,41 +1,66 @@
 //* React
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 //* Firebase
-import { auth } from "@/firebase/config";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth, googleProvider } from "@/firebase/config";
+import {
+  createUserWithEmailAndPassword,
+  getAdditionalUserInfo,
+  onAuthStateChanged,
+  signInWithPopup,
+  type AuthProvider,
+} from "firebase/auth";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
-import type { UserDoc, User } from "../types/user.type";
-import { getAuthErrorMessage, getUserId, getUserWithoutPassword } from "../utils/firebase.helper";
+import type { UserDoc, UserRegister } from "../types/user.type";
+import { createBaseNewUser, getAuthErrorMessage, getUserId } from "../utils/firebase.helper";
+import { useImageKit } from "@/features/profile/hooks/useImageKit";
 
 export default function useAuthState() {
   //* States
   const [user, setUser] = useState<UserDoc | null>(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  //* Custom hooks
-  const { setById, getById, find, update, isPending } = useCollection<UserDoc>("users");
+  //* Refs
+  const isCreatingUserDoc = useRef(false);
 
+  //* Custom hooks
+  const { setById, suscribeById, find, update } = useCollection<UserDoc>("users");
+  const { uploadProviderAvatar } = useImageKit();
+
+  //* Effects
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+    let unsubscribeDoc = () => {};
+
+    const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser) => {
+      // If there was a subscription to a previous document, we cancel it first
+      unsubscribeDoc();
+
       if (!firebaseUser) {
         setUser(null);
         setUserLoading(false);
         return;
       }
 
-      const userDoc = await getById(firebaseUser.uid);
-      setUser(userDoc);
-      setUserLoading(false);
+      setUserLoading(true);
+
+      // Subscribe to changes in the document to update the state
+      unsubscribeDoc = suscribeById(firebaseUser.uid, (userDoc) => {
+        if (!userDoc && isCreatingUserDoc.current) return;
+        setUser(userDoc);
+        setUserLoading(false);
+      });
     });
 
-    return unsubscribe;
-  }, [getById]);
+    return () => {
+      unsubscribeDoc();
+      unsubscribeAuth();
+    };
+  }, [suscribeById]);
 
   //* Functions
-  const registerWithEmailAndPassword = async (user: User): Promise<string | null> => {
+  const registerWithEmailAndPassword = async (user: UserRegister): Promise<string | null> => {
     const { email, password, username } = user;
 
     // Validate if the username is unique
@@ -43,12 +68,49 @@ export default function useAuthState() {
     if (foundDocument) return "That username is already in use";
 
     // Proceed with the register in Firebase Auth
+    isCreatingUserDoc.current = true;
+
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await setById(userCredential.user.uid, getUserWithoutPassword(user));
+      await setById(userCredential.user.uid, createBaseNewUser(user));
       return null;
     } catch (err) {
       return getAuthErrorMessage(err);
+    } finally {
+      isCreatingUserDoc.current = false;
+    }
+  };
+
+  const authWithProvider = async (provider: AuthProvider) => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const userCredential = result.user;
+      const additionalUserInfo = getAdditionalUserInfo(result);
+      const isNewUser = additionalUserInfo?.isNewUser;
+
+      if (isNewUser) {
+        isCreatingUserDoc.current = true;
+        const avatarResponse = userCredential.photoURL
+          ? await uploadProviderAvatar(userCredential.photoURL)
+          : null;
+        const displayName = userCredential.displayName || "";
+
+        await setById(
+          userCredential.uid,
+          createBaseNewUser({
+            email: userCredential.email!,
+            username: "",
+            displayName,
+            avatar: avatarResponse,
+          }),
+        );
+      }
+
+      return null;
+    } catch (error) {
+      return getAuthErrorMessage(error);
+    } finally {
+      isCreatingUserDoc.current = false;
     }
   };
 
@@ -77,8 +139,8 @@ export default function useAuthState() {
   return {
     user,
     userLoading,
-    isPending,
     registerWithEmailAndPassword,
+    authWithGoogle: () => authWithProvider(googleProvider),
     updateUserProfile,
   };
 }

@@ -6,7 +6,6 @@ import type { Avatar } from "./avatar.type";
 export type User = {
   email: string;
   username: string;
-  password: string;
   displayName: string;
   bio: string;
   professionalRole: string;
@@ -26,5 +25,13 @@ export type BaseDoc = {
 export type UserDoc = Omit<User, "password"> & BaseDoc;
 
 // Forms
-export type UserRegister = Pick<User, "email" | "username" | "password">;
-export type UserLogin = Pick<User, "email" | "password">;
+export type UserRegister = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export type UserLogin = {
+  email: string;
+  password: string;
+};

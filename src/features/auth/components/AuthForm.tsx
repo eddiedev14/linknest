@@ -4,18 +4,13 @@ import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { FaArrowRight } from "react-icons/fa6";
 import { InputField } from "@/shared/components/forms/fields";
 import { useAuthForm } from "../hooks/useAuthForm";
-import { Loader } from "@/shared/components/app/Loader";
 
 interface Props {
   isSignup: boolean;
 }
 
 export const AuthForm = ({ isSignup }: Props) => {
-  const { submitting, errors, register, onSubmit } = useAuthForm(isSignup);
-
-  if (submitting) {
-    return <Loader />;
-  }
+  const { errors, register, onSubmit } = useAuthForm(isSignup);
 
   return (
     <form

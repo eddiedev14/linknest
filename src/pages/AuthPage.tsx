@@ -1,30 +1,31 @@
+import { Navigate } from "react-router-dom";
 import { Button } from "@/shared/components/shadcn/button";
 import { Separator } from "@/shared/components/shadcn/separator";
-
-import { AuthForm } from "@/features/auth/components/AuthForm";
-
 import Logo from "@/assets/logo.png";
 import GoogleIcon from "@/assets/google-icon.svg";
 import GithubIcon from "@/assets/github-icon.svg";
 import AuthIllustration from "@/assets/auth-illustration.png";
+import { AuthForm } from "@/features/auth/components/AuthForm";
+import { Loader } from "@/shared/components/app/Loader";
+import { useAuthProviders } from "@/features/auth/hooks/useAuthProviders";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 
 interface Props {
   isSignup: boolean;
 }
 
 export const AuthPage = ({ isSignup }: Props) => {
+  const { handleGoogleAuth } = useAuthProviders();
+  const { user, userLoading } = useAuth();
+
+  if (userLoading) return <Loader />;
+  if (user) return <Navigate to="/profile" replace />;
+
   return (
-    <main
-      className="min-h-screen bg-background flex"
-      aria-label="Create your account"
-    >
+    <main className="min-h-screen bg-background flex" aria-label="Create your account">
       {/* ── Left panel: form ── */}
       <div className="flex-1 flex flex-col px-8 py-10 md:px-16 lg:px-20 max-w-xl">
-        <a
-          href="/"
-          className="flex items-center gap-2 group"
-          aria-label="Linknest Home"
-        >
+        <a href="/" className="flex items-center gap-2 group" aria-label="Linknest Home">
           <img src={Logo} alt="Linknest Logo" className="size-8" />
           <span className="font-heading font-bold text-xl text-foreground tracking-tight">
             Link <span className="text-primary">Nest</span>
@@ -47,16 +48,13 @@ export const AuthPage = ({ isSignup }: Props) => {
               size="lg"
               className=""
               aria-label="Sign in with Google"
+              onClick={handleGoogleAuth}
             >
               <img src={GoogleIcon} alt="Google Icon" />
               Sign up with Google
             </Button>
 
-            <Button
-              variant="outline"
-              size="lg"
-              aria-label="Sign in with Github"
-            >
+            <Button variant="outline" size="lg" aria-label="Sign in with Github">
               <img src={GithubIcon} alt="Github Icon" />
               Sign up with Github
             </Button>
@@ -93,8 +91,8 @@ export const AuthPage = ({ isSignup }: Props) => {
             One profile. Every platform.
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Centralize your GitHub, LinkedIn, coding platforms, content, and
-            contact channels in a professional developer profile.
+            Centralize your GitHub, LinkedIn, coding platforms, content, and contact channels in a
+            professional developer profile.
           </p>
           <span className="text-sm text-muted-foreground leading-relaxed">
             Illustration by{" "}
