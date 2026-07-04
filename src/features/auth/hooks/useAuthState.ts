@@ -8,6 +8,7 @@ import {
   getAdditionalUserInfo,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
   type AuthProvider,
 } from "firebase/auth";
 import { useCollection } from "@/firebase/hooks/useCollection";
@@ -131,8 +132,16 @@ export default function useAuthState() {
 
       return null;
     } catch (error) {
-      console.error(error);
       return "An error occurred while updating your profile";
+    }
+  };
+
+  const logout = async (): Promise<string | null> => {
+    try {
+      await signOut(auth);
+      return null;
+    } catch {
+      return "Unable to log out. Please try again.";
     }
   };
 
@@ -144,5 +153,6 @@ export default function useAuthState() {
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
     updateUserProfile,
+    logout,
   };
 }

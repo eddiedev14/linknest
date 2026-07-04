@@ -7,17 +7,25 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '../shadcn/alert-dialog';
+} from "../shadcn/alert-dialog";
 
 interface Props {
   open: boolean;
   title: string;
   text: string;
+  actionText?: string;
   onConfirm: () => void;
   onOpenChange: (open: boolean) => void;
 }
 
-export function ConfirmDialog({ open, title, text, onConfirm, onOpenChange }: Props) {
+export function ConfirmDialog({
+  open,
+  title,
+  text,
+  actionText = "Eliminar",
+  onConfirm,
+  onOpenChange,
+}: Props) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -35,7 +43,7 @@ export function ConfirmDialog({ open, title, text, onConfirm, onOpenChange }: Pr
               onOpenChange(false);
             }}
           >
-            Eliminar
+            {actionText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
