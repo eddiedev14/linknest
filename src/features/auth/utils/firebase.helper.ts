@@ -63,7 +63,10 @@ const createBaseNewUser = ({
     location: { country: "", city: "" },
     techStack: [],
     languages: [],
-    avatar: { url: `${avatar?.url}?v=${Date.now()}` || "", fileId: avatar?.fileId || "" },
+    avatar: {
+      url: avatar?.url ? `${avatar?.url}?v=${Date.now()}` : "",
+      fileId: avatar?.fileId || "",
+    },
     bannerStyle: "bg-primary",
   };
 };

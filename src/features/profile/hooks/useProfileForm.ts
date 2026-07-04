@@ -20,11 +20,19 @@ export const useProfileForm = () => {
   //* React Hook Form
   type FormData = z.input<typeof profileFormScheme>;
 
-  const { control, register, handleSubmit, setValue, watch } = useForm<FormData>({
+  const {
+    formState: { errors },
+    control,
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+  } = useForm<FormData>({
     resolver: zodResolver(profileFormScheme),
     mode: "onBlur",
     values: user // Default values
       ? {
+          username: user.username,
           displayName: user.displayName,
           bio: user.bio,
           professionalRole: user.professionalRole,
@@ -69,6 +77,7 @@ export const useProfileForm = () => {
     console.log("DATA", data);
 
     const updatedFields = {
+      username: data.username,
       displayName: data.displayName,
       bio: data.bio,
       professionalRole: data.professionalRole,
@@ -93,8 +102,10 @@ export const useProfileForm = () => {
   return {
     countriesOptions,
     citiesOptions,
+    errors,
     control,
     country,
+    isMissingUsername: user?.username === "",
     register,
     setValue,
     onSubmit: handleSubmit(handleProfileFormSubmit),

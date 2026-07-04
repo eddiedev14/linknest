@@ -13,11 +13,36 @@ import {
 } from "@/data/profile.data";
 
 export const ProfileForm = () => {
-  const { control, countriesOptions, citiesOptions, country, register, setValue, onSubmit } =
-    useProfileForm();
+  const {
+    errors,
+    control,
+    countriesOptions,
+    citiesOptions,
+    country,
+    isMissingUsername,
+    register,
+    setValue,
+    onSubmit,
+  } = useProfileForm();
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate>
+      {/* Username */}
+      {isMissingUsername && (
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="username">Username</Label>
+          <InputField
+            Icon={FaUser}
+            id="username"
+            type="text"
+            placeholder="Your Username"
+            hint="This will be your public profile URL."
+            registration={register("username")}
+            errorMsg={errors.username?.message}
+          />
+        </div>
+      )}
+
       {/* Display Name */}
       <div className="flex flex-col gap-2">
         <Label htmlFor="displayName">Display Name</Label>
