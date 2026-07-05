@@ -1,19 +1,22 @@
-import { TygerAvatar } from 'tyger-avatar';
-import { FaArrowRight, FaLink, FaChartBar, FaPalette } from 'react-icons/fa6';
-import { Badge } from '../shadcn/badge';
-import { mockAnalytics, mockLinks } from '@/data/landing.data';
-import { Input } from '../shadcn/input';
+import { TygerAvatar } from "tyger-avatar";
+import { FaArrowRight, FaLink, FaChartBar, FaPalette } from "react-icons/fa6";
+import { Badge } from "../shadcn/badge";
+import { mockAnalytics, mockLinks } from "@/data/landing.data";
+import { Input } from "../shadcn/input";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-16" aria-label="Hero">
+    <section
+      className="relative min-h-screen flex items-center overflow-hidden pt-16"
+      aria-label="Hero"
+    >
       {/* Subtle grid background */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(to right, oklch(0.9 0 0 / 0.6) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.9 0 0 / 0.6) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
+            "linear-gradient(to right, oklch(0.9 0 0 / 0.6) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.9 0 0 / 0.6) 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
         }}
         aria-hidden="true"
       />
@@ -34,8 +37,8 @@ export default function Hero() {
           </h1>
 
           <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
-            Centralize your professional presence in one place. Share your developer profile, coding platforms, social
-            links, and contact channels with a single link.
+            Centralize your professional presence in one place. Share your developer profile, coding
+            platforms, social links, and contact channels with a single link.
           </p>
 
           {/* URL preview input */}
@@ -80,8 +83,9 @@ export default function Hero() {
           <div
             className="relative w-64 rounded-[2.5rem] border-2 border-border bg-white shadow-2xl overflow-hidden"
             style={{
-              minHeight: '520px',
-              boxShadow: '0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px oklch(0.9 0 0)',
+              minHeight: "520px",
+              boxShadow:
+                "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px oklch(0.9 0 0)",
             }}
             aria-label="Product preview"
           >
@@ -89,7 +93,10 @@ export default function Hero() {
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 rounded-full bg-border z-10" />
 
             {/* Banner */}
-            <div className="h-28 w-full relative" style={{ background: 'oklch(0.564 0.21 270.5)' }}></div>
+            <div
+              className="h-28 w-full relative"
+              style={{ background: "oklch(0.564 0.21 270.5)" }}
+            ></div>
             {/* Avatar */}
             <div className="flex flex-col items-center mt-14 px-5 pb-6">
               <div className="absolute top-12">
@@ -100,12 +107,12 @@ export default function Hero() {
 
               {/* Links */}
               <div className="mt-4 w-full flex flex-col gap-3">
-                {mockLinks.map((link, i) => {
+                {mockLinks.map((link) => {
                   const Icon = link.icon;
 
                   return (
                     <div
-                      key={i}
+                      key={link.label}
                       className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-border bg-white hover:border-primary/40 hover:shadow-sm transition-all cursor-pointer group"
                     >
                       <div className="flex items-center gap-2">
@@ -114,7 +121,9 @@ export default function Hero() {
                           {link.label}
                         </span>
                       </div>
-                      <span className="text-[10px] font-medium text-muted-foreground">{link.clicks}</span>
+                      <span className="text-[10px] font-medium text-muted-foreground">
+                        {link.clicks}
+                      </span>
                     </div>
                   );
                 })}
@@ -125,7 +134,7 @@ export default function Hero() {
           {/* Floating analytics card */}
           <div
             className="absolute -right-4 top-1/3 w-36 bg-white rounded-2xl shadow-xl border border-border p-3 flex flex-col gap-2"
-            style={{ boxShadow: '0 8px 32px -4px oklch(0 0 0 / 0.1)' }}
+            style={{ boxShadow: "0 8px 32px -4px oklch(0 0 0 / 0.1)" }}
             aria-hidden="true"
           >
             <div className="flex items-center gap-1.5">
@@ -148,7 +157,9 @@ export default function Hero() {
           {/* Floating badge */}
           <Badge className="absolute -left-4 bottom-1/4 bg-white rounded-xl shadow-lg border border-border p-3 flex items-center gap-2">
             <FaLink className="text-primary" />
-            <span className="text-[10px] font-semibold text-foreground">getlinknest.vercel.app/u/alex</span>
+            <span className="text-[10px] font-semibold text-foreground">
+              getlinknest.vercel.app/u/alex
+            </span>
           </Badge>
 
           {/* Floating customise badge */}

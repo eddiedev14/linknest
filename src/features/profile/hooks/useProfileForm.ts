@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/incompatible-library */
 import { useState, useEffect } from "react";
 import type { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -30,7 +30,6 @@ export const useProfileForm = () => {
     register,
     handleSubmit,
     setValue,
-    watch,
   } = useForm<FormData>({
     resolver: zodResolver(profileFormScheme),
     mode: "onBlur",
@@ -49,7 +48,10 @@ export const useProfileForm = () => {
       : undefined,
   });
 
-  const country = watch("country");
+  const country = useWatch({
+    control,
+    name: "country",
+  });
 
   //* Effects
   useEffect(() => {
@@ -62,10 +64,7 @@ export const useProfileForm = () => {
   }, []);
 
   useEffect(() => {
-    if (!country) {
-      setCitiesOptions([]);
-      return;
-    }
+    if (!country) return;
 
     const getCitiesOptions = async () => {
       const citiesNames = await getCitiesFromCountry(country);
@@ -93,14 +92,14 @@ export const useProfileForm = () => {
       languages: data.languages,
     };
 
-    try {
-      const error = await updateUserProfile(updatedFields);
-      if (error) throw new Error(error);
-      toast.success("Your profile info was updated");
-      navigate("/links");
-    } catch {
+    const error = await updateUserProfile(updatedFields);
+    if (error) {
       toast.error("Error updating your profile info");
+      return;
     }
+
+    toast.success("Your profile info was updated");
+    navigate("/links");
   };
 
   return {

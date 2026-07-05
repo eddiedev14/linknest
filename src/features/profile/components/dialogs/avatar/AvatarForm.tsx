@@ -68,6 +68,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
           type="file"
           accept=".png, .jpg, .jpeg"
           className="sr-only"
+          aria-label="Upload profile photo"
         />
         {user?.avatar.url && (
           <>

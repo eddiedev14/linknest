@@ -1,6 +1,8 @@
-import Logo from '@/assets/logo.png';
-import { navMenuItems } from '@/data/landing.data';
-import { BsGithub, BsLinkedin } from 'react-icons/bs';
+import Logo from "@/assets/logo.png";
+import { navMenuItems } from "@/data/landing.data";
+import { BsGithub, BsLinkedin } from "react-icons/bs";
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 export default function Footer() {
   return (
@@ -23,7 +25,7 @@ export default function Footer() {
             {navMenuItems.map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(/ /g, '-')}`}
+                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
               >
                 {item}
@@ -34,13 +36,21 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} LinkNest. All rights reserved.
+            &copy; {CURRENT_YEAR} LinkNest. All rights reserved.
           </p>
           <div className="flex gap-4 *:text-foreground *:transition-all *:hover:-translate-y-1">
-            <a href="https://www.linkedin.com/in/eddiedev14/" target="_blank" className="hover:text-blue-500">
+            <a
+              href="https://www.linkedin.com/in/eddiedev14/"
+              target="_blank"
+              className="hover:text-blue-500"
+            >
               <BsLinkedin />
             </a>
-            <a href="https://github.com/eddiedev14/linknest" target="_blank" className="hover:text-black">
+            <a
+              href="https://github.com/eddiedev14/linknest"
+              target="_blank"
+              className="hover:text-black"
+            >
               <BsGithub />
             </a>
           </div>

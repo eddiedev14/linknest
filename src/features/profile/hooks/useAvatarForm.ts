@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -11,25 +10,19 @@ export const useAvatarDialog = () => {
 
   //* States
   const [avatarPhoto, setAvatarPhoto] = useState<File | null>(null);
-  const [avatarPreviewURL, setAvatarPreviewURL] = useState<string | null>(null);
 
   //* Custom hooks
   const { isUploading, isDeleting, uploadFile, deleteFile } = useImageKit();
 
-  //* Refs
+  //* Refs & Variables
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const avatarPreviewURL = avatarPhoto ? URL.createObjectURL(avatarPhoto) : null;
 
   //* Effects
   useEffect(() => {
-    if (!avatarPhoto) {
-      setAvatarPreviewURL(null);
-      return;
-    }
-
-    const url = URL.createObjectURL(avatarPhoto);
-    setAvatarPreviewURL(url);
-    return () => URL.revokeObjectURL(url);
-  }, [avatarPhoto]);
+    if (!avatarPreviewURL) return;
+    return () => URL.revokeObjectURL(avatarPreviewURL);
+  }, [avatarPreviewURL]);
 
   //* Handlers
   const handleFileClick = () => {
@@ -67,7 +60,12 @@ export const useAvatarDialog = () => {
       };
 
       const error = await updateUserProfile(updatedUser);
-      if (error) throw new Error(error);
+
+      if (error) {
+        toast.error(`Error while updating your profile: ${error}`);
+        return;
+      }
+
       toast.success("Your avatar photo was deleted");
     } catch (error) {
       toast.error(`Error while deleting the photo: ${(error as Error).message}`);
@@ -84,22 +82,26 @@ export const useAvatarDialog = () => {
       return;
     }
 
-    try {
-      const { url, fileId } = await uploadFile(avatarPhoto);
-      if (!url || !fileId) throw new Error("Error retrieving the avatar URL");
-
-      const updatedUser = {
-        ...user,
-        avatar: { url: `${url}?v=${Date.now()}`, fileId },
-      };
-
-      const error = await updateUserProfile(updatedUser);
-      if (error) throw new Error(error);
-      toast.success("Your avatar photo was updated");
-      onSuccess?.();
-    } catch (error) {
-      toast.error(`Error while uploading the photo: ${(error as Error).message}`);
+    const { url, fileId } = await uploadFile(avatarPhoto);
+    if (!url || !fileId) {
+      toast.error("Error retrieving the avatar URL");
+      return;
     }
+
+    const updatedUser = {
+      ...user,
+      avatar: { url: `${url}?v=${Date.now()}`, fileId },
+    };
+
+    const error = await updateUserProfile(updatedUser);
+
+    if (error) {
+      toast.error(`Error while uploading the photo: ${error}`);
+      return;
+    }
+
+    toast.success("Your avatar photo was updated");
+    onSuccess?.();
   };
 
   return {
