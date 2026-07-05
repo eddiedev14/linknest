@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Button } from "@/shared/components/shadcn/button";
 import { Separator } from "@/shared/components/shadcn/separator";
 import Logo from "@/assets/logo.png";
@@ -77,6 +77,17 @@ export const AuthPage = ({ isSignup = false }: Props) => {
           </div>
 
           <AuthForm isSignup={isSignup} />
+          <div className="text-center">
+            <span className="text-sm text-muted-foreground">
+              {isSignup ? "Already have an account? " : "Don't have an account? "}
+              <Link
+                to={isSignup ? "/login" : "/signup"}
+                className="font-medium text-primary hover:underline transition-colors"
+              >
+                {isSignup ? "Sign in" : "Create one"}
+              </Link>
+            </span>
+          </div>
         </div>
       </div>
 
