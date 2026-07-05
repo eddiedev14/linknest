@@ -19,6 +19,24 @@ import type { UserDoc, UserLogin, UserRegister } from "../types/user.type";
 import { createBaseNewUser, getAuthErrorMessage, getUserId } from "../utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
 
+const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
+  try {
+    await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+    return null;
+  } catch (err) {
+    return getAuthErrorMessage(err);
+  }
+};
+
+const logout = async (): Promise<string | null> => {
+  try {
+    await signOut(auth);
+    return null;
+  } catch {
+    return "Unable to log out. Please try again.";
+  }
+};
+
 export default function useAuthState() {
   //* States
   const [user, setUser] = useState<UserDoc | null>(null);
@@ -63,6 +81,7 @@ export default function useAuthState() {
 
   //* Functions
   const registerWithEmailAndPassword = async (user: UserRegister): Promise<string | null> => {
+    let error: string | null = null;
     const { email, password, username } = user;
 
     // Validate if the username is unique
@@ -75,24 +94,17 @@ export default function useAuthState() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await setById(userCredential.user.uid, createBaseNewUser(user));
-      return null;
     } catch (err) {
-      return getAuthErrorMessage(err);
-    } finally {
-      isCreatingUserDoc.current = false;
+      error = getAuthErrorMessage(err);
     }
+
+    isCreatingUserDoc.current = false;
+    return error;
   };
 
-  const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
-    try {
-      await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
-      return null;
-    } catch (err) {
-      return getAuthErrorMessage(err);
-    }
-  };
+  const authWithProvider = async (provider: AuthProvider): Promise<string | null> => {
+    let error: string | null = null;
 
-  const authWithProvider = async (provider: AuthProvider) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const userCredential = result.user;
@@ -116,13 +128,12 @@ export default function useAuthState() {
           }),
         );
       }
-
-      return null;
-    } catch (error) {
-      return getAuthErrorMessage(error);
-    } finally {
-      isCreatingUserDoc.current = false;
+    } catch (err) {
+      error = getAuthErrorMessage(err);
     }
+
+    isCreatingUserDoc.current = false;
+    return error;
   };
 
   const updateUserProfile = async (updatedFields: Partial<UserDoc>): Promise<string | null> => {
@@ -143,15 +154,6 @@ export default function useAuthState() {
       return null;
     } catch (error) {
       return "An error occurred while updating your profile";
-    }
-  };
-
-  const logout = async (): Promise<string | null> => {
-    try {
-      await signOut(auth);
-      return null;
-    } catch {
-      return "Unable to log out. Please try again.";
     }
   };
 

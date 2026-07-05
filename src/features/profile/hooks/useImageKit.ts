@@ -40,6 +40,7 @@ export const useImageKit = () => {
   // Function to upload Google avatar
   const uploadProviderAvatar = async (photoURL: string): Promise<Avatar> => {
     setIsUploading(true);
+    let avatar: Avatar;
 
     try {
       const idToken = await getFirebaseToken();
@@ -62,10 +63,14 @@ export const useImageKit = () => {
         throw new Error("Failed to upload Google avatar");
       }
 
-      return await response.json();
-    } finally {
+      avatar = await response.json();
+    } catch (error) {
       setIsUploading(false);
+      throw error;
     }
+
+    setIsUploading(false);
+    return avatar;
   };
 
   // Function to delete an image

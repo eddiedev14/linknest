@@ -3,11 +3,7 @@ import { StepItem } from "./StepItem";
 
 export default function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="py-28 bg-muted/40"
-      aria-label="How it works"
-    >
+    <section id="how-it-works" className="py-28 bg-muted/40" aria-label="How it works">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16 flex flex-col items-center gap-3">
           <span className="text-xs font-semibold uppercase tracking-widest text-primary">
@@ -17,8 +13,7 @@ export default function HowItWorks() {
             Your profile in <span className="text-primary">4 simple steps</span>
           </h2>
           <p className="text-muted-foreground max-w-md leading-relaxed text-balance">
-            Create your developer profile, connect your platforms, and start
-            sharing it in minutes.
+            Create your developer profile, connect your platforms, and start sharing it in minutes.
           </p>
         </div>
 
@@ -30,8 +25,8 @@ export default function HowItWorks() {
             aria-hidden="true"
           />
 
-          {steps.map((step, i) => (
-            <StepItem step={step} key={i} />
+          {steps.map((step) => (
+            <StepItem step={step} key={step.id} />
           ))}
         </div>
       </div>

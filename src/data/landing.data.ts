@@ -1,16 +1,5 @@
-import {
-  BsFillGlobeAmericasFill,
-  BsTwitterX,
-  BsInstagram,
-  BsLinkedin,
-} from "react-icons/bs";
-import {
-  FaChartBar,
-  FaGithub,
-  FaLink,
-  FaPalette,
-  FaShield,
-} from "react-icons/fa6";
+import { BsFillGlobeAmericasFill, BsTwitterX, BsInstagram, BsLinkedin } from "react-icons/bs";
+import { FaChartBar, FaGithub, FaLink, FaPalette, FaShield } from "react-icons/fa6";
 import { BiSolidZap } from "react-icons/bi";
 
 import type {
@@ -41,36 +30,42 @@ const mockAnalytics: IHeroAnalytic[] = [
 //* Features
 const features: IFeatureItem[] = [
   {
+    id: "professional-links",
     icon: FaLink,
     title: "Professional Links",
     description:
       "Connect your GitHub, LinkedIn, portfolio, resume, coding platforms, social profiles, and more from a single page.",
   },
   {
+    id: "transparent-analytics",
     icon: FaChartBar,
     title: "Transparent Analytics",
     description:
       "Track clicks across all your links and understand what recruiters, collaborators, and visitors engage with most.",
   },
   {
+    id: "visual-customization",
     icon: FaPalette,
     title: "Visual Customization",
     description:
       "Personalize your profile with an avatar, banner, bio, professional status, and tech stack to showcase who you are.",
   },
   {
+    id: "shareable-public-url",
     icon: BsFillGlobeAmericasFill,
     title: "Shareable Public URL",
     description:
       "Get a unique profile link like getlinknest.vercel.app/u/yourname and share it anywhere online.",
   },
   {
+    id: "privacy-first",
     icon: FaShield,
     title: "Privacy First",
     description:
       "Your analytics belong to you. We never sell your data or track visitors beyond the interactions you choose to measure.",
   },
   {
+    id: "ready-in-minutes",
     icon: BiSolidZap,
     title: "Ready in Minutes",
     description:
@@ -81,24 +76,28 @@ const features: IFeatureItem[] = [
 //* How It Works
 const steps: IStepItem[] = [
   {
+    id: "create-your-account",
     number: "01",
     title: "Create your account",
     description:
       "Sign up with email, Google or Github and choose your unique username. This becomes your public LinkNest profile.",
   },
   {
+    id: "build-your-profile",
     number: "02",
     title: "Build your profile",
     description:
       "Add your avatar, bio, professional status, tech stack, and other details that help people understand who you are.",
   },
   {
+    id: "connect-your-platforms",
     number: "03",
     title: "Connect your platforms",
     description:
       "Add your GitHub, LinkedIn, portfolio, coding platforms, social profiles, and contact channels from a single dashboard.",
   },
   {
+    id: "share-and-track",
     number: "04",
     title: "Share & track",
     description:
