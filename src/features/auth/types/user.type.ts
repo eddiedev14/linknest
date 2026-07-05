@@ -1,0 +1,37 @@
+import type { Timestamp } from "firebase/firestore";
+import type { ProfessionalStatus } from "./professionalStatus.type";
+import type { Location } from "./location.type";
+import type { Avatar } from "./avatar.type";
+
+export type User = {
+  email: string;
+  username: string;
+  displayName: string;
+  bio: string;
+  professionalRole: string;
+  professionalStatus: ProfessionalStatus;
+  location: Location;
+  techStack: string[];
+  languages: string[];
+  avatar: Avatar;
+  bannerStyle: string;
+};
+
+export type BaseDoc = {
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
+};
+
+export type UserDoc = Omit<User, "password"> & BaseDoc;
+
+// Forms
+export type UserRegister = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+export type UserLogin = {
+  email: string;
+  password: string;
+};

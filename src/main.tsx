@@ -1,10 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Landing } from "./pages/Landing";
+import { BrowserRouter } from "react-router-dom";
+import { LinknestApp } from "./LinknestApp";
 import "./styles/index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Landing />
+    <BrowserRouter>
+      <LinknestApp />
+    </BrowserRouter>
   </StrictMode>,
 );

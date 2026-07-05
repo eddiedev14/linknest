@@ -1,13 +1,10 @@
-import Logo from "@/assets/logo.png";
-import { navMenuItems } from "@/data/landing.data";
-import { BsGithub, BsLinkedin } from "react-icons/bs";
+import Logo from '@/assets/logo.png';
+import { navMenuItems } from '@/data/landing.data';
+import { BsGithub, BsLinkedin } from 'react-icons/bs';
 
 export default function Footer() {
   return (
-    <footer
-      className="bg-white border-t border-border py-12"
-      aria-label="Footer"
-    >
+    <footer className="bg-white border-t border-border py-12" aria-label="Footer">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col items-center gap-6 mb-6">
           <div className="flex flex-col items-center text-center gap-4">
@@ -18,7 +15,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              The smarter link-in-bio tool with transparent analytics.
+              The smarter link-in-bio tool with transparent analytics for developers.
             </p>
           </div>
 
@@ -26,7 +23,7 @@ export default function Footer() {
             {navMenuItems.map((item) => (
               <a
                 key={item}
-                href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+                href={`#${item.toLowerCase().replace(/ /g, '-')}`}
                 className="text-sm text-muted-foreground hover:text-primary transition-colors font-medium"
               >
                 {item}
@@ -40,24 +37,15 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} LinkNest. All rights reserved.
           </p>
           <div className="flex gap-4 *:text-foreground *:transition-all *:hover:-translate-y-1">
-            <a
-              href="https://www.linkedin.com/in/eddiedev14/"
-              target="_blank"
-              className="hover:text-blue-500"
-            >
-              <BsLinkedin size={18} />
+            <a href="https://www.linkedin.com/in/eddiedev14/" target="_blank" className="hover:text-blue-500">
+              <BsLinkedin />
             </a>
-            <a
-              href="https://github.com/eddiedev14/linknest"
-              target="_blank"
-              className="hover:text-black"
-            >
-              <BsGithub size={18} />
+            <a href="https://github.com/eddiedev14/linknest" target="_blank" className="hover:text-black">
+              <BsGithub />
             </a>
           </div>
           <p className="text-xs text-muted-foreground">
-            Made with <span className="text-primary">♥</span> for creators
-            everywhere
+            Made with <span className="text-primary">♥</span> for creators everywhere
           </p>
         </div>
       </div>

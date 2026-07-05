@@ -56,7 +56,7 @@
   --card-foreground: oklch(0.21 0.03 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.03 260);
-  --primary: oklch(0.63 0.23 275);
+  --primary: oklch(61.762% 0.20791 275.466);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.96 0.01 250);
   --secondary-foreground: oklch(0.21 0.03 260);
@@ -142,5 +142,51 @@ html {
   h5,
   h6 {
     font-family: var(--font-heading);
+  }
+}
+
+@layer utilities {
+  .banner-primary {
+    @apply bg-primary;
+  }
+
+  .banner-ocean {
+    background: linear-gradient(135deg, oklch(0.68 0.18 240), oklch(0.58 0.22 220));
+  }
+
+  .banner-sunset {
+    background: linear-gradient(135deg, oklch(0.72 0.22 30), oklch(0.65 0.26 10));
+  }
+
+  .banner-forest {
+    background: linear-gradient(135deg, oklch(0.7 0.18 145), oklch(0.58 0.15 165));
+  }
+
+  .banner-lavender {
+    background: linear-gradient(135deg, oklch(0.74 0.17 300), oklch(0.64 0.22 275));
+  }
+
+  .banner-rose {
+    background: linear-gradient(135deg, oklch(0.75 0.2 15), oklch(0.67 0.23 350));
+  }
+
+  .banner-aurora {
+    background: linear-gradient(135deg, oklch(0.72 0.18 180), oklch(0.66 0.2 290));
+  }
+
+  .banner-midnight {
+    background: linear-gradient(135deg, oklch(0.32 0.03 260), oklch(0.22 0.05 275));
+  }
+
+  .banner-gold {
+    background: linear-gradient(135deg, oklch(0.84 0.16 85), oklch(0.72 0.19 65));
+  }
+
+  .banner-cherry {
+    background: linear-gradient(135deg, oklch(0.68 0.22 20), oklch(0.58 0.24 5));
+  }
+
+  .banner-sky {
+    background: linear-gradient(135deg, oklch(0.8 0.12 230), oklch(0.68 0.16 210));
   }
 }
