@@ -152,7 +152,7 @@ export default function useAuthState() {
       );
 
       return null;
-    } catch (error) {
+    } catch {
       return "An error occurred while updating your profile";
     }
   };
