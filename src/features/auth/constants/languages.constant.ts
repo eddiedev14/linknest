@@ -1,4 +1,4 @@
-import type { LanguageCode } from "../types/language.type";
+import type { Language } from "../types";
 
 export const LANGUAGE_LABELS = {
   ar: "Arabic",
@@ -21,4 +21,4 @@ export const LANGUAGE_LABELS = {
   uk: "Ukrainian",
 } as const;
 
-export const LANGUAGE_VALUES = Object.keys(LANGUAGE_LABELS) as LanguageCode[];
+export const LANGUAGE_VALUES = Object.keys(LANGUAGE_LABELS) as Language[];

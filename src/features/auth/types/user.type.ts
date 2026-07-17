@@ -1,5 +1,5 @@
 import type { Timestamp } from "firebase/firestore";
-import type { Avatar, BannerStyle, Language, ProfessionalStatus, Tech } from ".";
+import type { Avatar, BannerStyle, Language, Location, ProfessionalStatus, Tech } from ".";
 
 export type User = {
   email: string;

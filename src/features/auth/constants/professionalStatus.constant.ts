@@ -6,6 +6,7 @@ export const PROFESSIONAL_STATUS_LABELS = {
   currently_employed: "Currently Employed",
 } as const;
 
-export const PROFESSIONAL_STATUS_VALUES = Object.keys(
-  PROFESSIONAL_STATUS_LABELS,
-) as ProfessionalStatus[];
+export const PROFESSIONAL_STATUS_VALUES = [
+  "",
+  ...Object.keys(PROFESSIONAL_STATUS_LABELS),
+] as ProfessionalStatus[];
