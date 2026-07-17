@@ -5,7 +5,7 @@ import { useDialog } from "@/shared/hooks/useDialog";
 import { LinkDialog } from "@/features/links/components/LinkDialog";
 
 export const Links = () => {
-  const { open, onOpenChange, handleOpenDialog } = useDialog();
+  const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
 
   return (
     <main className="flex-1 flex flex-col items-center py-10 px-4" aria-label="Manage your links">
@@ -17,7 +17,7 @@ export const Links = () => {
         />
 
         {/* Link Dialog */}
-        <LinkDialog open={open} onOpenChange={onOpenChange} />
+        <LinkDialog open={open} handleClose={handleCloseDialog} onOpenChange={onOpenChange} />
 
         {/* Empty Links */}
         <div className="flex flex-col items-center gap-4 py-8 px-6 text-center bg-background rounded-2xl border-2 border-dashed border-border">

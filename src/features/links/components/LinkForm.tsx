@@ -5,13 +5,14 @@ import { FiExternalLink } from "react-icons/fi";
 import { Label } from "@/shared/components/shadcn/label";
 import { Button } from "@/shared/components/shadcn/button";
 import { InputField } from "@/shared/components/forms/fields";
-import { Loader } from "@/shared/components/app/Loader";
 import { useLinkForm } from "../hooks/useLinkForm";
 
-export const LinkForm = () => {
-  const { errors, loading, selectedPlatform, register, setValue, onSubmit } = useLinkForm();
+interface Props {
+  onSuccess: () => void;
+}
 
-  if (loading) return <Loader />;
+export const LinkForm = ({ onSuccess }: Props) => {
+  const { errors, selectedPlatform, register, setValue, onSubmit } = useLinkForm(onSuccess);
 
   return (
     <form

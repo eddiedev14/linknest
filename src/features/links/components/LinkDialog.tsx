@@ -12,10 +12,11 @@ import { LinkForm } from "./LinkForm";
 
 interface Props {
   open: boolean;
+  handleClose: () => void;
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const LinkDialog = ({ open, onOpenChange }: Props) => {
+export const LinkDialog = ({ open, handleClose, onOpenChange }: Props) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
@@ -32,7 +33,7 @@ export const LinkDialog = ({ open, onOpenChange }: Props) => {
         <DialogHeader>
           <DialogTitle className="text-2xl">Add new link</DialogTitle>
           <DialogDescription>Fill in the details to add a new link to your page.</DialogDescription>
-          <LinkForm />
+          <LinkForm onSuccess={handleClose} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

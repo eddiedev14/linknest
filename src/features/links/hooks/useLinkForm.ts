@@ -5,7 +5,7 @@ import type { LinkFormData } from "../types/link.type";
 import { useLink } from "./useLink";
 import { toast } from "react-toastify";
 
-export const useLinkForm = () => {
+export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
   const { loading, addLink } = useLink();
 
@@ -42,6 +42,7 @@ export const useLinkForm = () => {
 
     toast.success("Link added successfully");
     reset();
+    onSuccess();
   };
 
   return {
