@@ -1,7 +1,7 @@
 import type { Timestamp } from "firebase/firestore";
 import type { Avatar, BannerStyle, Language, Location, ProfessionalStatus, Tech } from ".";
 
-export type User = {
+export interface User {
   email: string;
   username: string;
   displayName: string;
@@ -13,7 +13,7 @@ export type User = {
   languages: Language[];
   avatar: Avatar;
   bannerStyle: BannerStyle;
-};
+}
 
 export type BaseDoc = {
   createdAt?: Timestamp;
