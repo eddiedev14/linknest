@@ -1,1 +1,3 @@
-export type ProfessionalStatus = "available" | "open_to_opportunities" | "currently_employed" | "";
+import type { PROFESSIONAL_STATUS_LABELS } from "../constants/professionalStatus.constant";
+
+export type ProfessionalStatus = keyof typeof PROFESSIONAL_STATUS_LABELS | "";

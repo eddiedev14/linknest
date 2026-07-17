@@ -137,10 +137,10 @@ export default function useAuthState() {
   };
 
   const updateUserProfile = async (updatedFields: Partial<UserDoc>): Promise<string | null> => {
-    try {
-      const userId = getUserId();
-      if (!userId) return "The user ID could not be retrieved";
+    const userId = getUserId();
+    if (!userId) return "The user ID could not be retrieved";
 
+    try {
       await update(userId, updatedFields);
       setUser((prev) =>
         prev
@@ -152,7 +152,7 @@ export default function useAuthState() {
       );
 
       return null;
-    } catch (error) {
+    } catch {
       return "An error occurred while updating your profile";
     }
   };

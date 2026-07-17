@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Button } from '@/shared/components/shadcn/button';
+import { Button } from "@/shared/components/shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -7,15 +6,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/shared/components/shadcn/dialog';
-import { FaPencil } from 'react-icons/fa6';
-import { BannerPresets } from './BannerPresets';
+} from "@/shared/components/shadcn/dialog";
+import { FaPencil } from "react-icons/fa6";
+import { useDialog } from "@/shared/hooks/useDialog";
+import { BannerPresets } from "./BannerPresets";
 
 export const BannerDialog = () => {
-  const [open, setOpen] = useState(false);
+  const { open, onOpenChange, handleCloseDialog } = useDialog();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button
           type="button"
@@ -28,11 +28,13 @@ export const BannerDialog = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl">Customize your banner</DialogTitle>
-          <DialogDescription>Choose from our solid color presets or select your own custom color</DialogDescription>
+          <DialogDescription>
+            Choose from our solid color presets or select your own custom color
+          </DialogDescription>
 
           {/* Presets */}
           <div className="flex flex-col gap-2 mt-4">
-            <BannerPresets onSuccess={() => setOpen(false)} />
+            <BannerPresets onSuccess={handleCloseDialog} />
           </div>
         </DialogHeader>
       </DialogContent>

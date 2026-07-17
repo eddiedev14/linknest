@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Button } from '@/shared/components/shadcn/button';
+import { Button } from "@/shared/components/shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -7,15 +6,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/shared/components/shadcn/dialog';
-import { FaCamera } from 'react-icons/fa6';
-import { AvatarForm } from './AvatarForm';
+} from "@/shared/components/shadcn/dialog";
+import { FaCamera } from "react-icons/fa6";
+import { useDialog } from "@/shared/hooks/useDialog";
+import { AvatarForm } from "./AvatarForm";
 
 export const AvatarDialog = () => {
-  const [open, setOpen] = useState(false);
+  const { open, onOpenChange, handleCloseDialog } = useDialog();
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <Button
           type="button"
@@ -28,9 +28,11 @@ export const AvatarDialog = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl">Upload your avatar</DialogTitle>
-          <DialogDescription>Upload the public avatar photo that will appear on your Linknest page</DialogDescription>
+          <DialogDescription>
+            Upload the public avatar photo that will appear on your Linknest page
+          </DialogDescription>
 
-          <AvatarForm onSuccess={() => setOpen(false)} />
+          <AvatarForm onSuccess={handleCloseDialog} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

@@ -67,7 +67,7 @@ const createBaseNewUser = ({
       url: avatar?.url ? `${avatar?.url}?v=${Date.now()}` : "",
       fileId: avatar?.fileId || "",
     },
-    bannerStyle: "bg-primary",
+    bannerStyle: "banner-primary",
   };
 };
 
