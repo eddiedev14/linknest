@@ -16,13 +16,13 @@ export const LINK_PLATFORMS_MAP: Record<PlatformId, LinkPlatform> = {
   github: {
     name: "GitHub",
     Icon: FaGithub,
-    baseUrl: "https://github.com/",
+    baseUrl: "github.com/",
     bgColor: "#24292F",
   },
   linkedin: {
     name: "LinkedIn",
     Icon: FaLinkedin,
-    baseUrl: "https://linkedin.com/in/",
+    baseUrl: "linkedin.com/in/",
     bgColor: "#0A66C2",
   },
   portfolio: {
@@ -34,37 +34,37 @@ export const LINK_PLATFORMS_MAP: Record<PlatformId, LinkPlatform> = {
   devto: {
     name: "Dev.to",
     Icon: FaDev,
-    baseUrl: "https://dev.to/",
+    baseUrl: "dev.to/",
     bgColor: "#0F172A",
   },
   stackoverflow: {
     name: "Stack Overflow",
     Icon: FaStackOverflow,
-    baseUrl: "https://stackoverflow.com/users/",
+    baseUrl: "stackoverflow.com/users/",
     bgColor: "#F48024",
   },
   hackerrank: {
     name: "HackerRank",
     Icon: FaHackerrank,
-    baseUrl: "https://hackerrank.com/profile/",
+    baseUrl: "hackerrank.com/profile/",
     bgColor: "#00EA64",
   },
   codepen: {
     name: "CodePen",
     Icon: FaCodepen,
-    baseUrl: "https://codepen.io/",
+    baseUrl: "codepen.io/",
     bgColor: "#000000",
   },
   medium: {
     name: "Medium",
     Icon: FaMedium,
-    baseUrl: "https://medium.com/@",
+    baseUrl: "medium.com/@",
     bgColor: "#121212",
   },
   x: {
     name: "X",
     Icon: FaXTwitter,
-    baseUrl: "https://x.com/",
+    baseUrl: "x.com/",
     bgColor: "#000000",
   },
   website: {
