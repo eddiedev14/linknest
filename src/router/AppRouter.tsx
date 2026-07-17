@@ -5,6 +5,7 @@ import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { PageLayout } from "@/shared/components/app/PageLayout";
+import { LinkContextProvider } from "@/features/links/context/LinkContext";
 
 export const AppRouter = () => {
   // * Esperar a que se compruebe si hay una sesión activa en toda la app.
@@ -26,7 +27,13 @@ export const AppRouter = () => {
       {/* Rutas Privadas */}
       <Route element={<PrivateRoute />}>
         {/* Layout común para todas las rutas privadas */}
-        <Route element={<PageLayout />}>
+        <Route
+          element={
+            <LinkContextProvider>
+              <PageLayout />
+            </LinkContextProvider>
+          }
+        >
           <Route path="/links" element={<Links />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
