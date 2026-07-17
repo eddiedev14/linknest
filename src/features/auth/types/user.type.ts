@@ -1,7 +1,5 @@
 import type { Timestamp } from "firebase/firestore";
-import type { ProfessionalStatus } from "./professionalStatus.type";
-import type { Location } from "./location.type";
-import type { Avatar } from "./avatar.type";
+import type { Avatar, BannerStyle, Language, ProfessionalStatus, Tech } from ".";
 
 export type User = {
   email: string;
@@ -11,10 +9,10 @@ export type User = {
   professionalRole: string;
   professionalStatus: ProfessionalStatus;
   location: Location;
-  techStack: string[];
-  languages: string[];
+  techStack: Tech[];
+  languages: Language[];
   avatar: Avatar;
-  bannerStyle: string;
+  bannerStyle: BannerStyle;
 };
 
 export type BaseDoc = {

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/incompatible-library */
 import { useState, useEffect } from "react";
 import type { z } from "zod";
 import { useForm, useWatch } from "react-hook-form";

@@ -1,7 +1,7 @@
 import { Button } from "@/shared/components/shadcn/button";
 import { cn } from "@/lib/utils";
 import { FaPencil } from "react-icons/fa6";
-import { BANNER_PRESETS } from "@/data/profile.data";
+import { BANNER_PRESETS } from "@/features/auth/constants/bannerPresets.constant";
 import { useBannerDialog } from "../../../hooks/useBannerDialog";
 import { Loader } from "@/shared/components/app/Loader";
 

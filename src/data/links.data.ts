@@ -1,4 +1,4 @@
-import type { IconType } from "react-icons";
+import type { LinkPlatform, PlatformId } from "@/features/links/types/platform.type";
 import {
   FaBriefcase,
   FaCodepen,
@@ -12,83 +12,67 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 
-interface ILinkPlatform {
-  id: string;
-  name: string;
-  Icon: IconType;
-  baseUrl: string;
-  bgColor: string;
-}
-
-export const LINK_PLATFORMS: ILinkPlatform[] = [
-  {
-    id: "github",
+export const LINK_PLATFORMS_MAP: Record<PlatformId, LinkPlatform> = {
+  github: {
     name: "GitHub",
     Icon: FaGithub,
     baseUrl: "https://github.com/",
     bgColor: "#24292F",
   },
-  {
-    id: "linkedin",
+  linkedin: {
     name: "LinkedIn",
     Icon: FaLinkedin,
     baseUrl: "https://linkedin.com/in/",
     bgColor: "#0A66C2",
   },
-  {
-    id: "portfolio",
+  portfolio: {
     name: "Portfolio",
     Icon: FaBriefcase,
     baseUrl: "",
     bgColor: "#6366F1",
   },
-  {
-    id: "devto",
+  devto: {
     name: "Dev.to",
     Icon: FaDev,
     baseUrl: "https://dev.to/",
     bgColor: "#0F172A",
   },
-  {
-    id: "stackoverflow",
+  stackoverflow: {
     name: "Stack Overflow",
     Icon: FaStackOverflow,
     baseUrl: "https://stackoverflow.com/users/",
     bgColor: "#F48024",
   },
-  {
-    id: "hackerrank",
+  hackerrank: {
     name: "HackerRank",
     Icon: FaHackerrank,
     baseUrl: "https://hackerrank.com/profile/",
     bgColor: "#00EA64",
   },
-  {
-    id: "codepen",
+  codepen: {
     name: "CodePen",
     Icon: FaCodepen,
     baseUrl: "https://codepen.io/",
-    bgColor: "#000",
+    bgColor: "#000000",
   },
-  {
-    id: "medium",
+  medium: {
     name: "Medium",
     Icon: FaMedium,
     baseUrl: "https://medium.com/@",
     bgColor: "#121212",
   },
-  {
-    id: "x",
+  x: {
     name: "X",
     Icon: FaXTwitter,
     baseUrl: "https://x.com/",
     bgColor: "#000000",
   },
-  {
-    id: "website",
+  website: {
     name: "Website",
     Icon: FaGlobe,
     baseUrl: "",
     bgColor: "#6366F1",
   },
-];
+};
+
+export const PLATFORM_ENTRIES = Object.entries(LINK_PLATFORMS_MAP) as [PlatformId, LinkPlatform][];
