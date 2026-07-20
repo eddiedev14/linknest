@@ -71,7 +71,7 @@ export const LINK_PLATFORMS_MAP: Record<PlatformId, LinkPlatform> = {
     name: "Website",
     Icon: FaGlobe,
     baseUrl: "",
-    bgColor: "#6366F1",
+    bgColor: "#2196f3",
   },
 };
 

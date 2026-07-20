@@ -12,6 +12,7 @@ import {
   signOut,
   type AuthProvider,
 } from "firebase/auth";
+import { where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
@@ -46,7 +47,7 @@ export default function useAuthState() {
   const isCreatingUserDoc = useRef(false);
 
   //* Custom hooks
-  const { isPending, setById, suscribeById, find, update } = useCollection<UserDoc>("users");
+  const { setById, suscribeById, find, update } = useCollection<UserDoc>("users");
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects
@@ -85,7 +86,7 @@ export default function useAuthState() {
     const { email, password, username } = user;
 
     // Validate if the username is unique
-    const foundDocument = await find([["username", "==", username]]);
+    const foundDocument = await find([where("username", "==", username)]);
     if (foundDocument) return "That username is already in use";
 
     // Proceed with the register in Firebase Auth
@@ -160,7 +161,6 @@ export default function useAuthState() {
   return {
     user,
     userLoading,
-    isPending,
     registerWithEmailAndPassword,
     loginWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
