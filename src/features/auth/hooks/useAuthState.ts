@@ -12,6 +12,7 @@ import {
   signOut,
   type AuthProvider,
 } from "firebase/auth";
+import { where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
@@ -85,7 +86,7 @@ export default function useAuthState() {
     const { email, password, username } = user;
 
     // Validate if the username is unique
-    const foundDocument = await find([["username", "==", username]]);
+    const foundDocument = await find([where("username", "==", username)]);
     if (foundDocument) return "That username is already in use";
 
     // Proceed with the register in Firebase Auth

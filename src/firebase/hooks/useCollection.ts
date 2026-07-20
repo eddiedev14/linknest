@@ -4,22 +4,16 @@ import {
   collection,
   query,
   onSnapshot,
-  where,
   addDoc,
   updateDoc,
   deleteDoc,
   doc,
   serverTimestamp,
-  type DocumentData,
-  type WhereFilterOp,
   getDoc,
   setDoc,
   getDocs,
 } from "firebase/firestore";
-import type { Unsubscribe } from "firebase/firestore";
-
-// Tipo de filtro (tupla)
-export type Filter = [string, WhereFilterOp, unknown];
+import type { DocumentData, Query, QueryConstraint, Unsubscribe } from "firebase/firestore";
 
 //? Se tipa el hook con un genérico para tipado de typescript.
 export const useCollection = <T>(table: string) => {
@@ -32,21 +26,19 @@ export const useCollection = <T>(table: string) => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const buildQuery = (constraints: QueryConstraint[] = []): Query => {
+    return query(collection(db, table), ...constraints);
+  };
+
   //* 1. R -> READ
-  const suscribe = (filters: Filter[] = []): Unsubscribe => {
+  const suscribe = (constraints: QueryConstraint[] = []): Unsubscribe => {
     // Cargando y no hay errores
     setIsPending(true);
     setError(null);
 
     try {
       // Se hace una busqueda sobre la colección indicada
-      let q = query(collection(db, table));
-
-      // Pueden haber filtros por lo que se itera para obtener aquellos en los que coincide todo.
-      // Ejemplo de uso: getAll([["age", ">", 18]]);
-      filters.forEach(([field, op, value]) => {
-        q = query(q, where(field, op, value));
-      });
+      let q = buildQuery(constraints);
 
       // Firebase responde con un “paquete” de documentos
       const unsubscribe = onSnapshot(
@@ -128,16 +120,12 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 1. R -> READ
-  const find = async (filters: Filter[] = []): Promise<Doc<T> | null> => {
+  const find = async (constraints: QueryConstraint[] = []): Promise<Doc<T> | null> => {
     setIsPending(true);
     setError(null);
 
     try {
-      let q = query(collection(db, table));
-
-      filters.forEach(([field, op, value]) => {
-        q = query(q, where(field, op, value));
-      });
+      let q = buildQuery(constraints);
 
       const snapshot = await getDocs(q);
       setIsPending(false);
