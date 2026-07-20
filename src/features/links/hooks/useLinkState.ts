@@ -1,22 +1,24 @@
+import { useEffect } from "react";
+import { orderBy } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 import { getUserId } from "@/features/auth/utils/firebase.helper";
 import type { Link, LinkFormData } from "../types/link.type";
-import { useEffect } from "react";
 
 export const useLinkState = () => {
   //* Collection Hook
   const userId = getUserId();
   const {
     results: links,
-    isPending: loading,
+    isPending,
     add,
     suscribe,
+    updateMany,
   } = useCollection<Link>(`users/${userId}/links`);
   const linksCount = links.length;
 
   //* Effects
   useEffect(() => {
-    const unsubscribe = suscribe();
+    const unsubscribe = suscribe([orderBy("position")]);
     return unsubscribe;
   }, [suscribe]);
 
@@ -29,8 +31,23 @@ export const useLinkState = () => {
     return !linkId ? "An error occurred while adding your link" : null;
   };
 
+  const updateLinksOrder = async (updatedLinks: Link[]): Promise<string | null> => {
+    const updates = updatedLinks.map((link, index) => ({
+      id: link.id,
+      data: {
+        position: index + 1,
+      },
+    }));
+
+    const success = await updateMany(updates);
+    return !success ? "An error occurred while updating the order of your links" : null;
+  };
+
   return {
-    loading,
+    links,
+    linksCount,
+    loadingLinks: isPending,
     addLink,
+    updateLinksOrder,
   };
 };

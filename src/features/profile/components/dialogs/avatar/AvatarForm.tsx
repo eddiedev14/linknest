@@ -4,7 +4,7 @@ import { Button } from "@/shared/components/shadcn/button";
 import { FaImage, FaTrash } from "react-icons/fa6";
 import { Loader } from "@/shared/components/app/Loader";
 import { useAuth } from "@/features/auth/hooks/useAuth";
-import { useAvatarDialog } from "@/features/profile/hooks/useAvatarForm";
+import { useAvatarForm } from "@/features/profile/hooks/useAvatarForm";
 import { ConfirmDialog } from "@/shared/components/forms/ConfirmDialog";
 
 interface Props {
@@ -21,16 +21,11 @@ export const AvatarForm = ({ onSuccess }: Props) => {
     fileInputRef,
     isUploading,
     isDeleting,
-    isPending,
     handleFileClick,
     handleFileChange,
     removeAvatar,
     handleAvatarSubmit,
-  } = useAvatarDialog();
-
-  if (isUploading || isDeleting || isPending) {
-    return <Loader />;
-  }
+  } = useAvatarForm();
 
   return (
     <>
@@ -74,6 +69,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
           <>
             <Button
               onClick={() => setConfirmOpen(true)}
+              disabled={isDeleting}
               type="button"
               variant="destructive"
               className="flex-1 mr-2"
@@ -90,7 +86,9 @@ export const AvatarForm = ({ onSuccess }: Props) => {
             />
           </>
         )}
-        <Button className="flex-1">Save</Button>
+        <Button type="submit" disabled={isUploading} className="flex-1">
+          {isUploading ? <Loader size="sm" /> : "Save"}
+        </Button>
       </form>
     </>
   );

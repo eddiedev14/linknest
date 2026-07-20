@@ -5,12 +5,13 @@ import type { BannerStyle } from "@/features/auth/types";
 
 export const useBannerDialog = () => {
   //* Context
-  const { user, isPending, updateUserProfile } = useAuth();
+  const { user, updateUserProfile } = useAuth();
 
   //* States
   const [selectedColor, setSelectedColor] = useState<BannerStyle>(
     user?.bannerStyle || "banner-primary",
   );
+  const [isSaving, setIsSaving] = useState(false);
 
   //* Refs
   const colorInputRef = useRef<HTMLInputElement>(null);
@@ -32,7 +33,7 @@ export const useBannerDialog = () => {
     return () => {
       inputElement.removeEventListener("change", handleNativeChange);
     };
-  }, [isPending]);
+  }, []);
 
   //* Computed
   const isCustomColor = selectedColor.startsWith("#");
@@ -57,20 +58,28 @@ export const useBannerDialog = () => {
       bannerStyle: selectedColor || "banner-primary",
     };
 
-    const error = await updateUserProfile(updatedUser);
-    if (error) {
-      toast.error(error);
-    }
+    setIsSaving(true);
 
-    toast.success("Your banner style was updated");
-    onSuccess?.();
+    try {
+      const error = await updateUserProfile(updatedUser);
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      toast.success("Your banner style was updated");
+      onSuccess?.();
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return {
     selectedColor,
     colorInputRef,
     isCustomColor,
-    isPending,
+    isSaving,
     setSelectedColor,
     handleCustomColorClick,
     handleBannerColorSubmit,

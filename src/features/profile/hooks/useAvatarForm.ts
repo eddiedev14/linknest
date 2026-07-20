@@ -4,9 +4,9 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { validateAvatarImg } from "../utils/avatar.helper";
 import { useImageKit } from "./useImageKit";
 
-export const useAvatarDialog = () => {
+export const useAvatarForm = () => {
   //* Context
-  const { user, isPending, updateUserProfile } = useAuth();
+  const { user, updateUserProfile } = useAuth();
 
   //* States
   const [avatarPhoto, setAvatarPhoto] = useState<File | null>(null);
@@ -110,7 +110,6 @@ export const useAvatarDialog = () => {
     fileInputRef,
     isUploading,
     isDeleting,
-    isPending,
     handleFileClick,
     handleFileChange,
     removeAvatar,

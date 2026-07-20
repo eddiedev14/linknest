@@ -12,7 +12,8 @@ interface Props {
 }
 
 export const LinkForm = ({ onSuccess }: Props) => {
-  const { errors, selectedPlatform, register, setValue, onSubmit } = useLinkForm(onSuccess);
+  const { errors, isSaving, selectedPlatform, register, setValue, onSubmit } =
+    useLinkForm(onSuccess);
 
   return (
     <form
@@ -86,7 +87,9 @@ export const LinkForm = ({ onSuccess }: Props) => {
         />
       </div>
 
-      <Button type="submit">Add Link</Button>
+      <Button type="submit" disabled={isSaving}>
+        {isSaving ? "Adding..." : "Add Link"}
+      </Button>
     </form>
   );
 };

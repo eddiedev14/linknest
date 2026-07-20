@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import { linkFormScheme } from "../validations/link.scheme";
 import type { LinkFormData } from "../types/link.type";
 import { useLink } from "./useLink";
-import { toast } from "react-toastify";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
-  const { loading, addLink } = useLink();
+  const { addLink } = useLink();
+
+  //* States
+  const [isSaving, setIsSaving] = useState(false);
 
   //* React Hook Form
   const {
@@ -34,20 +38,27 @@ export const useLinkForm = (onSuccess: () => void) => {
 
   //* Handlers
   const handleLinkFormSubmit = async (data: LinkFormData) => {
-    const error = await addLink(data);
-    if (error) {
-      toast.error(error);
-      return;
-    }
+    setIsSaving(true);
 
-    toast.success("Link added successfully");
-    reset();
-    onSuccess();
+    try {
+      const error = await addLink(data);
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      toast.success("Link added successfully");
+      reset();
+      onSuccess();
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return {
     errors,
-    loading,
+    isSaving,
     selectedPlatform,
     register,
     setValue,

@@ -12,6 +12,7 @@ import {
   getDoc,
   setDoc,
   getDocs,
+  writeBatch,
 } from "firebase/firestore";
 import type { DocumentData, Query, QueryConstraint, Unsubscribe } from "firebase/firestore";
 
@@ -24,7 +25,6 @@ export const useCollection = <T>(table: string) => {
 
   const [results, setResults] = useState<Doc<T>[]>([]);
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const buildQuery = (constraints: QueryConstraint[] = []): Query => {
     return query(collection(db, table), ...constraints);
@@ -32,9 +32,7 @@ export const useCollection = <T>(table: string) => {
 
   //* 1. R -> READ
   const suscribe = (constraints: QueryConstraint[] = []): Unsubscribe => {
-    // Cargando y no hay errores
     setIsPending(true);
-    setError(null);
 
     try {
       // Se hace una busqueda sobre la colección indicada
@@ -53,14 +51,12 @@ export const useCollection = <T>(table: string) => {
           setIsPending(false);
         },
         () => {
-          setError(`Error al suscribirse a ${table}`);
           setIsPending(false);
         },
       );
 
       return unsubscribe;
     } catch {
-      setError(`Error al consultar los registros solicitados de la colección ${table}`);
       setIsPending(false);
       return () => {};
     }
@@ -69,7 +65,6 @@ export const useCollection = <T>(table: string) => {
   //* 1. R -> READ by id (real-time)
   const suscribeById = (id: string, callback: (doc: Doc<T> | null) => void): Unsubscribe => {
     setIsPending(true);
-    setError(null);
 
     const unsubscribe = onSnapshot(
       doc(db, table, id),
@@ -83,7 +78,6 @@ export const useCollection = <T>(table: string) => {
         setIsPending(false);
       },
       () => {
-        setError(`Error al suscribirse al documento ${table}/${id}`);
         setIsPending(false);
       },
     );
@@ -94,7 +88,6 @@ export const useCollection = <T>(table: string) => {
   //* 1. R -> READ
   const getById = async (id: string): Promise<Doc<T> | null> => {
     setIsPending(true);
-    setError(null);
 
     try {
       const docRef = doc(db, table, id);
@@ -114,7 +107,6 @@ export const useCollection = <T>(table: string) => {
       }
     } catch {
       setIsPending(false);
-      setError(`Error al obtener el registro solcitado de la colección ${table}`);
       return null;
     }
   };
@@ -122,7 +114,6 @@ export const useCollection = <T>(table: string) => {
   //* 1. R -> READ
   const find = async (constraints: QueryConstraint[] = []): Promise<Doc<T> | null> => {
     setIsPending(true);
-    setError(null);
 
     try {
       let q = buildQuery(constraints);
@@ -140,16 +131,12 @@ export const useCollection = <T>(table: string) => {
       };
     } catch {
       setIsPending(false);
-      setError(`Error al consultar el registro solicitado de la colección ${table}`);
       return null;
     }
   };
 
   //* 2. C -> CREATE
   const add = async (data: T): Promise<string | null> => {
-    setIsPending(true);
-    setError(null);
-
     try {
       // Añadir el documento al firestore
       const ref = await addDoc(collection(db, table), {
@@ -157,20 +144,14 @@ export const useCollection = <T>(table: string) => {
         createdAt: serverTimestamp(),
       } as DocumentData);
 
-      setIsPending(false);
       return ref.id; // Retornar el id del documento creado
     } catch {
-      setIsPending(false);
-      setError(`Error al agregar un nuevo registro en la colección ${table}`);
       return null;
     }
   };
 
   //* 2. C -> CREATE
   const setById = async (id: string, data: T): Promise<boolean> => {
-    setIsPending(true);
-    setError(null);
-
     try {
       const docRef = doc(db, table, id);
 
@@ -179,20 +160,14 @@ export const useCollection = <T>(table: string) => {
         createdAt: serverTimestamp(),
       });
 
-      setIsPending(false);
       return true;
     } catch {
-      setError(`Error al crear el documento en ${table} con id ${id}`);
-      setIsPending(false);
       return false;
     }
   };
 
   //* 3. U -> UPDATE
   const update = async (id: string, data: DocumentData) => {
-    setIsPending(true);
-    setError(null);
-
     try {
       // Busca el documento con ese id y lo actualiza
       // con doc(db, table, id), se obtiene un documento específico de esa colección por su id
@@ -202,27 +177,38 @@ export const useCollection = <T>(table: string) => {
         updatedAt: serverTimestamp(),
       });
 
-      setIsPending(false);
       return true;
     } catch {
-      setIsPending(false);
-      setError(`Error al actualizar el registro solicitado de la colección ${table}`);
+      return false;
+    }
+  };
+
+  //* 3. U -> UPDATE
+  const updateMany = async (updates: { id: string; data: Partial<T> }[]): Promise<boolean> => {
+    try {
+      // Agrupa todas las actualizaciones en una sola operación atómica.
+      const batch = writeBatch(db);
+
+      updates.forEach(({ id, data }) => {
+        batch.update(doc(db, table, id), {
+          ...data,
+          updatedAt: serverTimestamp(),
+        });
+      });
+
+      await batch.commit();
+      return true;
+    } catch {
       return false;
     }
   };
 
   //* 4. D -> DELETE
   const remove = async (id: string) => {
-    setIsPending(true);
-    setError(null);
-
     try {
       await deleteDoc(doc(db, table, id));
-      setIsPending(false);
       return true;
     } catch {
-      setError(`Error al eliminar el registro solicitado de la colección ${table}`);
-      setIsPending(false);
       return false;
     }
   };
@@ -230,7 +216,6 @@ export const useCollection = <T>(table: string) => {
   return {
     results,
     isPending,
-    error,
     suscribe,
     suscribeById,
     getById,
@@ -238,6 +223,7 @@ export const useCollection = <T>(table: string) => {
     add,
     setById,
     update,
+    updateMany,
     remove,
   };
 };

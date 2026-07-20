@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import { FaPencil } from "react-icons/fa6";
 import { BANNER_PRESETS } from "@/features/auth/constants/bannerPresets.constant";
 import { useBannerDialog } from "../../../hooks/useBannerDialog";
-import { Loader } from "@/shared/components/app/Loader";
 
 interface Props {
   onSuccess: () => void;
@@ -14,15 +13,11 @@ export const BannerPresets = ({ onSuccess }: Props) => {
     selectedColor,
     colorInputRef,
     isCustomColor,
-    isPending,
+    isSaving,
     setSelectedColor,
     handleCustomColorClick,
     handleBannerColorSubmit,
   } = useBannerDialog();
-
-  if (isPending) {
-    return <Loader />;
-  }
 
   return (
     <>
@@ -69,7 +64,9 @@ export const BannerPresets = ({ onSuccess }: Props) => {
           className="sr-only"
           aria-label="Upload banner image"
         />
-        <Button className="mt-4 flex-1">Save</Button>
+        <Button type="submit" disabled={isSaving} className="flex-1 mt-2">
+          {isSaving ? "Saving..." : "Save"}
+        </Button>
       </form>
     </>
   );
