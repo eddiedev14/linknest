@@ -8,7 +8,8 @@ import { useLink } from "./useLink";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
-  const { linkToEdit, addLink } = useLink();
+  const { linkToEdit, addLink, editLink, handleSetLinkToEdit } = useLink();
+  const isEditing = !!linkToEdit;
 
   //* States
   const [isSaving, setIsSaving] = useState(false);
@@ -47,16 +48,19 @@ export const useLinkForm = (onSuccess: () => void) => {
     setIsSaving(true);
 
     try {
-      const error = await addLink(data);
+      const error = isEditing ? await editLink(linkToEdit.id, data) : await addLink(data);
 
       if (error) {
         toast.error(error);
         return;
       }
 
-      toast.success("Link added successfully");
+      toast.success(isEditing ? "Link updated successfully" : "Link added successfully");
       reset();
       onSuccess();
+
+      // Reset link dialog
+      if (isEditing) handleSetLinkToEdit(null);
     } finally {
       setIsSaving(false);
     }
@@ -66,6 +70,7 @@ export const useLinkForm = (onSuccess: () => void) => {
     errors,
     isSaving,
     selectedPlatform,
+    isEditing,
     register,
     setValue,
     onSubmit: handleSubmit(handleLinkFormSubmit),

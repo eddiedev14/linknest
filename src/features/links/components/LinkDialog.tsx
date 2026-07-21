@@ -12,14 +12,19 @@ import { LinkForm } from "./LinkForm";
 import { useLink } from "../hooks/useLink";
 
 export const LinkDialog = () => {
-  const { open, onOpenChange, handleCloseDialog } = useLink();
+  const { open, onOpenChange, handleCloseDialog, handleSetLinkToEdit } = useLink();
 
-  const handleClose = () => {
-    handleCloseDialog();
+  const handleDialogChange = (nextOpen: boolean) => {
+    // When the dialog box closes
+    if (!nextOpen) {
+      handleSetLinkToEdit(null);
+    }
+
+    onOpenChange(nextOpen);
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogChange}>
       <DialogTrigger asChild>
         <Button
           size="lg"
@@ -34,7 +39,7 @@ export const LinkDialog = () => {
         <DialogHeader>
           <DialogTitle className="text-2xl">Add new link</DialogTitle>
           <DialogDescription>Fill in the details to add a new link to your page.</DialogDescription>
-          <LinkForm onSuccess={handleClose} />
+          <LinkForm onSuccess={handleCloseDialog} />
         </DialogHeader>
       </DialogContent>
     </Dialog>

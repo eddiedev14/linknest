@@ -36,7 +36,7 @@ export const useCollection = <T>(table: string) => {
 
     try {
       // Se hace una busqueda sobre la colección indicada
-      let q = buildQuery(constraints);
+      const q = buildQuery(constraints);
 
       // Firebase responde con un “paquete” de documentos
       const unsubscribe = onSnapshot(
@@ -116,7 +116,7 @@ export const useCollection = <T>(table: string) => {
     setIsPending(true);
 
     try {
-      let q = buildQuery(constraints);
+      const q = buildQuery(constraints);
 
       const snapshot = await getDocs(q);
       setIsPending(false);
@@ -167,11 +167,8 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 3. U -> UPDATE
-  const update = async (id: string, data: DocumentData) => {
+  const update = async (id: string, data: Partial<T>) => {
     try {
-      // Busca el documento con ese id y lo actualiza
-      // con doc(db, table, id), se obtiene un documento específico de esa colección por su id
-      // updateDoc, recibe el documento a reemplazar y el nuevo documento
       await updateDoc(doc(db, table, id), {
         ...data,
         updatedAt: serverTimestamp(),

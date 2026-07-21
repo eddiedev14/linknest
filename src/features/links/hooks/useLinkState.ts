@@ -19,6 +19,7 @@ export const useLinkState = () => {
     isPending,
     add,
     suscribe,
+    update,
     updateMany,
   } = useCollection<Link>(`users/${userId}/links`);
   const linksCount = links.length;
@@ -50,9 +51,14 @@ export const useLinkState = () => {
     return !success ? "An error occurred while updating the order of your links" : null;
   };
 
-  const handleSetLinkToEdit = (link: Link) => {
+  const handleSetLinkToEdit = (link: Link | null) => {
     setLinkToEdit(link);
-    handleOpenDialog();
+    if (link) handleOpenDialog();
+  };
+
+  const editLink = async (id: string, data: LinkFormData): Promise<string | null> => {
+    const success = await update(id, data);
+    return !success ? "An error occurred while updating your link" : null;
   };
 
   return {
@@ -67,5 +73,6 @@ export const useLinkState = () => {
     addLink,
     updateLinksOrder,
     handleSetLinkToEdit,
+    editLink,
   };
 };

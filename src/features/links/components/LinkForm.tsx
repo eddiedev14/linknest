@@ -12,14 +12,22 @@ interface Props {
 }
 
 export const LinkForm = ({ onSuccess }: Props) => {
-  const { errors, isSaving, selectedPlatform, register, setValue, onSubmit } =
+  const { errors, isSaving, selectedPlatform, isEditing, register, setValue, onSubmit } =
     useLinkForm(onSuccess);
+
+  const saveMessage = isSaving
+    ? isEditing
+      ? "Updating..."
+      : "Adding..."
+    : isEditing
+      ? "Update Link"
+      : "Add Link";
 
   return (
     <form
       onSubmit={onSubmit}
       noValidate
-      aria-label="Add new Link"
+      aria-label={isEditing ? "Edit your link" : "Add new link"}
       className="mt-4 flex flex-col gap-5"
     >
       {/* Platform */}
@@ -88,7 +96,7 @@ export const LinkForm = ({ onSuccess }: Props) => {
       </div>
 
       <Button type="submit" disabled={isSaving}>
-        {isSaving ? "Adding..." : "Add Link"}
+        {saveMessage}
       </Button>
     </form>
   );
