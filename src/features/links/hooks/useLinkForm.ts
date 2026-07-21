@@ -8,7 +8,7 @@ import { useLink } from "./useLink";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
-  const { addLink } = useLink();
+  const { linkToEdit, addLink } = useLink();
 
   //* States
   const [isSaving, setIsSaving] = useState(false);
@@ -24,11 +24,17 @@ export const useLinkForm = (onSuccess: () => void) => {
   } = useForm<LinkFormData>({
     resolver: zodResolver(linkFormScheme),
     mode: "onBlur",
-    values: {
-      platform: "website",
-      label: "",
-      url: "",
-    },
+    values: linkToEdit
+      ? {
+          platform: linkToEdit.platform,
+          label: linkToEdit.label,
+          url: linkToEdit.url,
+        }
+      : {
+          platform: "website",
+          label: "",
+          url: "",
+        },
   });
 
   const selectedPlatform = useWatch({

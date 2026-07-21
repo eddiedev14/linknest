@@ -1,10 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { orderBy } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 import { getUserId } from "@/features/auth/utils/firebase.helper";
+import { useDialog } from "@/shared/hooks/useDialog";
 import type { Link, LinkFormData } from "../types/link.type";
 
 export const useLinkState = () => {
+  //* States
+  const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
+
+  //* Custom Hook (Link Dialog)
+  const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
+
   //* Collection Hook
   const userId = getUserId();
   const {
@@ -43,11 +50,22 @@ export const useLinkState = () => {
     return !success ? "An error occurred while updating the order of your links" : null;
   };
 
+  const handleSetLinkToEdit = (link: Link) => {
+    setLinkToEdit(link);
+    handleOpenDialog();
+  };
+
   return {
+    open,
     links,
     linksCount,
     loadingLinks: isPending,
+    linkToEdit,
+    onOpenChange,
+    handleOpenDialog,
+    handleCloseDialog,
     addLink,
     updateLinksOrder,
+    handleSetLinkToEdit,
   };
 };

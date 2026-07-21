@@ -9,14 +9,15 @@ import {
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "@/shared/components/shadcn/button";
 import { LinkForm } from "./LinkForm";
+import { useLink } from "../hooks/useLink";
 
-interface Props {
-  open: boolean;
-  handleClose: () => void;
-  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>;
-}
+export const LinkDialog = () => {
+  const { open, onOpenChange, handleCloseDialog } = useLink();
 
-export const LinkDialog = ({ open, handleClose, onOpenChange }: Props) => {
+  const handleClose = () => {
+    handleCloseDialog();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>

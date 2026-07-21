@@ -2,14 +2,12 @@ import { FaLink, FaPlus } from "react-icons/fa6";
 import { Button } from "@/shared/components/shadcn/button";
 import { PageHeader } from "@/shared/components/app/PageHeader";
 import { PageLoader } from "@/shared/components/app/PageLoader";
-import { useDialog } from "@/shared/hooks/useDialog";
 import { LinkDialog } from "@/features/links/components/LinkDialog";
 import { useLink } from "@/features/links/hooks/useLink";
 import { LinkList } from "@/features/links/components/LinkList";
 
 export const Links = () => {
-  const { loadingLinks, linksCount } = useLink();
-  const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
+  const { loadingLinks, linksCount, handleOpenDialog } = useLink();
 
   if (loadingLinks) {
     return <PageLoader />;
@@ -25,7 +23,7 @@ export const Links = () => {
         />
 
         {/* Link Dialog */}
-        <LinkDialog open={open} handleClose={handleCloseDialog} onOpenChange={onOpenChange} />
+        <LinkDialog />
 
         {/* Link List */}
         <LinkList />

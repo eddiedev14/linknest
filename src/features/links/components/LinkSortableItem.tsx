@@ -5,6 +5,7 @@ import { Button } from "@/shared/components/shadcn/button";
 import type { Link } from "../types/link.type";
 import { LINK_PLATFORMS_MAP } from "@/data/links.data";
 import { FaPencil, FaTrash } from "react-icons/fa6";
+import { useLink } from "../hooks/useLink";
 
 interface Props {
   link: Link;
@@ -13,6 +14,9 @@ interface Props {
 export const LinkSortableItem = ({ link }: Props) => {
   const { id, label, platform, url, position } = link;
   const { Icon, bgColor } = LINK_PLATFORMS_MAP[platform];
+  const { handleSetLinkToEdit } = useLink();
+
+  //* Dnd Kit
   const { ref, handleRef, isDragging } = useSortable({ id, index: position });
 
   return (
@@ -53,7 +57,11 @@ export const LinkSortableItem = ({ link }: Props) => {
         {/* Actions */}
         <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity *:bg-transparent *:size-8 *:rounded-lg *:flex *:items-center *:justify-center *:text-muted-foreground *:transition-colors">
           {/* Edit */}
-          <Button className="hover:text-foreground hover:bg-muted" aria-label={`Edit ${label}`}>
+          <Button
+            onClick={() => handleSetLinkToEdit(link)}
+            className="hover:text-foreground hover:bg-muted"
+            aria-label={`Edit ${label}`}
+          >
             <FaPencil size={12} aria-hidden="true" />
           </Button>
 
