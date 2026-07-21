@@ -47,23 +47,21 @@ export const useLinkForm = (onSuccess: () => void) => {
   const handleLinkFormSubmit = async (data: LinkFormData) => {
     setIsSaving(true);
 
-    try {
-      const error = isEditing ? await editLink(linkToEdit.id, data) : await addLink(data);
+    const error = isEditing ? await editLink(linkToEdit.id, data) : await addLink(data);
 
-      if (error) {
-        toast.error(error);
-        return;
-      }
+    setIsSaving(false);
 
-      toast.success(isEditing ? "Link updated successfully" : "Link added successfully");
-      reset();
-      onSuccess();
-
-      // Reset link dialog
-      if (isEditing) handleSetLinkToEdit(null);
-    } finally {
-      setIsSaving(false);
+    if (error) {
+      toast.error(error);
+      return;
     }
+
+    toast.success(isEditing ? "Link updated successfully" : "Link added successfully");
+
+    reset();
+    onSuccess();
+
+    if (isEditing) handleSetLinkToEdit(null);
   };
 
   return {
