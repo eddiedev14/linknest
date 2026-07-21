@@ -8,7 +8,8 @@ import { useLink } from "./useLink";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
-  const { addLink } = useLink();
+  const { linkToEdit, addLink, editLink, handleSetLinkToEdit } = useLink();
+  const isEditing = !!linkToEdit;
 
   //* States
   const [isSaving, setIsSaving] = useState(false);
@@ -24,11 +25,17 @@ export const useLinkForm = (onSuccess: () => void) => {
   } = useForm<LinkFormData>({
     resolver: zodResolver(linkFormScheme),
     mode: "onBlur",
-    values: {
-      platform: "website",
-      label: "",
-      url: "",
-    },
+    values: linkToEdit
+      ? {
+          platform: linkToEdit.platform,
+          label: linkToEdit.label,
+          url: linkToEdit.url,
+        }
+      : {
+          platform: "website",
+          label: "",
+          url: "",
+        },
   });
 
   const selectedPlatform = useWatch({
@@ -40,26 +47,28 @@ export const useLinkForm = (onSuccess: () => void) => {
   const handleLinkFormSubmit = async (data: LinkFormData) => {
     setIsSaving(true);
 
-    try {
-      const error = await addLink(data);
+    const error = isEditing ? await editLink(linkToEdit.id, data) : await addLink(data);
 
-      if (error) {
-        toast.error(error);
-        return;
-      }
+    setIsSaving(false);
 
-      toast.success("Link added successfully");
-      reset();
-      onSuccess();
-    } finally {
-      setIsSaving(false);
+    if (error) {
+      toast.error(error);
+      return;
     }
+
+    toast.success(isEditing ? "Link updated successfully" : "Link added successfully");
+
+    reset();
+    onSuccess();
+
+    if (isEditing) handleSetLinkToEdit(null);
   };
 
   return {
     errors,
     isSaving,
     selectedPlatform,
+    isEditing,
     register,
     setValue,
     onSubmit: handleSubmit(handleLinkFormSubmit),
