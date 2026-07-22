@@ -158,6 +158,10 @@ export default function useAuthState() {
     }
   };
 
+  const findUser = async (username: string): Promise<UserDoc | null> => {
+    return find([where("username", "==", username)]);
+  };
+
   return {
     user,
     userLoading,
@@ -166,6 +170,7 @@ export default function useAuthState() {
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
     updateUserProfile,
+    findUser,
     logout,
   };
 }

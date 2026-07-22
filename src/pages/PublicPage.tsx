@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { FaBriefcase, FaCheck, FaGlobe, FaLink, FaMapPin } from "react-icons/fa6";
-import { useParams } from "react-router-dom";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PageLoader } from "@/shared/components/app/PageLoader";
+import { UserBanner } from "@/shared/components/app/user/UserBanner";
+import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -188,10 +188,9 @@ function Pill({ children, className }: { children: React.ReactNode; className?: 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function PublicPage() {
-  const { username } = useParams();
-  const { userLoading } = useAuth();
+  const { username, loading, bannerClassname, bannerCSS } = usePublicPage();
 
-  if (userLoading) {
+  if (loading) {
     return <PageLoader />;
   }
 
@@ -203,23 +202,7 @@ export function PublicPage() {
       >
         {/* ── Profile card ── */}
         <div className="w-full bg-background rounded-3xl border border-border overflow-hidden shadow-sm mt-8 mb-6">
-          {/* Banner */}
-          <div
-            className="h-28 w-full relative"
-            style={{ background: "oklch(0.564 0.21 270.5)" }}
-            role="img"
-            aria-label="Profile banner"
-          >
-            {/* Subtle pattern */}
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-              aria-hidden="true"
-            />
-          </div>
+          <UserBanner className={bannerClassname} style={bannerCSS} />
 
           {/* Avatar — overlapping banner */}
           <div className="px-6 pb-6">
