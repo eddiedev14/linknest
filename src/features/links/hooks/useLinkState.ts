@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { orderBy } from "firebase/firestore";
+import { toast } from "react-toastify";
 import { useCollection } from "@/firebase/hooks/useCollection";
 import { getUserId } from "@/features/auth/utils/firebase.helper";
 import { useDialog } from "@/shared/hooks/useDialog";
@@ -21,6 +22,7 @@ export const useLinkState = () => {
     suscribe,
     update,
     updateMany,
+    remove,
   } = useCollection<Link>(`users/${userId}/links`);
   const linksCount = links.length;
 
@@ -61,6 +63,16 @@ export const useLinkState = () => {
     return !success ? "An error occurred while updating your link" : null;
   };
 
+  const removeLink = async (id: string) => {
+    const success = await remove(id);
+    if (!success) {
+      toast.error(`An error occurred while removing your link`);
+      return;
+    }
+
+    toast.success("Your link was deleted successfully");
+  };
+
   return {
     open,
     links,
@@ -74,5 +86,6 @@ export const useLinkState = () => {
     updateLinksOrder,
     handleSetLinkToEdit,
     editLink,
+    removeLink,
   };
 };
