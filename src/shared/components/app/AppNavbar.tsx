@@ -110,7 +110,7 @@ export const AppNavbar = () => {
         onOpenChange={setConfirmOpen}
         title="Log Out?"
         text="If you continue, your Linknest account will be closed and you will need to log in again."
-        actionText="Cerrar Sesión"
+        actionText="Log out"
         onConfirm={handleLogout}
       />
     </>

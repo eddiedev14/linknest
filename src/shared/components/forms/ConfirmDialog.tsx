@@ -22,7 +22,7 @@ export function ConfirmDialog({
   open,
   title,
   text,
-  actionText = "Eliminar",
+  actionText = "Remove",
   onConfirm,
   onOpenChange,
 }: Props) {
@@ -35,7 +35,7 @@ export function ConfirmDialog({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
 
           <AlertDialogAction
             onClick={() => {
