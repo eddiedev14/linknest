@@ -1,28 +1,13 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
-import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/data/app.data";
+import { IoMdClose, IoMdMenu } from "react-icons/io";
+import Logo from "@/assets/logo.png";
 import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
-import { useAuth } from "@/features/auth/hooks/useAuth";
-import Logo from "@/assets/logo.png";
-import { IoMdClose, IoMdMenu } from "react-icons/io";
+import { AppNavbarContent } from "./AppNavbarContent";
+import { useAppNavbar } from "@/shared/hooks/useAppNavbar";
 
 export const AppNavbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
-  const { logout } = useAuth();
-
-  const handleLogout = async () => {
-    const error = await logout();
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    toast.success("Session closed successfully");
-  };
+  const { isOpen, confirmOpen, isAuthenticated, setIsOpen, setConfirmOpen, handleLogout } =
+    useAppNavbar();
 
   return (
     <>
@@ -37,26 +22,10 @@ export const AppNavbar = () => {
 
           {/* Desktop */}
           <nav className="hidden items-center gap-4 md:flex">
-            {NAV_ITEMS.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-accent text-primary"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                  )
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-
-            <Button type="button" onClick={() => setConfirmOpen(true)} variant="destructive">
-              Cerrar Sesión
-            </Button>
+            <AppNavbarContent
+              isAuthenticated={isAuthenticated}
+              onLogout={() => setConfirmOpen(true)}
+            />
           </nav>
 
           {/* Mobile button */}
@@ -74,32 +43,11 @@ export const AppNavbar = () => {
         {isOpen && (
           <nav className="absolute left-0 top-14 z-50 w-full border-t border-border bg-background shadow-lg md:hidden">
             <div className="flex flex-col gap-2 p-4">
-              {NAV_ITEMS.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={({ isActive }) =>
-                    cn(
-                      "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                      isActive
-                        ? "bg-accent text-primary"
-                        : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                    )
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-
-              <Button
-                type="button"
-                onClick={() => setConfirmOpen(true)}
-                variant="destructive"
-                className="mt-2 w-full"
-              >
-                Cerrar Sesión
-              </Button>
+              <AppNavbarContent
+                mobile
+                isAuthenticated={isAuthenticated}
+                onLogout={() => setConfirmOpen(true)}
+              />
             </div>
           </nav>
         )}

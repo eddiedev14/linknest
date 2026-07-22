@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { AuthPage, Landing, Links, Profile } from "@/pages";
+import { AuthPage, Landing, Links, Profile, PublicPage } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -19,6 +19,18 @@ export const AppRouter = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
 
+      {/* Public Page */}
+      <Route
+        element={
+          <LinkContextProvider>
+            <PageLayout />
+          </LinkContextProvider>
+        }
+      >
+        <Route path="/u/:username" element={<PublicPage />} />
+      </Route>
+
+      {/* Auth Pages */}
       <Route element={<GuestOnlyRoute />}>
         <Route path="/signup" element={<AuthPage isSignup />} />
         <Route path="/login" element={<AuthPage />} />
