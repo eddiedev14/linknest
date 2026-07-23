@@ -5,6 +5,7 @@ import { PageLoader } from "@/shared/components/app/PageLoader";
 import { UserBanner } from "@/shared/components/app/user/UserBanner";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
+import { Badge } from "@/shared/components/shadcn/badge";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -210,11 +211,11 @@ export function PublicPage() {
             <div className="relative -mt-10 mb-3 flex justify-between items-end">
               <UserAvatar avatarURL={userProfile?.avatar.url} username={username} />
 
-              {/* Employment status pill */}
-              <div className="flex items-center gap-1.5 bg-background border border-border rounded-full px-3 py-1.5 shadow-sm mb-1">
-                <span className="size-2 rounded-full bg-emerald-400 shrink-0" aria-hidden="true" />
-                <span className="text-xs font-semibold text-foreground">Open to work</span>
-              </div>
+              {/* Employment status */}
+              <Badge variant="outline" className="h-auto shadow-sm font-semibold">
+                <span className="size-2 shrink-0 rounded-full bg-emerald-400" aria-hidden="true" />
+                Open to work
+              </Badge>
             </div>
 
             {/* Name + username */}

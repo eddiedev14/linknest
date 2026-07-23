@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserBannerProps } from "@/shared/utils/userBanner.helper";
@@ -18,10 +19,7 @@ export const usePublicPage = () => {
 
   //* Effects
   useEffect(() => {
-    if (!username) {
-      return;
-    }
-
+    if (!username) return;
     const loadUserProfile = async () => {
       const user = await findUser(username);
       setUserProfile(user);
@@ -29,7 +27,7 @@ export const usePublicPage = () => {
     };
 
     loadUserProfile();
-  }, [username, findUser]);
+  }, [username]);
 
   return {
     username,
