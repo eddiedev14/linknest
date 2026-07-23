@@ -1,0 +1,15 @@
+import { Badge } from "../../shadcn/badge";
+import type { Tech } from "@/features/auth/types";
+import { TECH_LABELS } from "@/features/auth/constants/techs.constant";
+
+interface Props {
+  tech: Tech;
+}
+
+export const UserTechPill = ({ tech }: Props) => {
+  return (
+    <Badge key={tech} className="bg-accent/60 border-accent text-primary font-semibold">
+      {TECH_LABELS[tech]}
+    </Badge>
+  );
+};

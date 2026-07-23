@@ -6,6 +6,7 @@ import { UserBanner } from "@/shared/components/app/user/UserBanner";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
 import { UserProfessionalStatusPill } from "../shared/components/app/user/UserProfessionalStatusPill";
+import { UserTechPill } from "@/shared/components/app/user/UserTechPill";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -117,7 +118,6 @@ const LINKS: LinkEntry[] = [
   },
 ];
 
-const LANGUAGES = ["JavaScript", "TypeScript", "Python", "Go", "Rust"];
 const SPOKEN_LANGS = ["English", "Spanish"];
 
 // ─── Link card ────────────────────────────────────────────────────────────────
@@ -205,6 +205,10 @@ export function PublicPage() {
     avatar: { url },
     professionalStatus,
     displayName,
+    professionalRole,
+    location: { city, country },
+    bio,
+    techStack,
   } = userProfile;
 
   return (
@@ -230,31 +234,38 @@ export function PublicPage() {
 
             {/* Name + username */}
             <h1 className="font-heading text-xl font-bold text-foreground leading-tight">
-              {displayName}
+              {displayName || "Anonymous"}
             </h1>
-            <p className="text-sm text-muted-foreground mt-0.5">@eddiedev14</p>
+            <p className="text-sm text-muted-foreground mt-0.5">@{username}</p>
 
             {/* Role */}
-            <div className="flex items-center gap-1.5 mt-2">
-              <FaBriefcase
-                size={13}
-                className="text-muted-foreground shrink-0"
-                aria-hidden="true"
-              />
-              <span className="text-sm text-foreground font-medium">Full-Stack Developer</span>
-            </div>
+            {professionalRole && (
+              <div className="flex items-center gap-1.5 mt-2">
+                <FaBriefcase
+                  size={13}
+                  className="text-muted-foreground shrink-0"
+                  aria-hidden="true"
+                />
+                <span className="text-sm text-foreground font-medium">{professionalRole}</span>
+              </div>
+            )}
 
             {/* Location */}
-            <div className="flex items-center gap-1.5 mt-1">
-              <FaMapPin size={13} className="text-muted-foreground shrink-0" aria-hidden="true" />
-              <span className="text-sm text-muted-foreground">Monterrey, Mexico</span>
-            </div>
+            {(city || country) && (
+              <div className="flex items-center gap-1.5 mt-1">
+                <FaMapPin size={13} className="text-muted-foreground shrink-0" aria-hidden="true" />
+                <span className="text-sm text-muted-foreground">
+                  {[city, country].filter(Boolean).join(", ")}
+                </span>
+              </div>
+            )}
 
             {/* Bio */}
-            <p className="text-sm text-muted-foreground leading-relaxed mt-4 text-pretty">
-              Building web products people actually enjoy. Passionate about clean architecture, DX,
-              and open source. Currently crafting tools for developers.
-            </p>
+            {bio && (
+              <p className="text-sm text-muted-foreground leading-relaxed mt-4 text-pretty">
+                {bio}
+              </p>
+            )}
 
             {/* Divider */}
             <div className="h-px bg-border mt-5 mb-4" />
@@ -262,21 +273,18 @@ export function PublicPage() {
             {/* Tags row */}
             <div className="flex flex-col gap-3">
               {/* Programming languages */}
-              <div className="flex flex-col gap-2">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Stack
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {LANGUAGES.map((lang) => (
-                    <Pill
-                      key={lang}
-                      className="bg-accent/60 border-accent text-primary font-semibold"
-                    >
-                      {lang}
-                    </Pill>
-                  ))}
+              {techStack && (
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Stack
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {techStack.map((tech) => (
+                      <UserTechPill tech={tech} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Spoken languages */}
               <div className="flex flex-col gap-2">
