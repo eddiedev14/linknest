@@ -10,6 +10,7 @@ import { UserTechPill } from "@/shared/components/app/user/UserTechPill";
 import { UserLanguagePill } from "@/shared/components/app/user/UserLanguagePill";
 import { FooterAttribution } from "@/shared/components/app/FooterAttribution";
 import { Navigate } from "react-router-dom";
+import { useUserLinks } from "@/features/public-page/hooks/useUserLinks";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -174,15 +175,18 @@ function LinkCard({ link }: { link: LinkEntry }) {
 }
 
 export function PublicPage() {
-  const { username, userProfile, loading, bannerClassname, bannerCSS } = usePublicPage();
+  const { username, userProfile, userLoading, bannerClassname, bannerCSS } = usePublicPage();
+  const { links, loadingLinks } = useUserLinks(userProfile?.id);
 
-  if (loading) {
+  if (userLoading || loadingLinks) {
     return <PageLoader />;
   }
 
   if (!userProfile) {
     return <Navigate to="/404" replace />;
   }
+
+  console.log(links);
 
   const {
     avatar: { url },

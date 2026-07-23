@@ -32,7 +32,7 @@ export const usePublicPage = () => {
   return {
     username,
     userProfile,
-    loading: userProfileLoading,
+    userLoading: userProfileLoading,
     bannerClassname,
     bannerCSS,
   };

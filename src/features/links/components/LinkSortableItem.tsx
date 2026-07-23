@@ -7,7 +7,7 @@ import { Button } from "@/shared/components/shadcn/button";
 import { ConfirmDialog } from "@/shared/components/forms/ConfirmDialog";
 import type { Link } from "../types/link.type";
 import { LINK_PLATFORMS_MAP } from "@/data/links.data";
-import { useLink } from "../hooks/useLink";
+import { useMyLinks } from "../hooks/useLink";
 
 interface Props {
   link: Link;
@@ -16,7 +16,7 @@ interface Props {
 export const LinkSortableItem = ({ link }: Props) => {
   const { id, label, platform, url, position } = link;
   const { Icon, bgColor } = LINK_PLATFORMS_MAP[platform];
-  const { handleSetLinkToEdit, removeLink } = useLink();
+  const { handleSetLinkToEdit, removeLink } = useMyLinks();
 
   //* States
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);

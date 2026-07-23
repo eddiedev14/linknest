@@ -6,7 +6,7 @@ import { getUserId } from "@/features/auth/utils/firebase.helper";
 import { useDialog } from "@/shared/hooks/useDialog";
 import type { Link, LinkFormData } from "../types/link.type";
 
-export const useLinkState = () => {
+export const useMyLinksState = () => {
   //* States
   const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
 

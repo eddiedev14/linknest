@@ -1,11 +1,11 @@
 import { use } from "react";
-import { LinkContext } from "../context/LinkContext";
+import { MyLinksContext } from "../context/MyLinksContext";
 
-export const useLink = () => {
-  const context = use(LinkContext);
+export const useMyLinks = () => {
+  const context = use(MyLinksContext);
 
   if (!context) {
-    throw new Error("useLink must be used inside AuthProvider");
+    throw new Error("useMyLinks must be used inside AuthProvider");
   }
 
   return context;

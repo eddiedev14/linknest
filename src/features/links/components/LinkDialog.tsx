@@ -9,10 +9,10 @@ import {
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "@/shared/components/shadcn/button";
 import { LinkForm } from "./LinkForm";
-import { useLink } from "../hooks/useLink";
+import { useMyLinks } from "../hooks/useLink";
 
 export const LinkDialog = () => {
-  const { open, onOpenChange, handleCloseDialog, handleSetLinkToEdit } = useLink();
+  const { open, onOpenChange, handleCloseDialog, handleSetLinkToEdit } = useMyLinks();
 
   const handleDialogChange = (nextOpen: boolean) => {
     // When the dialog box closes

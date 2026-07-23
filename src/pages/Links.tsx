@@ -3,11 +3,11 @@ import { Button } from "@/shared/components/shadcn/button";
 import { PageHeader } from "@/shared/components/app/PageHeader";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { LinkDialog } from "@/features/links/components/LinkDialog";
-import { useLink } from "@/features/links/hooks/useLink";
 import { LinkList } from "@/features/links/components/LinkList";
+import { useMyLinks } from "@/features/links/hooks/useLink";
 
 export const Links = () => {
-  const { loadingLinks, linksCount, handleOpenDialog } = useLink();
+  const { loadingLinks, linksCount, handleOpenDialog } = useMyLinks();
 
   if (loadingLinks) {
     return <PageLoader />;

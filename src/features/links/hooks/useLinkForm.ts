@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { linkFormScheme } from "../validations/link.scheme";
 import type { LinkFormData } from "../types/link.type";
-import { useLink } from "./useLink";
+import { useMyLinks } from "./useLink";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook
-  const { linkToEdit, addLink, editLink, handleSetLinkToEdit } = useLink();
+  const { linkToEdit, addLink, editLink, handleSetLinkToEdit } = useMyLinks();
   const isEditing = !!linkToEdit;
 
   //* States

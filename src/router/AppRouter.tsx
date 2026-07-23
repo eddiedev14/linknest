@@ -2,10 +2,10 @@ import { Navigate, Route, Routes } from "react-router";
 import { AuthPage, Landing, Links, NotFound, Profile, PublicPage } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
+import { MyLinksContextProvider } from "@/features/links/context/MyLinksContext";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { PageLayout } from "@/shared/components/app/PageLayout";
-import { LinkContextProvider } from "@/features/links/context/LinkContext";
 
 export const AppRouter = () => {
   // * Esperar a que se compruebe si hay una sesión activa en toda la app.
@@ -19,14 +19,8 @@ export const AppRouter = () => {
     <Routes>
       <Route path="/" element={<Landing />} />
 
-      {/* Public Page */}
-      <Route
-        element={
-          <LinkContextProvider>
-            <PageLayout />
-          </LinkContextProvider>
-        }
-      >
+      {/* Pages with PageLayout */}
+      <Route element={<PageLayout />}>
         <Route path="/u/:username" element={<PublicPage />} />
       </Route>
 
@@ -36,14 +30,13 @@ export const AppRouter = () => {
         <Route path="/login" element={<AuthPage />} />
       </Route>
 
-      {/* Rutas Privadas */}
+      {/* Private Pages */}
       <Route element={<PrivateRoute />}>
-        {/* Layout común para todas las rutas privadas */}
         <Route
           element={
-            <LinkContextProvider>
+            <MyLinksContextProvider>
               <PageLayout />
-            </LinkContextProvider>
+            </MyLinksContextProvider>
           }
         >
           <Route path="/links" element={<Links />} />

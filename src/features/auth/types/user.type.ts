@@ -2,6 +2,7 @@ import type { Timestamp } from "firebase/firestore";
 import type { Avatar, BannerStyle, Language, Location, ProfessionalStatus, Tech } from ".";
 
 export interface User {
+  id: string;
   email: string;
   username: string;
   displayName: string;
