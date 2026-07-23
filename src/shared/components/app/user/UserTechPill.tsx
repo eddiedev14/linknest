@@ -8,7 +8,7 @@ interface Props {
 
 export const UserTechPill = ({ tech }: Props) => {
   return (
-    <Badge key={tech} className="bg-accent/60 border-accent text-primary font-semibold">
+    <Badge className="bg-accent/60 border-accent text-primary font-semibold">
       {TECH_LABELS[tech]}
     </Badge>
   );

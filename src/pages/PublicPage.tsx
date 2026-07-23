@@ -7,6 +7,7 @@ import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
 import { UserProfessionalStatusPill } from "../shared/components/app/user/UserProfessionalStatusPill";
 import { UserTechPill } from "@/shared/components/app/user/UserTechPill";
+import { UserLanguagePill } from "@/shared/components/app/user/UserLanguagePill";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -118,8 +119,6 @@ const LINKS: LinkEntry[] = [
   },
 ];
 
-const SPOKEN_LANGS = ["English", "Spanish"];
-
 // ─── Link card ────────────────────────────────────────────────────────────────
 
 function LinkCard({ link }: { link: LinkEntry }) {
@@ -172,23 +171,6 @@ function LinkCard({ link }: { link: LinkEntry }) {
   );
 }
 
-// ─── Pill badge ───────────────────────────────────────────────────────────────
-
-function Pill({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full px-3 py-1 text-xs font-medium border border-border bg-muted/60 text-foreground",
-        className,
-      )}
-    >
-      {children}
-    </span>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export function PublicPage() {
   const { username, userProfile, loading, bannerClassname, bannerCSS } = usePublicPage();
 
@@ -209,6 +191,7 @@ export function PublicPage() {
     location: { city, country },
     bio,
     techStack,
+    languages,
   } = userProfile;
 
   return (
@@ -280,7 +263,7 @@ export function PublicPage() {
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {techStack.map((tech) => (
-                      <UserTechPill tech={tech} />
+                      <UserTechPill key={tech} tech={tech} />
                     ))}
                   </div>
                 </div>
@@ -292,8 +275,8 @@ export function PublicPage() {
                   Languages
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {SPOKEN_LANGS.map((lang) => (
-                    <Pill key={lang}>{lang}</Pill>
+                  {languages.map((lang) => (
+                    <UserLanguagePill key={lang} language={lang} />
                   ))}
                 </div>
               </div>
