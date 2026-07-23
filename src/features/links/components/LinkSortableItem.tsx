@@ -5,12 +5,12 @@ import { LuGripVertical } from "react-icons/lu";
 import { FaPencil, FaTrash } from "react-icons/fa6";
 import { Button } from "@/shared/components/shadcn/button";
 import { ConfirmDialog } from "@/shared/components/forms/ConfirmDialog";
-import type { Link } from "../types/link.type";
+import type { LinkDoc } from "../types/link.type";
 import { LINK_PLATFORMS_MAP } from "@/data/links.data";
 import { useMyLinks } from "../hooks/useLink";
 
 interface Props {
-  link: Link;
+  link: LinkDoc;
 }
 
 export const LinkSortableItem = ({ link }: Props) => {
