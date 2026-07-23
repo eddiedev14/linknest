@@ -1,13 +1,15 @@
+import Logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp } from "react-icons/io5";
+import { useAuth } from "@/features/auth/hooks/useAuth";
 import { navMenuItems } from "@/data/landing.data";
-import Logo from "@/assets/logo.png";
 
 export default function Navbar() {
   //* States
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -47,17 +49,19 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
+          {!user && (
+            <a
+              href="/login"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Log in
+            </a>
+          )}
           <a
-            href="/login"
-            className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-          >
-            Log in
-          </a>
-          <a
-            href="/signup"
+            href={user ? "/links" : "/signup"}
             className="text-sm font-semibold bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-sm"
           >
-            Get started free
+            {user ? "Continue to Linknest" : "Get started free"}
           </a>
         </div>
 

@@ -3,3 +3,4 @@ export { AuthPage } from "./AuthPage";
 export { Profile } from "./Profile";
 export { Links } from "./Links";
 export { PublicPage } from "./PublicPage";
+export { NotFound } from "./NotFound";

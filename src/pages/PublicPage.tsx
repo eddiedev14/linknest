@@ -8,6 +8,8 @@ import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
 import { UserProfessionalStatusPill } from "../shared/components/app/user/UserProfessionalStatusPill";
 import { UserTechPill } from "@/shared/components/app/user/UserTechPill";
 import { UserLanguagePill } from "@/shared/components/app/user/UserLanguagePill";
+import { FooterAttribution } from "@/shared/components/app/FooterAttribution";
+import { Navigate } from "react-router-dom";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -179,8 +181,7 @@ export function PublicPage() {
   }
 
   if (!userProfile) {
-    //* Mandarlo a 404 Page
-    return;
+    return <Navigate to="/404" replace />;
   }
 
   const {
@@ -251,12 +252,14 @@ export function PublicPage() {
             )}
 
             {/* Divider */}
-            <div className="h-px bg-border mt-5 mb-4" />
+            {(techStack.length > 0 || languages.length > 0) && (
+              <div className="h-px bg-border mt-5 mb-4" />
+            )}
 
             {/* Tags row */}
             <div className="flex flex-col gap-3">
               {/* Programming languages */}
-              {techStack && (
+              {techStack.length > 0 && (
                 <div className="flex flex-col gap-2">
                   <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Stack
@@ -270,21 +273,23 @@ export function PublicPage() {
               )}
 
               {/* Spoken languages */}
-              <div className="flex flex-col gap-2">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Languages
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {languages.map((lang) => (
-                    <UserLanguagePill key={lang} language={lang} />
-                  ))}
+              {languages.length > 0 && (
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Languages
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {languages.map((lang) => (
+                      <UserLanguagePill key={lang} language={lang} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* ── Links section ── */}
+        {/* ── Links ── */}
         <section className="w-full flex flex-col gap-3" aria-label="Eddie's links">
           <div className="flex items-center justify-between px-1 mb-1">
             <h2 className="font-heading text-sm font-bold text-foreground uppercase tracking-widest">
@@ -299,20 +304,7 @@ export function PublicPage() {
         </section>
 
         {/* ── Footer attribution ── */}
-        <div className="mt-12 flex flex-col items-center gap-1.5">
-          <p className="text-xs text-muted-foreground">
-            Powered by{" "}
-            <a href="/" className="font-semibold text-primary hover:underline underline-offset-2">
-              LinkNest
-            </a>
-          </p>
-          <a
-            href="/register"
-            className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
-          >
-            Create your own free page
-          </a>
-        </div>
+        <FooterAttribution />
       </main>
     </div>
   );

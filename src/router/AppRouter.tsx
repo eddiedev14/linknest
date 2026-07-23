@@ -1,5 +1,5 @@
-import { Route, Routes } from "react-router";
-import { AuthPage, Landing, Links, Profile, PublicPage } from "@/pages";
+import { Navigate, Route, Routes } from "react-router";
+import { AuthPage, Landing, Links, NotFound, Profile, PublicPage } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -49,6 +49,12 @@ export const AppRouter = () => {
           <Route path="/links" element={<Links />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
+      </Route>
+
+      {/* Errors Pages */}
+      <Route element={<PageLayout />}>
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Route>
     </Routes>
   );
