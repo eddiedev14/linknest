@@ -5,7 +5,7 @@ import { PageLoader } from "@/shared/components/app/PageLoader";
 import { UserBanner } from "@/shared/components/app/user/UserBanner";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
-import { Badge } from "@/shared/components/shadcn/badge";
+import { UserProfessionalStatusPill } from "../shared/components/app/user/UserProfessionalStatusPill";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -196,6 +196,17 @@ export function PublicPage() {
     return <PageLoader />;
   }
 
+  if (!userProfile) {
+    //* Mandarlo a 404 Page
+    return;
+  }
+
+  const {
+    avatar: { url },
+    professionalStatus,
+    displayName,
+  } = userProfile;
+
   return (
     <div className="min-h-screen bg-muted/30 flex flex-col items-center">
       <main
@@ -209,18 +220,17 @@ export function PublicPage() {
           {/* Avatar */}
           <div className="px-6 pb-6">
             <div className="relative -mt-10 mb-3 flex justify-between items-end">
-              <UserAvatar avatarURL={userProfile?.avatar.url} username={username} />
+              <UserAvatar avatarURL={url} username={username} />
 
               {/* Employment status */}
-              <Badge variant="outline" className="h-auto shadow-sm font-semibold">
-                <span className="size-2 shrink-0 rounded-full bg-emerald-400" aria-hidden="true" />
-                Open to work
-              </Badge>
+              {professionalStatus && (
+                <UserProfessionalStatusPill professionalStatus={professionalStatus} />
+              )}
             </div>
 
             {/* Name + username */}
             <h1 className="font-heading text-xl font-bold text-foreground leading-tight">
-              Eddie Castillo
+              {displayName}
             </h1>
             <p className="text-sm text-muted-foreground mt-0.5">@eddiedev14</p>
 
