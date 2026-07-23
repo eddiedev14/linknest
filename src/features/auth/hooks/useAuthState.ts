@@ -16,8 +16,12 @@ import { where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
-import type { UserDoc, UserLogin, UserRegister } from "../types/user.type";
-import { createBaseNewUser, getAuthErrorMessage, getUserId } from "../utils/firebase.helper";
+import type { User, UserDoc, UserLogin, UserRegister } from "../types/user.type";
+import {
+  createBaseNewUser,
+  getAuthErrorMessage,
+  getUserId,
+} from "@/firebase/utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
 
 const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
@@ -47,7 +51,7 @@ export default function useAuthState() {
   const isCreatingUserDoc = useRef(false);
 
   //* Custom hooks
-  const { setById, suscribeById, find, update } = useCollection<UserDoc>("users");
+  const { setById, suscribeById, find, update } = useCollection<User>("users");
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects

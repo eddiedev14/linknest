@@ -1,4 +1,4 @@
-import { getFirebaseToken } from "@/features/auth/utils/firebase.helper";
+import { getFirebaseToken } from "@/firebase/utils/firebase.helper";
 import type { AuthResponse } from "../types/imageKit.response.type";
 
 // ? Function to request the image's authentication parameters from the backend

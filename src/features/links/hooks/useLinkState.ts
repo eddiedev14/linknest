@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { orderBy } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useCollection } from "@/firebase/hooks/useCollection";
-import { getUserId } from "@/features/auth/utils/firebase.helper";
+import { getUserId } from "@/firebase/utils/firebase.helper";
 import { useDialog } from "@/shared/hooks/useDialog";
-import type { Link, LinkFormData } from "../types/link.type";
+import type { Link, LinkDoc, LinkFormData } from "../types/link.type";
 
 export const useMyLinksState = () => {
   //* States
-  const [linkToEdit, setLinkToEdit] = useState<Link | null>(null);
+  const [linkToEdit, setLinkToEdit] = useState<LinkDoc | null>(null);
 
   //* Custom Hook (Link Dialog)
   const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
@@ -41,7 +41,7 @@ export const useMyLinksState = () => {
     return !linkId ? "An error occurred while adding your link" : null;
   };
 
-  const updateLinksOrder = async (updatedLinks: Link[]): Promise<string | null> => {
+  const updateLinksOrder = async (updatedLinks: LinkDoc[]): Promise<string | null> => {
     const updates = updatedLinks.map((link, index) => ({
       id: link.id,
       data: {
@@ -53,7 +53,7 @@ export const useMyLinksState = () => {
     return !success ? "An error occurred while updating the order of your links" : null;
   };
 
-  const handleSetLinkToEdit = (link: Link | null) => {
+  const handleSetLinkToEdit = (link: LinkDoc | null) => {
     setLinkToEdit(link);
     if (link) handleOpenDialog();
   };

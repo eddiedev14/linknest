@@ -15,15 +15,11 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import type { DocumentData, Query, QueryConstraint, Unsubscribe } from "firebase/firestore";
+import type { FirestoreDoc } from "../types/firestore.types";
 
 //? Se tipa el hook con un genérico para tipado de typescript.
 export const useCollection = <T>(table: string) => {
-  // Tipo base de documento
-  type Doc<T> = {
-    id: string;
-  } & T;
-
-  const [results, setResults] = useState<Doc<T>[]>([]);
+  const [results, setResults] = useState<FirestoreDoc<T>[]>([]);
   const [isPending, setIsPending] = useState(false);
 
   const buildQuery = (constraints: QueryConstraint[] = []): Query => {
@@ -42,7 +38,7 @@ export const useCollection = <T>(table: string) => {
       const unsubscribe = onSnapshot(
         q,
         (snapshot) => {
-          const docs: Doc<T>[] = snapshot.docs.map((d) => ({
+          const docs: FirestoreDoc<T>[] = snapshot.docs.map((d) => ({
             id: d.id,
             ...(d.data() as T),
           }));
@@ -63,7 +59,10 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 1. R -> READ by id (real-time)
-  const suscribeById = (id: string, callback: (doc: Doc<T> | null) => void): Unsubscribe => {
+  const suscribeById = (
+    id: string,
+    callback: (doc: FirestoreDoc<T> | null) => void,
+  ): Unsubscribe => {
     setIsPending(true);
 
     const unsubscribe = onSnapshot(
@@ -86,7 +85,7 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 1. R -> READ
-  const getById = async (id: string): Promise<Doc<T> | null> => {
+  const getById = async (id: string): Promise<FirestoreDoc<T> | null> => {
     setIsPending(true);
 
     try {
@@ -94,7 +93,7 @@ export const useCollection = <T>(table: string) => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const result: Doc<T> = {
+        const result: FirestoreDoc<T> = {
           id: docSnap.id,
           ...(docSnap.data() as T),
         };
@@ -112,7 +111,7 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 1. R -> READ
-  const find = async (constraints: QueryConstraint[] = []): Promise<Doc<T> | null> => {
+  const find = async (constraints: QueryConstraint[] = []): Promise<FirestoreDoc<T> | null> => {
     setIsPending(true);
 
     try {

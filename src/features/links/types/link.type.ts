@@ -1,11 +1,12 @@
+import type { FirestoreDoc } from "@/firebase/types/firestore.types";
 import type { PlatformId } from "./platform.type";
 
 export interface Link {
-  id: string; // Firestore ID
   position: number;
   platform: PlatformId;
   label: string;
   url: string;
 }
 
-export type LinkFormData = Omit<Link, "id" | "position">;
+export type LinkDoc = FirestoreDoc<Link>;
+export type LinkFormData = Omit<Link, "position">;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { upload } from "@imagekit/react";
-import { getFirebaseToken, getUserId } from "@/features/auth/utils/firebase.helper";
+import { getFirebaseToken, getUserId } from "@/firebase/utils/firebase.helper";
 import { deleteImageKitFile, getAuth } from "../actions/imageKit.actions";
 import type { Avatar } from "@/features/auth/types/avatar.type";
 
