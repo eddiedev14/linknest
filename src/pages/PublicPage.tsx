@@ -4,6 +4,7 @@ import { FaBriefcase, FaCheck, FaGlobe, FaLink, FaMapPin } from "react-icons/fa6
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { UserBanner } from "@/shared/components/app/user/UserBanner";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
+import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -188,7 +189,7 @@ function Pill({ children, className }: { children: React.ReactNode; className?: 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export function PublicPage() {
-  const { username, loading, bannerClassname, bannerCSS } = usePublicPage();
+  const { username, userProfile, loading, bannerClassname, bannerCSS } = usePublicPage();
 
   if (loading) {
     return <PageLoader />;
@@ -204,17 +205,10 @@ export function PublicPage() {
         <div className="w-full bg-background rounded-3xl border border-border overflow-hidden shadow-sm mt-8 mb-6">
           <UserBanner className={bannerClassname} style={bannerCSS} />
 
-          {/* Avatar — overlapping banner */}
+          {/* Avatar */}
           <div className="px-6 pb-6">
             <div className="relative -mt-10 mb-3 flex justify-between items-end">
-              <div className="size-20 rounded-2xl border-4 border-background bg-muted overflow-hidden shadow-md shrink-0">
-                <img
-                  src="https://api.dicebear.com/9.x/lorelei/svg?seed=eddiedev14&backgroundColor=6366f1&backgroundType=solid"
-                  alt="Eddie's avatar"
-                  className="size-full object-cover"
-                  crossOrigin="anonymous"
-                />
-              </div>
+              <UserAvatar avatarURL={userProfile?.avatar.url} username={username} />
 
               {/* Employment status pill */}
               <div className="flex items-center gap-1.5 bg-background border border-border rounded-full px-3 py-1.5 shadow-sm mb-1">
