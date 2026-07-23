@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, type ReactNode } from "react";
-import { useMyLinksState } from "../hooks/useLinkState";
+import { useMyLinksState } from "../hooks/useMyLinksState";
 
 interface IProvider {
   children: ReactNode;

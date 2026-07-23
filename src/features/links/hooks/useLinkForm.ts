@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { linkFormScheme } from "../validations/link.scheme";
 import type { LinkFormData } from "../types/link.type";
-import { useMyLinks } from "./useLink";
+import { useMyLinks } from "./useMyLinks";
 
 export const useLinkForm = (onSuccess: () => void) => {
   //* Custom hook

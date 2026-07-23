@@ -9,7 +9,7 @@ import {
 import { FaPlus } from "react-icons/fa6";
 import { Button } from "@/shared/components/shadcn/button";
 import { LinkForm } from "./LinkForm";
-import { useMyLinks } from "../hooks/useLink";
+import { useMyLinks } from "../hooks/useMyLinks";
 
 export const LinkDialog = () => {
   const { open, onOpenChange, handleCloseDialog, handleSetLinkToEdit } = useMyLinks();

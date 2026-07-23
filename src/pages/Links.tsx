@@ -4,7 +4,7 @@ import { PageHeader } from "@/shared/components/app/PageHeader";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { LinkDialog } from "@/features/links/components/LinkDialog";
 import { LinkList } from "@/features/links/components/LinkList";
-import { useMyLinks } from "@/features/links/hooks/useLink";
+import { useMyLinks } from "@/features/links/hooks/useMyLinks";
 
 export const Links = () => {
   const { loadingLinks, linksCount, handleOpenDialog } = useMyLinks();

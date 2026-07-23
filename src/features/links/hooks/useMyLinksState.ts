@@ -28,8 +28,7 @@ export const useMyLinksState = () => {
 
   //* Effects
   useEffect(() => {
-    const unsubscribe = suscribe([orderBy("position")]);
-    return unsubscribe;
+    return suscribe([orderBy("position")]);
   }, [suscribe]);
 
   //* Functions
