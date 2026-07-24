@@ -1,7 +1,7 @@
 import { FirebaseError } from "firebase/app";
 import { auth } from "@/firebase/config";
-import type { User } from "../types/user.type";
-import type { Avatar } from "../types/avatar.type";
+import type { Avatar } from "@/features/auth/types";
+import type { User } from "@/features/auth/types/user.type";
 
 // Función para obtener el mensaje de error de firebase a la hora de autenticarse
 const getAuthErrorMessage = (error: unknown): string => {

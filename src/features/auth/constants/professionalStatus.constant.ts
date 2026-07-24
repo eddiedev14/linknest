@@ -10,3 +10,12 @@ export const PROFESSIONAL_STATUS_VALUES = [
   "",
   ...Object.keys(PROFESSIONAL_STATUS_LABELS),
 ] as ProfessionalStatus[];
+
+export const PROFESSIONAL_STATUS_PILL_COLORS: Record<
+  keyof typeof PROFESSIONAL_STATUS_LABELS,
+  string
+> = {
+  available: "bg-emerald-500",
+  open_to_opportunities: "bg-sky-500",
+  currently_employed: "bg-primary",
+};

@@ -1,4 +1,4 @@
-import type { Timestamp } from "firebase/firestore";
+import type { FirestoreDoc } from "@/firebase/types/firestore.types";
 import type { Avatar, BannerStyle, Language, Location, ProfessionalStatus, Tech } from ".";
 
 export interface User {
@@ -15,12 +15,7 @@ export interface User {
   bannerStyle: BannerStyle;
 }
 
-export type BaseDoc = {
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-};
-
-export type UserDoc = Omit<User, "password"> & BaseDoc;
+export type UserDoc = FirestoreDoc<User>;
 
 // Forms
 export type UserRegister = {

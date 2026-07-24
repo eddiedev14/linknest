@@ -1,17 +1,12 @@
-import { FaLink, FaPlus } from "react-icons/fa6";
-import { Button } from "@/shared/components/shadcn/button";
 import { PageHeader } from "@/shared/components/app/PageHeader";
-import { PageLoader } from "@/shared/components/app/PageLoader";
 import { LinkDialog } from "@/features/links/components/LinkDialog";
-import { useLink } from "@/features/links/hooks/useLink";
+import { LinksSkeleton } from "@/features/links/components/LinksSkeleton";
 import { LinkList } from "@/features/links/components/LinkList";
+import { NoLinksPlaceholder } from "@/features/links/components/NoLinksPlaceholder";
+import { useMyLinks } from "@/features/links/hooks/useMyLinks";
 
 export const Links = () => {
-  const { loadingLinks, linksCount, handleOpenDialog } = useLink();
-
-  if (loadingLinks) {
-    return <PageLoader />;
-  }
+  const { loadingLinks, linksCount, handleOpenDialog } = useMyLinks();
 
   return (
     <main className="flex-1 flex flex-col items-center py-10 px-4" aria-label="Manage your links">
@@ -25,30 +20,17 @@ export const Links = () => {
         {/* Link Dialog */}
         <LinkDialog />
 
-        {/* Link List */}
-        <LinkList />
-
-        {/* Empty Links */}
-        {linksCount === 0 && (
-          <div className="flex flex-col items-center gap-4 py-8 px-6 text-center bg-background rounded-2xl border-2 border-dashed border-border">
-            <div className="size-14 rounded-2xl bg-accent flex items-center justify-center">
-              <FaLink size={24} className="text-primary" aria-hidden="true" />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <h3 className="font-heading font-semibold text-base text-foreground">No links yet</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Add your first link to start building your public page.
-              </p>
-            </div>
-            <Button
-              size="lg"
-              className="h-10 px-6 rounded-xl font-semibold text-sm shadow-sm shadow-primary/20 gap-2"
-              onClick={handleOpenDialog}
-            >
-              <FaPlus size={15} aria-hidden="true" />
-              Add your first link
-            </Button>
-          </div>
+        {/* Content */}
+        {loadingLinks ? (
+          <LinksSkeleton />
+        ) : linksCount > 0 ? (
+          <LinkList />
+        ) : (
+          <NoLinksPlaceholder
+            title="No links yet"
+            paragraph="Add your first link to start building your public page."
+            onOpenDialog={handleOpenDialog}
+          />
         )}
       </div>
     </main>

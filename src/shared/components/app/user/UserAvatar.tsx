@@ -1,0 +1,38 @@
+import { Image } from "@imagekit/react";
+import AnonymousProfile from "@/assets/anonymous.png";
+
+interface Props {
+  avatarURL?: string;
+  username?: string;
+}
+
+const urlEndpoint = import.meta.env.VITE_IMAGEKIT_URL_ENDPOINT;
+
+export const UserAvatar = ({ avatarURL, username }: Props) => {
+  return (
+    <div
+      className="size-28 rounded-full border-4 border-background bg-muted flex items-center justify-center overflow-hidden shadow-md"
+      aria-label="Profile photo"
+    >
+      {avatarURL ? (
+        <Image
+          urlEndpoint={urlEndpoint}
+          src={avatarURL}
+          transformation={[
+            {
+              width: 300,
+              height: 300,
+              crop: "maintain_ratio",
+              quality: 80,
+              format: "webp",
+            },
+          ]}
+          loading="lazy"
+          alt={`${username}'s profile`}
+        />
+      ) : (
+        <img src={AnonymousProfile} className="object-cover" alt="Default profile" />
+      )}
+    </div>
+  );
+};

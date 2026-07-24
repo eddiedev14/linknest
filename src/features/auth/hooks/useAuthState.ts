@@ -1,5 +1,5 @@
 //* React
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 //* Firebase
 import { auth, githubProvider, googleProvider } from "@/firebase/config";
@@ -16,8 +16,12 @@ import { where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
-import type { UserDoc, UserLogin, UserRegister } from "../types/user.type";
-import { createBaseNewUser, getAuthErrorMessage, getUserId } from "../utils/firebase.helper";
+import type { User, UserDoc, UserLogin, UserRegister } from "../types/user.type";
+import {
+  createBaseNewUser,
+  getAuthErrorMessage,
+  getUserId,
+} from "@/firebase/utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
 
 const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
@@ -47,7 +51,7 @@ export default function useAuthState() {
   const isCreatingUserDoc = useRef(false);
 
   //* Custom hooks
-  const { setById, suscribeById, find, update } = useCollection<UserDoc>("users");
+  const { setById, suscribeById, find, update } = useCollection<User>("users");
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects
@@ -158,6 +162,13 @@ export default function useAuthState() {
     }
   };
 
+  const findUser = useCallback(
+    async (username: string): Promise<UserDoc | null> => {
+      return find([where("username", "==", username)]);
+    },
+    [find],
+  );
+
   return {
     user,
     userLoading,
@@ -166,6 +177,7 @@ export default function useAuthState() {
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
     updateUserProfile,
+    findUser,
     logout,
   };
 }

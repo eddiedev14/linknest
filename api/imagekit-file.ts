@@ -1,12 +1,12 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: <> */
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { auth } from './firebaseAdmin';
-import ImageKit from 'imagekit';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { auth } from "./firebaseAdmin.js";
+import ImageKit from "imagekit";
 
 const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, IMAGEKIT_URL_ENDPOINT } = process.env;
 
 if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY || !IMAGEKIT_URL_ENDPOINT) {
-  throw new Error('Missing ImageKit environment variables');
+  throw new Error("Missing ImageKit environment variables");
 }
 
 const imagekit = new ImageKit({
@@ -16,9 +16,9 @@ const imagekit = new ImageKit({
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'DELETE') {
+  if (req.method !== "DELETE") {
     return res.status(405).json({
-      message: 'Method not allowed',
+      message: "Method not allowed",
     });
   }
 
@@ -26,29 +26,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // 1. Obtener token del usuario
     const authHeader = req.headers.authorization;
 
-    if (!authHeader?.startsWith('Bearer ')) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return res.status(401).json({
-        message: 'Unauthorized',
+        message: "Unauthorized",
       });
     }
 
-    const idToken = authHeader.split('Bearer ')[1];
+    const idToken = authHeader.split("Bearer ")[1];
 
     // 2. Verificar token con Firebase
     const decodedUser = await auth.verifyIdToken(idToken);
 
     if (!decodedUser?.uid) {
       return res.status(401).json({
-        message: 'Invalid token',
+        message: "Invalid token",
       });
     }
 
     // 3. Obtener el fileId del body
     const { fileId } = req.body;
 
-    if (!fileId || typeof fileId !== 'string') {
+    if (!fileId || typeof fileId !== "string") {
       return res.status(400).json({
-        message: 'fileId is required',
+        message: "fileId is required",
       });
     }
 
@@ -62,7 +62,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error(error);
 
     return res.status(500).json({
-      message: 'Failed to delete file',
+      message: "Failed to delete file",
     });
   }
 }
