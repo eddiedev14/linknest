@@ -42,11 +42,14 @@ export const useLinkList = () => {
 
       if (error) {
         toast.error(error);
+        setIsUpdatingOrder(false);
         return;
       }
 
       toast.success("Links are now correctly ordered");
-    } finally {
+      setIsUpdatingOrder(false);
+    } catch {
+      toast.error("Something went wrong. Please try again.");
       setIsUpdatingOrder(false);
     }
   };

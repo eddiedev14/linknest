@@ -8,9 +8,9 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    babel({ presets: [reactCompilerPreset()] }),
     react(),
     tailwindcss(),
-    babel({ presets: [reactCompilerPreset()] }),
     visualizer({
       open: true,
       gzipSize: true,

@@ -38,11 +38,12 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground">
             &copy; {CURRENT_YEAR} LinkNest. All rights reserved.
           </p>
-          <div className="flex gap-4 *:text-foreground *:transition-all *:hover:-translate-y-1">
+          <div className="flex gap-4 *:text-foreground *:transition-colors">
             <a
               href="https://www.linkedin.com/in/eddiedev14/"
               target="_blank"
               className="hover:text-blue-500"
+              aria-label="My Linkedin"
             >
               <BsLinkedin />
             </a>
@@ -50,6 +51,7 @@ export default function Footer() {
               href="https://github.com/eddiedev14/linknest"
               target="_blank"
               className="hover:text-black"
+              aria-label="My Github"
             >
               <BsGithub />
             </a>

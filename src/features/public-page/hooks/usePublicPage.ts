@@ -29,21 +29,32 @@ export const usePublicPage = () => {
   } = useCollection<Link>(`users/${userId}/links`);
 
   //* Effects
+  //* Effects
   useEffect(() => {
     if (!username) return;
+    let ignore = false;
+
     const loadUserProfile = async () => {
       const user = await findUser(username);
-      setUserProfile(user);
-      setUserProfileLoading(false);
+      if (!ignore) {
+        setUserProfile(user);
+        setUserProfileLoading(false);
+      }
     };
 
     loadUserProfile();
+
+    return () => {
+      ignore = true;
+    };
   }, [username, findUser]);
 
   useEffect(() => {
     if (!userId) return;
     return suscribeLinks([orderBy("position")]);
   }, [userId, suscribeLinks]);
+
+  console.count("Re-render...");
 
   return {
     username,

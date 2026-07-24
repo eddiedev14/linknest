@@ -92,10 +92,7 @@ export const AuthPage = ({ isSignup = false }: Props) => {
       </div>
 
       {/* Right panel ── */}
-      <aside
-        className="hidden lg:flex flex-1 flex-col items-center justify-center bg-accent/30 px-14 py-12 overflow-hidden"
-        aria-hidden="true"
-      >
+      <aside className="hidden lg:flex flex-1 flex-col items-center justify-center bg-accent/30 px-14 py-12 overflow-hidden">
         <div className="w-full max-w-md">
           <img
             src={isSignup ? SignupIllustration : SigninIllustration}

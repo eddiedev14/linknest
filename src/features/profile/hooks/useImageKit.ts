@@ -9,11 +9,10 @@ export const useImageKit = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Function to upload a local profile photo
-  const uploadFile = async (file: File): Promise<Avatar> => {
+  const uploadFile = async (file: File): Promise<Avatar | null> => {
     setIsUploading(true);
 
     try {
-      // Get credentials from backend
       const auth = await getAuth();
 
       const result = await upload({
@@ -28,24 +27,27 @@ export const useImageKit = () => {
         useUniqueFileName: false,
       });
 
+      setIsUploading(false);
+
       return {
         url: result.url || "",
         fileId: result.fileId || "",
       };
-    } finally {
+    } catch {
       setIsUploading(false);
+      return null;
     }
   };
 
   // Function to upload Google avatar
-  const uploadProviderAvatar = async (photoURL: string): Promise<Avatar> => {
+  const uploadProviderAvatar = async (photoURL: string): Promise<Avatar | null> => {
     setIsUploading(true);
-    let avatar: Avatar;
 
     try {
       const idToken = await getFirebaseToken();
       if (!idToken) {
-        throw new Error("The Firebase token could not be obtained");
+        setIsUploading(false);
+        return null;
       }
 
       const response = await fetch("/api/upload-provider-photo", {
@@ -54,23 +56,21 @@ export const useImageKit = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify({
-          photoURL,
-        }),
+        body: JSON.stringify({ photoURL }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload Google avatar");
+        setIsUploading(false);
+        return null;
       }
 
-      avatar = await response.json();
-    } catch (error) {
+      const avatar = await response.json();
       setIsUploading(false);
-      throw error;
+      return avatar;
+    } catch {
+      setIsUploading(false);
+      return null;
     }
-
-    setIsUploading(false);
-    return avatar;
   };
 
   // Function to delete an image
@@ -79,10 +79,16 @@ export const useImageKit = () => {
 
     try {
       const idToken = await getFirebaseToken();
-      if (!idToken) return "The Firebase token could not be obtained";
+      if (!idToken) {
+        setIsDeleting(false);
+        return "The Firebase token could not be obtained";
+      }
+
       deleteImageKitFile(idToken, fileId);
-    } finally {
       setIsDeleting(false);
+    } catch {
+      setIsDeleting(false);
+      return "Something went wrong. Please try again.";
     }
   };
 

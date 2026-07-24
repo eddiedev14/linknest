@@ -6,6 +6,11 @@ const citiesCache = new Map<string, SelectOption[]>();
 
 const getAllCountries = async (): Promise<SelectOption[]> => {
   const res = await fetch("https://countriesnow.space/api/v0.1/countries/positions");
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch countries: ${res.status}`);
+  }
+
   const data: CountriesResponse = await res.json();
   return data.data.map((country) => ({
     label: country.name,
@@ -23,6 +28,10 @@ const getCitiesFromCountry = async (country: string): Promise<SelectOption[]> =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ country }),
   });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch cities: ${res.status}`);
+  }
 
   const data: CitiesResponse = await res.json();
   const normalizedData = normalizeUniqueAndSort(data.data);
