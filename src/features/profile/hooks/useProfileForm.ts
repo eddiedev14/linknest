@@ -54,24 +54,35 @@ export const useProfileForm = () => {
 
   //* Effects
   useEffect(() => {
+    let ignore = false;
+
     const getCountriesOptions = async () => {
       const countriesNames = await getAllCountries();
-      setCountriesOptions(countriesNames);
+      if (!ignore) setCountriesOptions(countriesNames);
     };
 
     getCountriesOptions();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   useEffect(() => {
     if (!country) return;
+    let ignore = false;
 
     const getCitiesOptions = async () => {
       const citiesNames = await getCitiesFromCountry(country);
-      setCitiesOptions(citiesNames);
+      if (!ignore) setCitiesOptions(citiesNames);
     };
 
     getCitiesOptions();
-  }, [country, setValue]);
+
+    return () => {
+      ignore = true;
+    };
+  }, [country]);
 
   //* Handlers
   const handleProfileFormSubmit = async (data: FormData) => {

@@ -113,7 +113,7 @@ export default function Hero() {
                   return (
                     <div
                       key={link.label}
-                      className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-border bg-white hover:border-primary/40 hover:shadow-sm transition-all cursor-pointer group"
+                      className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-border bg-white hover:border-primary/40 transition-colors cursor-pointer group"
                     >
                       <div className="flex items-center gap-2">
                         <Icon className="text-primary" />

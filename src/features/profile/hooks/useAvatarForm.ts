@@ -10,19 +10,23 @@ export const useAvatarForm = () => {
 
   //* States
   const [avatarPhoto, setAvatarPhoto] = useState<File | null>(null);
+  const [avatarPreviewURL, setAvatarPreviewURL] = useState<string | null>(null);
 
   //* Custom hooks
   const { isUploading, isDeleting, uploadFile, deleteFile } = useImageKit();
 
   //* Refs & Variables
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const avatarPreviewURL = avatarPhoto ? URL.createObjectURL(avatarPhoto) : null;
+  const previewURLRef = useRef<string | null>(null);
 
-  //* Effects
+  //* Effects — solo revoca al desmontar, sin setState
   useEffect(() => {
-    if (!avatarPreviewURL) return;
-    return () => URL.revokeObjectURL(avatarPreviewURL);
-  }, [avatarPreviewURL]);
+    return () => {
+      if (previewURLRef.current) {
+        URL.revokeObjectURL(previewURLRef.current);
+      }
+    };
+  }, []);
 
   //* Handlers
   const handleFileClick = () => {
@@ -32,37 +36,53 @@ export const useAvatarForm = () => {
   const handleFileChange = () => {
     const input = fileInputRef.current;
 
+    // Siempre revoca la URL anterior antes de crear una nueva (o de limpiar)
+    if (previewURLRef.current) {
+      URL.revokeObjectURL(previewURLRef.current);
+      previewURLRef.current = null;
+    }
+
     if (!input || !input.files || input.files.length === 0) {
       setAvatarPhoto(null);
+      setAvatarPreviewURL(null);
       return;
     }
 
     const file = input.files[0];
+    const imgErrorValidation = validateAvatarImg(file);
 
-    try {
-      validateAvatarImg(file);
-      setAvatarPhoto(file);
-    } catch (error) {
-      toast.error((error as Error).message);
+    if (imgErrorValidation) {
+      toast.error(imgErrorValidation);
+      return;
     }
+
+    const url = URL.createObjectURL(file);
+    previewURLRef.current = url;
+
+    setAvatarPhoto(file);
+    setAvatarPreviewURL(url);
   };
 
   const removeAvatar = async () => {
     if (!user) return;
 
     try {
-      // Delete the photo from ImageKit
-      await deleteFile(user.avatar.fileId);
+      const imageKitError = await deleteFile(user.avatar.fileId);
+
+      if (imageKitError) {
+        toast.error("Error while removing your profile photo from our file system");
+        return;
+      }
 
       const updatedUser = {
         ...user,
         avatar: { url: "", fileId: "" },
       };
 
-      const error = await updateUserProfile(updatedUser);
+      const firestoreError = await updateUserProfile(updatedUser);
 
-      if (error) {
-        toast.error(`Error while updating your profile: ${error}`);
+      if (firestoreError) {
+        toast.error("Error while removing your profile photo from our database");
         return;
       }
 
@@ -82,15 +102,16 @@ export const useAvatarForm = () => {
       return;
     }
 
-    const { url, fileId } = await uploadFile(avatarPhoto);
-    if (!url || !fileId) {
+    const avatar = await uploadFile(avatarPhoto);
+
+    if (!avatar || !avatar.url || !avatar.fileId) {
       toast.error("Error retrieving the avatar URL");
       return;
     }
 
     const updatedUser = {
       ...user,
-      avatar: { url: `${url}?v=${Date.now()}`, fileId },
+      avatar: { url: `${avatar.url}?v=${Date.now()}`, fileId: avatar.fileId },
     };
 
     const error = await updateUserProfile(updatedUser);

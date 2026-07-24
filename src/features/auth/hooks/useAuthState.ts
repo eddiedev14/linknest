@@ -145,21 +145,19 @@ export default function useAuthState() {
     const userId = getUserId();
     if (!userId) return "The user ID could not be retrieved";
 
-    try {
-      await update(userId, updatedFields);
-      setUser((prev) =>
-        prev
-          ? {
-              ...prev,
-              ...updatedFields,
-            }
-          : prev,
-      );
+    const success = await update(userId, updatedFields);
+    if (!success) return "An error occurred while updating your profile";
 
-      return null;
-    } catch {
-      return "An error occurred while updating your profile";
-    }
+    setUser((prev) =>
+      prev
+        ? {
+            ...prev,
+            ...updatedFields,
+          }
+        : prev,
+    );
+
+    return null;
   };
 
   const findUser = useCallback(

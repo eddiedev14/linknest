@@ -65,12 +65,15 @@ export const useBannerDialog = () => {
 
       if (error) {
         toast.error(error);
+        setIsSaving(false);
         return;
       }
 
       toast.success("Your banner style was updated");
       onSuccess?.();
-    } finally {
+      setIsSaving(false);
+    } catch {
+      toast.error("Something went wrong. Please try again.");
       setIsSaving(false);
     }
   };
