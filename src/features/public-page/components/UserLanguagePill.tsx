@@ -1,5 +1,5 @@
 import type { Language } from "@/features/auth/types";
-import { Badge } from "../../shadcn/badge";
+import { Badge } from "../../../shared/components/shadcn/badge";
 import { LANGUAGE_LABELS } from "@/features/auth/constants/languages.constant";
 
 interface Props {

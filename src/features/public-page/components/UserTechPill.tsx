@@ -1,4 +1,4 @@
-import { Badge } from "../../shadcn/badge";
+import { Badge } from "../../../shared/components/shadcn/badge";
 import type { Tech } from "@/features/auth/types";
 import { TECH_LABELS } from "@/features/auth/constants/techs.constant";
 
