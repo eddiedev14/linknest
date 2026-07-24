@@ -79,10 +79,7 @@ export const useImageKit = () => {
 
     try {
       const idToken = await getFirebaseToken();
-      if (!idToken) {
-        throw new Error("The Firebase token could not be obtained");
-      }
-
+      if (!idToken) return "The Firebase token could not be obtained";
       deleteImageKitFile(idToken, fileId);
     } finally {
       setIsDeleting(false);

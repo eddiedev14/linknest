@@ -38,13 +38,14 @@ export const useAvatarForm = () => {
     }
 
     const file = input.files[0];
+    const imgErrorValidation = validateAvatarImg(file);
 
-    try {
-      validateAvatarImg(file);
-      setAvatarPhoto(file);
-    } catch (error) {
-      toast.error((error as Error).message);
+    if (imgErrorValidation) {
+      toast.error(imgErrorValidation);
+      return;
     }
+
+    setAvatarPhoto(file);
   };
 
   const removeAvatar = async () => {
@@ -52,17 +53,22 @@ export const useAvatarForm = () => {
 
     try {
       // Delete the photo from ImageKit
-      await deleteFile(user.avatar.fileId);
+      const imageKitError = await deleteFile(user.avatar.fileId);
+
+      if (imageKitError) {
+        toast.error("Error while removing your profile photo from our file system");
+        return;
+      }
 
       const updatedUser = {
         ...user,
         avatar: { url: "", fileId: "" },
       };
 
-      const error = await updateUserProfile(updatedUser);
+      const firestoreError = await updateUserProfile(updatedUser);
 
-      if (error) {
-        toast.error(`Error while updating your profile: ${error}`);
+      if (firestoreError) {
+        toast.error("Error while removing your profile photo from our database");
         return;
       }
 
