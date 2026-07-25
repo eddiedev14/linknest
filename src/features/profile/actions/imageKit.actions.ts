@@ -1,38 +1,55 @@
+import { imageKitApi } from "../api/imageKit.api";
 import { getFirebaseToken } from "@/firebase/utils/firebase.helper";
 import type { AuthResponse } from "../types/imageKit.response.type";
+import type { Avatar } from "@/features/auth/types";
 
 // ? Function to request the image's authentication parameters from the backend
 const getAuth = async (): Promise<AuthResponse> => {
   const idToken = await getFirebaseToken();
   if (!idToken) throw new Error("The Firebase token could not be obtained");
 
-  const res = await fetch("/api/imagekit-auth", {
-    method: "GET",
+  const response = await imageKitApi.get("/imagekit-auth", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
   });
 
-  if (!res.ok) {
-    throw new Error("Unable to obtain ImageKit authentication");
-  }
-
-  return res.json();
+  return response.data;
 };
 
-const deleteImageKitFile = async (idToken: string, fileId: string) => {
-  const res = await fetch("/api/imagekit-file", {
-    method: "DELETE",
+const uploadFromProvider = async (photoURL: string) => {
+  const idToken = await getFirebaseToken();
+  if (!idToken) {
+    throw new Error("The Firebase token could not be obtained");
+  }
+
+  const response = await imageKitApi.post<Avatar>(
+    "/upload-provider-photo",
+    { photoURL },
+    {
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    },
+  );
+
+  return response.data;
+};
+
+const deleteImageKitFile = async (fileId: string) => {
+  const idToken = await getFirebaseToken();
+  if (!idToken) {
+    throw new Error("The Firebase token could not be obtained");
+  }
+
+  await imageKitApi.delete("/imagekit-file", {
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${idToken}`,
     },
-    body: JSON.stringify({ fileId }),
+    data: {
+      fileId,
+    },
   });
-
-  if (!res.ok) {
-    throw new Error("Unable to delete ImageKit file");
-  }
 };
 
-export { getAuth, deleteImageKitFile };
+export { getAuth, uploadFromProvider, deleteImageKitFile };

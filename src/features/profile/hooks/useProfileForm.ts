@@ -56,12 +56,16 @@ export const useProfileForm = () => {
   useEffect(() => {
     let ignore = false;
 
-    const getCountriesOptions = async () => {
-      const countriesNames = await getAllCountries();
-      if (!ignore) setCountriesOptions(countriesNames);
+    const loadCountries = async () => {
+      try {
+        const countries = await getAllCountries();
+        if (!ignore) setCountriesOptions(countries);
+      } catch {
+        if (!ignore) toast.error("An error occurred while retrieving the countries");
+      }
     };
 
-    getCountriesOptions();
+    loadCountries();
 
     return () => {
       ignore = true;
@@ -72,12 +76,16 @@ export const useProfileForm = () => {
     if (!country) return;
     let ignore = false;
 
-    const getCitiesOptions = async () => {
-      const citiesNames = await getCitiesFromCountry(country);
-      if (!ignore) setCitiesOptions(citiesNames);
+    const loadCities = async () => {
+      try {
+        const cities = await getCitiesFromCountry(country);
+        if (!ignore) setCitiesOptions(cities);
+      } catch {
+        if (!ignore) toast.error("An error occurred while retrieving the cities from the country");
+      }
     };
 
-    getCitiesOptions();
+    loadCities();
 
     return () => {
       ignore = true;

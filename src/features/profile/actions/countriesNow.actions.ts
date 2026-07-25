@@ -1,3 +1,4 @@
+import { countriesNowApi } from "../api/countriesNow.api";
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 import type { CitiesResponse, CountriesResponse } from "../types/countriesNow.response.type";
 import { normalizeUniqueAndSort } from "../utils/countriesNow.helper";
@@ -5,36 +6,22 @@ import { normalizeUniqueAndSort } from "../utils/countriesNow.helper";
 const citiesCache = new Map<string, SelectOption[]>();
 
 const getAllCountries = async (): Promise<SelectOption[]> => {
-  const res = await fetch("https://countriesnow.space/api/v0.1/countries/positions");
+  const response = await countriesNowApi.get<CountriesResponse>("/positions");
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch countries: ${res.status}`);
-  }
-
-  const data: CountriesResponse = await res.json();
-  return data.data.map((country) => ({
+  return response.data.data.map((country) => ({
     label: country.name,
     value: country.name,
   }));
 };
 
 const getCitiesFromCountry = async (country: string): Promise<SelectOption[]> => {
+  //* Cache implementation
   if (citiesCache.has(country)) {
     return citiesCache.get(country)!;
   }
 
-  const res = await fetch("https://countriesnow.space/api/v0.1/countries/cities", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ country }),
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch cities: ${res.status}`);
-  }
-
-  const data: CitiesResponse = await res.json();
-  const normalizedData = normalizeUniqueAndSort(data.data);
+  const response = await countriesNowApi.post<CitiesResponse>("/cities", { country });
+  const normalizedData = normalizeUniqueAndSort(response.data.data);
   const citiesOptions: SelectOption[] = normalizedData.map((city) => ({
     label: city,
     value: city,

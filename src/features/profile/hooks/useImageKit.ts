@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { upload } from "@imagekit/react";
-import { getFirebaseToken, getUserId } from "@/firebase/utils/firebase.helper";
-import { deleteImageKitFile, getAuth } from "../actions/imageKit.actions";
+import { getUserId } from "@/firebase/utils/firebase.helper";
+import { getAuth, uploadFromProvider, deleteImageKitFile } from "../actions/imageKit.actions";
 import type { Avatar } from "@/features/auth/types/avatar.type";
 
 export const useImageKit = () => {
@@ -44,27 +44,7 @@ export const useImageKit = () => {
     setIsUploading(true);
 
     try {
-      const idToken = await getFirebaseToken();
-      if (!idToken) {
-        setIsUploading(false);
-        return null;
-      }
-
-      const response = await fetch("/api/upload-provider-photo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({ photoURL }),
-      });
-
-      if (!response.ok) {
-        setIsUploading(false);
-        return null;
-      }
-
-      const avatar = await response.json();
+      const avatar = await uploadFromProvider(photoURL);
       setIsUploading(false);
       return avatar;
     } catch {
@@ -78,13 +58,7 @@ export const useImageKit = () => {
     setIsDeleting(true);
 
     try {
-      const idToken = await getFirebaseToken();
-      if (!idToken) {
-        setIsDeleting(false);
-        return "The Firebase token could not be obtained";
-      }
-
-      deleteImageKitFile(idToken, fileId);
+      deleteImageKitFile(fileId);
       setIsDeleting(false);
     } catch {
       setIsDeleting(false);
