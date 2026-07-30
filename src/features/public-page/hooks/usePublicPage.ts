@@ -54,8 +54,6 @@ export const usePublicPage = () => {
     return suscribeLinks([orderBy("position")]);
   }, [userId, suscribeLinks]);
 
-  console.count("Re-render...");
-
   return {
     username,
     userProfile,

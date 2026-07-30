@@ -14,11 +14,17 @@ import {
   getDocs,
   writeBatch,
 } from "firebase/firestore";
-import type { DocumentData, Query, QueryConstraint, Unsubscribe } from "firebase/firestore";
+import type {
+  DocumentData,
+  Query,
+  QueryConstraint,
+  Unsubscribe,
+  UpdateData,
+} from "firebase/firestore";
 import type { FirestoreDoc } from "../types/firestore.types";
 
 //? Se tipa el hook con un genérico para tipado de typescript.
-export const useCollection = <T>(table: string) => {
+export const useCollection = <T extends DocumentData>(table: string) => {
   const [results, setResults] = useState<FirestoreDoc<T>[]>([]);
   const [isPending, setIsPending] = useState(false);
 
@@ -141,7 +147,7 @@ export const useCollection = <T>(table: string) => {
       const ref = await addDoc(collection(db, table), {
         ...data,
         createdAt: serverTimestamp(),
-      } as DocumentData);
+      });
 
       return ref.id; // Retornar el id del documento creado
     } catch {
@@ -166,7 +172,7 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 3. U -> UPDATE
-  const update = async (id: string, data: Partial<T>) => {
+  const update = async (id: string, data: UpdateData<T>) => {
     try {
       await updateDoc(doc(db, table, id), {
         ...data,
@@ -180,7 +186,7 @@ export const useCollection = <T>(table: string) => {
   };
 
   //* 3. U -> UPDATE
-  const updateMany = async (updates: { id: string; data: Partial<T> }[]): Promise<boolean> => {
+  const updateMany = async (updates: { id: string; data: UpdateData<T> }[]): Promise<boolean> => {
     try {
       // Agrupa todas las actualizaciones en una sola operación atómica.
       const batch = writeBatch(db);

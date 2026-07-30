@@ -35,8 +35,8 @@ export const useMyLinksState = () => {
   const addLink = async (data: LinkFormData): Promise<string | null> => {
     if (linksCount === 10) return "You can add a maximum of 10 links to your account";
 
-    const payload = { ...data, position: linksCount + 1 };
-    const linkId = await add(payload as Link);
+    const payload: Link = { ...data, position: linksCount + 1, totalClicks: 0 };
+    const linkId = await add(payload);
     return !linkId ? "An error occurred while adding your link" : null;
   };
 
