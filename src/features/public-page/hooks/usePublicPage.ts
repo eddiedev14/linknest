@@ -4,6 +4,7 @@ import { orderBy } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 import { getUserBannerProps } from "@/shared/utils/userBanner.helper";
 import { useAuth } from "@/features/auth/hooks/useAuth";
+import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
 import type { UserDoc } from "@/features/auth/types/user.type";
 import type { Link } from "@/features/links/types/link.type";
 
@@ -21,14 +22,14 @@ export const usePublicPage = () => {
   //* Context
   const { findUser } = useAuth();
 
-  //* useCollection (links)
+  //* Custom hooks
   const {
     results: links,
     isPending: loadingLinks,
     suscribe: suscribeLinks,
   } = useCollection<Link>(`users/${userId}/links`);
+  const { registerClick } = useAnalytics(userId);
 
-  //* Effects
   //* Effects
   useEffect(() => {
     if (!username) return;
@@ -62,5 +63,6 @@ export const usePublicPage = () => {
     loadingLinks,
     bannerClassname,
     bannerCSS,
+    onLinkClick: registerClick,
   };
 };

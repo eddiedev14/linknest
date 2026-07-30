@@ -13,8 +13,16 @@ import { FooterAttribution } from "@/shared/components/app/FooterAttribution";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 
 export function PublicPage() {
-  const { username, userProfile, links, loading, loadingLinks, bannerClassname, bannerCSS } =
-    usePublicPage();
+  const {
+    username,
+    userProfile,
+    links,
+    loading,
+    loadingLinks,
+    bannerClassname,
+    bannerCSS,
+    onLinkClick,
+  } = usePublicPage();
 
   if (loading) {
     return <PageLoader />;
@@ -144,7 +152,7 @@ export function PublicPage() {
 
               <ol className="flex flex-col gap-3">
                 {links.map((link) => (
-                  <UserLinkItem key={link.id} link={link} />
+                  <UserLinkItem key={link.id} link={link} onLinkClick={onLinkClick} />
                 ))}
               </ol>
             </>
