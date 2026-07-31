@@ -1,5 +1,5 @@
 //* React
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 //* Firebase
 import { auth, githubProvider, googleProvider } from "@/firebase/config";
@@ -160,12 +160,9 @@ export default function useAuthState() {
     return null;
   };
 
-  const findUser = useCallback(
-    async (username: string): Promise<UserDoc | null> => {
-      return find([where("username", "==", username)]);
-    },
-    [find],
-  );
+  const findUser = async (username: string): Promise<UserDoc | null> => {
+    return find([where("username", "==", username)]);
+  };
 
   return {
     user,
