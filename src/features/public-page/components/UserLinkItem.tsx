@@ -3,15 +3,26 @@ import type { LinkDoc } from "@/features/links/types/link.type";
 
 interface Props {
   link: LinkDoc;
+  onLinkClick: (link: LinkDoc) => void;
 }
 
-export const UserLinkItem = ({ link }: Props) => {
+export const UserLinkItem = ({ link, onLinkClick }: Props) => {
   const { label, platform, url } = link;
   const { Icon, bgColor } = LINK_PLATFORMS_MAP[platform];
 
+  const handleLinkClick = () => {
+    onLinkClick(link);
+  };
+
   return (
     <li>
-      <a href={url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${label}`}>
+      <a
+        href={url}
+        onClick={handleLinkClick}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${label}`}
+      >
         <div className="group flex items-center gap-3 bg-background rounded-2xl border border-border px-4 py-4 shadow-sm transition-shadow">
           {/* Platform icon badge */}
           <div

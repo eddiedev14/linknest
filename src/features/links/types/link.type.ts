@@ -6,7 +6,8 @@ export interface Link {
   platform: PlatformId;
   label: string;
   url: string;
+  totalClicks: number;
 }
 
 export type LinkDoc = FirestoreDoc<Link>;
-export type LinkFormData = Omit<Link, "position">;
+export type LinkFormData = Omit<Link, "position" | "totalClicks">;
