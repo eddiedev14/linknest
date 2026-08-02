@@ -20,13 +20,13 @@ export const useAnalytics = (userId?: string) => {
     // 1. Validate if the link should be register as a stat
     if (!canRegisterClick(id)) return;
 
-    // 2. Update the totalClicks field in links collection
-    const updated = await updateLink(id, {
-      totalClicks: increment(1),
-    });
-
-    // 3. Register/update a new document in Analytics colleciton
-    const upserted = await upsertAnalytics(link);
+    // 2. Update the global analytics
+    const [updated, upserted] = await Promise.all([
+      updateLink(id, {
+        totalClicks: increment(1),
+      }),
+      upsertAnalytics(link),
+    ]);
 
     if (updated && upserted) {
       saveClickLocally(id);
@@ -57,6 +57,7 @@ export const useAnalytics = (userId?: string) => {
       },
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { date, ...updatePayload } = payload;
 
     // 2. Upsert the Analytics doc
