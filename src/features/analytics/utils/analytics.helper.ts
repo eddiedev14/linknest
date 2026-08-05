@@ -1,7 +1,9 @@
+import { FaArrowDown, FaArrowUp, FaEquals } from "react-icons/fa6";
 import type { DailyAnalytics } from "../types/analytics.type";
-import type { ClicksPerDay } from "../types/stats.type";
+import type { ClicksPerDay, Stats } from "../types/stats.type";
 
-export function buildStats(weekAnalytics: DailyAnalytics[]) {
+// Function to calculate the values for the stats and analytics
+const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats => {
   // Today at 00:00
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -34,8 +36,38 @@ export function buildStats(weekAnalytics: DailyAnalytics[]) {
     }));
 
   return {
+    totalLinks,
     totalClicksToday,
     totalClicksYesterday,
     clicksPerDay,
   };
-}
+};
+
+const getDeltaClicksInfo = (delta: number, absoluteDelta: number) => {
+  if (delta > 0) {
+    return {
+      classname: "text-emerald-500",
+      Icon: FaArrowUp,
+      ariaLabel: `${absoluteDelta} more clicks than yesterday`,
+      value: `+${absoluteDelta}`,
+    };
+  }
+
+  if (delta < 0) {
+    return {
+      classname: "text-destructive",
+      Icon: FaArrowDown,
+      ariaLabel: `${absoluteDelta} fewer clicks than yesterday`,
+      value: `-${absoluteDelta}`,
+    };
+  }
+
+  return {
+    classname: "text-primary",
+    Icon: FaEquals,
+    ariaLabel: `Same number of clicks as yesterday`,
+    value: "",
+  };
+};
+
+export { buildStats, getDeltaClicksInfo };

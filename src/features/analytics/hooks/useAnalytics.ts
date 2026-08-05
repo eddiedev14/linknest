@@ -99,17 +99,9 @@ export const useAnalytics = (userId?: string) => {
     ]);
 
     // 2. Calculate the stats with the helper function.
-    const { totalClicksToday, totalClicksYesterday, clicksPerDay } = buildStats(weekAnalytics);
-
-    const data: Stats = {
-      totalLinks,
-      totalClicksToday,
-      totalClicksYesterday,
-      clicksPerDay: clicksPerDay,
-    };
-
+    const stats = buildStats(totalLinks, weekAnalytics);
     setAnalyticsLoading(false);
-    setStats(data);
+    setStats(stats);
   };
 
   return {

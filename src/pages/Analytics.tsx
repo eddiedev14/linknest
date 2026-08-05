@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { getUserId } from "@/firebase/utils/firebase.helper";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { PageHeader } from "@/shared/components/app/PageHeader";
-import { StatCards } from "@/features/analytics/components/StatCards";
+import { StatCards } from "@/features/analytics/components/stats/StatCards";
 import { WeeklyClicksChart } from "@/features/analytics/components/WeeklyClicksChart";
 import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
 
