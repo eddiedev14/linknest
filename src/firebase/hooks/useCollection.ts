@@ -13,6 +13,7 @@ import {
   setDoc,
   getDocs,
   writeBatch,
+  getCountFromServer,
 } from "firebase/firestore";
 import type {
   DocumentData,
@@ -136,7 +137,6 @@ export const useCollection = <T extends DocumentData>(table: string) => {
 
       try {
         const q = buildQuery(constraints);
-
         const snapshot = await getDocs(q);
         setIsPending(false);
 
@@ -151,6 +151,26 @@ export const useCollection = <T extends DocumentData>(table: string) => {
       } catch {
         setIsPending(false);
         return null;
+      }
+    },
+    [buildQuery],
+  );
+
+  //* 1. R -> READ
+  const getAll = useCallback(
+    async (constraints: QueryConstraint[] = []): Promise<FirestoreDoc<T>[]> => {
+      setIsPending(true);
+
+      try {
+        const q = buildQuery(constraints);
+        const snapshot = await getDocs(q);
+
+        return snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as T),
+        }));
+      } finally {
+        setIsPending(false);
       }
     },
     [buildQuery],
@@ -276,6 +296,24 @@ export const useCollection = <T extends DocumentData>(table: string) => {
     }
   };
 
+  //* 5. AGGREGATE FUNCTIONS -> COUNT
+  const count = useCallback(
+    async (constraints: QueryConstraint[] = []): Promise<number> => {
+      setIsPending(true);
+
+      try {
+        const q = buildQuery(constraints);
+        const snapshot = await getCountFromServer(q);
+        setIsPending(false);
+        return snapshot.data().count;
+      } catch {
+        setIsPending(false);
+        return 0;
+      }
+    },
+    [buildQuery],
+  );
+
   return {
     results,
     isPending,
@@ -283,10 +321,12 @@ export const useCollection = <T extends DocumentData>(table: string) => {
     suscribeById,
     getById,
     find,
+    getAll,
     add,
     setById,
     update,
     updateMany,
     remove,
+    count,
   };
 };

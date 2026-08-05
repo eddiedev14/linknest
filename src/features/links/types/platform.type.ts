@@ -8,4 +8,5 @@ export interface LinkPlatform {
   Icon: IconType;
   baseUrl: string;
   bgColor: string;
+  chartColor: string;
 }

@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router";
-import { AuthPage, Landing, Links, NotFound, Profile, PublicPage } from "@/pages";
+import { Analytics, AuthPage, Landing, Links, NotFound, Profile, PublicPage } from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { MyLinksContextProvider } from "@/features/links/context/MyLinksContext";
@@ -40,6 +40,7 @@ export const AppRouter = () => {
           }
         >
           <Route path="/links" element={<Links />} />
+          <Route path="/analytics" element={<Analytics />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
