@@ -6,6 +6,7 @@ import { StatCards } from "@/features/analytics/components/stats/StatCards";
 import { WeeklyClicksChart } from "@/features/analytics/components/charts/WeeklyClicksChart";
 import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
 import { WeeklyPlatformsChart } from "@/features/analytics/components/charts/WeeklyPlatformsChart";
+import { WeeklyLinksChart } from "@/features/analytics/components/charts/WeeklyLinksChart";
 
 export const Analytics = () => {
   const userId = getUserId();
@@ -18,12 +19,18 @@ export const Analytics = () => {
   if (analyticsLoading) return <PageLoader />;
   if (!stats) return;
 
-  const { totalLinks, totalClicksToday, totalClicksYesterday, clicksPerDay, clicksByPlatform } =
-    stats;
+  const {
+    totalLinks,
+    totalClicksToday,
+    totalClicksYesterday,
+    clicksPerDay,
+    clicksByPlatform,
+    clicksByLink,
+  } = stats;
 
   return (
     <main className="flex-1 flex flex-col items-center py-10 px-4" aria-label="Your Analytics">
-      <div className="w-full max-w-2xl flex flex-col gap-6">
+      <div className="w-full max-w-3xl flex flex-col gap-6">
         <PageHeader
           title="Analytics"
           description="Track how your audience interacts with your links over the last 7 days."
@@ -38,8 +45,9 @@ export const Analytics = () => {
         {/* Charts */}
         {<WeeklyClicksChart data={clicksPerDay} />}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid md:grid-cols-2 gap-3">
           <WeeklyPlatformsChart data={clicksByPlatform} />
+          <WeeklyLinksChart data={clicksByLink} />
         </div>
       </div>
     </main>

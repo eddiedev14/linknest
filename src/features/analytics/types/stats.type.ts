@@ -12,10 +12,16 @@ export interface ClicksByPlatformChart {
   clicks: number;
 }
 
+export interface ClicksByLinkChart {
+  label: string;
+  clicks: number;
+}
+
 export interface Stats {
   totalLinks: number;
   totalClicksToday: number;
   totalClicksYesterday: number;
   clicksPerDay: ClicksPerDayChart[];
   clicksByPlatform: ClicksByPlatformChart[];
+  clicksByLink: ClicksByLinkChart[];
 }

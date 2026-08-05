@@ -1,7 +1,13 @@
 import { FaArrowDown, FaArrowUp, FaEquals } from "react-icons/fa6";
 import type { PlatformId } from "@/features/links/types/platform.type";
 import type { DailyAnalytics } from "../types/analytics.type";
-import type { ClicksByPlatformChart, ClicksPerDayChart, Stats, Weekday } from "../types/stats.type";
+import type {
+  ClicksByLinkChart,
+  ClicksByPlatformChart,
+  ClicksPerDayChart,
+  Stats,
+  Weekday,
+} from "../types/stats.type";
 
 // Function to calculate the values for the stats and analytics
 const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats => {
@@ -19,6 +25,7 @@ const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats 
 
   let clicksPerDay: ClicksPerDayChart[] = [];
   let clicksByPlatform: ClicksByPlatformChart[] = [];
+  let clicksByLink: ClicksByLinkChart[] = [];
 
   // 2. Iterate over weekAnalytics to calculate all the stats
   weekAnalytics
@@ -53,7 +60,19 @@ const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats 
           return;
         }
 
-        clicksByPlatform.push({ platform: platformId, clicks: clicks });
+        clicksByPlatform.push({ platform: platformId, clicks });
+      });
+
+      // Clicks by label
+      Object.entries(day.byLink).forEach(([label, clicks]) => {
+        const existing = clicksByLink.find((link) => link.label === label);
+
+        if (existing) {
+          existing.clicks += clicks;
+          return;
+        }
+
+        clicksByLink.push({ label, clicks });
       });
     });
 
@@ -63,6 +82,7 @@ const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats 
     totalClicksYesterday,
     clicksPerDay,
     clicksByPlatform,
+    clicksByLink,
   };
 };
 
