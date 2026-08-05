@@ -18,7 +18,7 @@ export const LinkList = () => {
         </ol>
       </DragDropProvider>
 
-      <div className="flex justify-end">
+      <div>
         <Button onClick={handleSaveOrderClick} disabled={!hasOrderChanged || isUpdatingOrder}>
           {isUpdatingOrder ? "Updating order..." : "Update order"}
           <IoReload />
