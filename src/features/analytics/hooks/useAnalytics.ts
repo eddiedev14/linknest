@@ -5,7 +5,7 @@ import type { Link, LinkDoc } from "@/features/links/types/link.type";
 import type { DailyAnalytics } from "../types/analytics.type";
 import type { Stats } from "../types/stats.type";
 import { canRegisterClick, saveClickLocally } from "../utils/localStorage.helper";
-import { buildStats } from "../utils/analytics.helper";
+import { buildStats } from "../utils/stats.helper";
 
 export const useAnalytics = (userId?: string) => {
   //* States

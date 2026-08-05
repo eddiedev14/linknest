@@ -13,10 +13,10 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/shared/components/shadcn/chart";
-import type { ClicksPerDay } from "../types/stats.type";
+import type { ClicksPerDayChart } from "../../types/stats.type";
 
 interface Props {
-  data: ClicksPerDay[];
+  data: ClicksPerDayChart[];
 }
 
 const chartConfig = {

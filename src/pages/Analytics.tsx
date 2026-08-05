@@ -3,8 +3,9 @@ import { getUserId } from "@/firebase/utils/firebase.helper";
 import { PageLoader } from "@/shared/components/app/PageLoader";
 import { PageHeader } from "@/shared/components/app/PageHeader";
 import { StatCards } from "@/features/analytics/components/stats/StatCards";
-import { WeeklyClicksChart } from "@/features/analytics/components/WeeklyClicksChart";
+import { WeeklyClicksChart } from "@/features/analytics/components/charts/WeeklyClicksChart";
 import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
+import { WeeklyPlatformsChart } from "@/features/analytics/components/charts/WeeklyPlatformsChart";
 
 export const Analytics = () => {
   const userId = getUserId();
@@ -17,7 +18,8 @@ export const Analytics = () => {
   if (analyticsLoading) return <PageLoader />;
   if (!stats) return;
 
-  const { totalLinks, totalClicksToday, totalClicksYesterday, clicksPerDay } = stats;
+  const { totalLinks, totalClicksToday, totalClicksYesterday, clicksPerDay, clicksByPlatform } =
+    stats;
 
   return (
     <main className="flex-1 flex flex-col items-center py-10 px-4" aria-label="Your Analytics">
@@ -34,7 +36,11 @@ export const Analytics = () => {
         />
 
         {/* Charts */}
-        {clicksPerDay && <WeeklyClicksChart data={clicksPerDay} />}
+        {<WeeklyClicksChart data={clicksPerDay} />}
+
+        <div className="grid grid-cols-2 gap-3">
+          <WeeklyPlatformsChart data={clicksByPlatform} />
+        </div>
       </div>
     </main>
   );

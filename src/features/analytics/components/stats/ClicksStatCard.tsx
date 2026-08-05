@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { FaComputerMouse } from "react-icons/fa6";
 import { Card, CardContent } from "@/shared/components/shadcn/card";
-import { getDeltaClicksInfo } from "../../utils/analytics.helper";
+import { getDeltaClicksInfo } from "../../utils/stats.helper";
 
 interface Props {
   totalClicksToday: number;
