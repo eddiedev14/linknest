@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useMatch } from "react-router-dom";
 import { AppNavbar } from "./AppNavbar";
 import { ShareButton } from "./user/ShareButton";
 import { getPublicURL } from "@/shared/utils/publicURL.helper";
@@ -7,12 +7,13 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 export const PageLayout = () => {
   const { user } = useAuth();
   const publicURL = getPublicURL(user?.username);
+  const isPublicProfile = useMatch("/u/:username"); // Don't show the share button if is an user profile page.
 
   return (
     <div className="min-h-screen bg-muted/40 flex flex-col">
       <AppNavbar />
       <Outlet />
-      {user?.username && <ShareButton url={publicURL} />}
+      {!isPublicProfile && user?.username && <ShareButton url={publicURL} />}
     </div>
   );
 };

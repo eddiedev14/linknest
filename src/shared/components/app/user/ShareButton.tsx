@@ -24,7 +24,7 @@ export const ShareButton = ({ url }: Props) => {
     <div
       tabIndex={0}
       role="group"
-      className="fixed right-4 bottom-4 sm:right-6 sm:bottom-6 md:right-8 md:bottom-8 flex items-center h-16 max-w-16 hover:max-w-[calc(100vw-2rem)] focus-within:max-w-[calc(100vw-2rem)] sm:hover:max-w-sm sm:focus-within:max-w-sm md:hover:max-w-md md:focus-within:max-w-md overflow-hidden rounded-full border border-border shadow-sm transition-[max-width] duration-300 ease-in-out cursor-pointer focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+      className="bg-white fixed right-4 bottom-4 sm:right-6 sm:bottom-6 md:right-8 md:bottom-8 flex items-center h-16 max-w-16 hover:max-w-[calc(100vw-2rem)] focus-within:max-w-[calc(100vw-2rem)] sm:hover:max-w-sm sm:focus-within:max-w-sm md:hover:max-w-md md:focus-within:max-w-md overflow-hidden rounded-full border border-border shadow-sm transition-[max-width] duration-300 ease-in-out cursor-pointer focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
       aria-label="Share your public profile URL"
       title="Share your public profile URL"
     >
