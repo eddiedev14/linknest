@@ -27,6 +27,7 @@ export const AuthForm = ({ isSignup }: Props) => {
           id="email"
           type="email"
           placeholder="you@example.com"
+          autoComplete="email"
           errorMsg={errors.email?.message}
           registration={register("email")}
         />
@@ -40,6 +41,7 @@ export const AuthForm = ({ isSignup }: Props) => {
             Icon={CiUser}
             id="username"
             placeholder="Your Username"
+            autoComplete="username"
             errorMsg={errors.username?.message}
             hint="This will be your public profile URL."
             registration={register("username")}
@@ -54,6 +56,7 @@ export const AuthForm = ({ isSignup }: Props) => {
           Icon={CiLock}
           id="password"
           type="password"
+          autoComplete="current-password"
           errorMsg={errors.password?.message}
           registration={register("password")}
         />
@@ -67,6 +70,7 @@ export const AuthForm = ({ isSignup }: Props) => {
             Icon={CiLock}
             id="confirmPassword"
             type="password"
+            autoComplete="new-password"
             errorMsg={errors.confirmPassword?.message}
             registration={register("confirmPassword")}
           />

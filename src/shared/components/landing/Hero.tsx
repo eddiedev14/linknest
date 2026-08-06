@@ -25,7 +25,7 @@ export default function Hero() {
         {/* Left: Copy */}
         <div className="flex flex-col gap-6">
           {/* Badge */}
-          <Badge className="inline-flex items-center gap-2 self-start bg-accent text-accent-foreground text-xs font-semibold p-3 rounded-full border border-primary/20">
+          <Badge className="inline-flex items-center gap-2 self-start bg-white text-accent-foreground text-xs font-semibold p-3 rounded-full border border-primary/70">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             Built for developers
           </Badge>

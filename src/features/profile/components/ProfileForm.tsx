@@ -36,6 +36,7 @@ export const ProfileForm = () => {
             id="username"
             type="text"
             placeholder="Your Username"
+            autoComplete="username"
             hint="This will be your public profile URL."
             registration={register("username")}
             errorMsg={errors.username?.message}
@@ -51,6 +52,7 @@ export const ProfileForm = () => {
           id="displayName"
           type="text"
           placeholder="e.g. Alex Rivera"
+          autoComplete="name"
           hint="This is the name shown at the top of your public page."
           registration={register("displayName")}
         />

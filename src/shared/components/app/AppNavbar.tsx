@@ -1,18 +1,35 @@
-import { IoMdClose, IoMdMenu } from "react-icons/io";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { IoMdClose } from "react-icons/io";
 import Logo from "@/assets/logo.png";
-import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
+import { SearchBar } from "../SearchBar";
 import { AppNavbarContent } from "./AppNavbarContent";
-import { useAppNavbar } from "@/shared/hooks/useAppNavbar";
+import { useNavbar } from "@/shared/hooks/useNavbar";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { IoSearch, IoMenuSharp } from "react-icons/io5";
 
 export const AppNavbar = () => {
-  const { isOpen, confirmOpen, isAuthenticated, setIsOpen, setConfirmOpen, handleLogout } =
-    useAppNavbar();
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const { menuOpen, searchOpen, toggleMenu, toggleSearch } = useNavbar();
+  const { user, logout } = useAuth();
+  const isAuthenticated = !!user;
+
+  //* Handlers
+  const handleLogout = async () => {
+    const error = await logout();
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success("Session closed successfully");
+  };
 
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-border bg-background">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
+        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 lg:px-6">
           <a href="/" className="flex items-center gap-2">
             <img src={Logo} alt="Linknest Logo" className="size-8" />
             <span className="font-heading text-lg font-bold tracking-tight">
@@ -20,28 +37,50 @@ export const AppNavbar = () => {
             </span>
           </a>
 
-          {/* Desktop */}
-          <nav className="hidden items-center gap-4 md:flex">
+          {/* Search (Desktop) */}
+          <div className="hidden md:block">
+            <SearchBar />
+          </div>
+
+          <div className="hidden items-center gap-4 lg:flex">
             <AppNavbarContent
               isAuthenticated={isAuthenticated}
               onLogout={() => setConfirmOpen(true)}
             />
-          </nav>
+          </div>
 
-          {/* Mobile button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <IoMdClose className="size-5" /> : <IoMdMenu className="size-5" />}
-          </Button>
-        </div>
+          {/* Mobile buttons */}
+          <div className="flex items-center gap-1 lg:hidden">
+            <button
+              type="button"
+              onClick={toggleSearch}
+              className="p-2 rounded-lg hover:bg-muted transition-colors md:hidden"
+              aria-label="Search"
+            >
+              {searchOpen ? <IoMdClose /> : <IoSearch />}
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className="p-2 rounded-lg hover:bg-muted transition-colors"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
+            </button>
+          </div>
+        </nav>
+
+        {/* Mobile Search */}
+        {searchOpen && (
+          <div className="md:hidden border-t border-border bg-white px-6 py-4">
+            <SearchBar autoFocus />
+          </div>
+        )}
 
         {/* Mobile menu */}
-        {isOpen && (
-          <nav className="absolute left-0 top-14 z-50 w-full border-t border-border bg-background shadow-lg md:hidden">
+        {menuOpen && (
+          <nav className="absolute left-0 top-14 z-50 w-full border-t border-border bg-background shadow-lg lg:hidden">
             <div className="flex flex-col gap-2 p-4">
               <AppNavbarContent
                 mobile
