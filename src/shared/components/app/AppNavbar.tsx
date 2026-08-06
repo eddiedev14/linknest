@@ -4,6 +4,7 @@ import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
 import { AppNavbarContent } from "./AppNavbarContent";
 import { useAppNavbar } from "@/shared/hooks/useAppNavbar";
+import { SearchBar } from "../SearchBar";
 
 export const AppNavbar = () => {
   const { isOpen, confirmOpen, isAuthenticated, setIsOpen, setConfirmOpen, handleLogout } =
@@ -12,7 +13,7 @@ export const AppNavbar = () => {
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-border bg-background">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
+        <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
           <a href="/" className="flex items-center gap-2">
             <img src={Logo} alt="Linknest Logo" className="size-8" />
             <span className="font-heading text-lg font-bold tracking-tight">
@@ -20,13 +21,15 @@ export const AppNavbar = () => {
             </span>
           </a>
 
-          {/* Desktop */}
-          <nav className="hidden items-center gap-4 md:flex">
+          {/* Search bar */}
+          <SearchBar />
+
+          <div className="hidden items-center gap-4 md:flex">
             <AppNavbarContent
               isAuthenticated={isAuthenticated}
               onLogout={() => setConfirmOpen(true)}
             />
-          </nav>
+          </div>
 
           {/* Mobile button */}
           <Button
@@ -37,7 +40,7 @@ export const AppNavbar = () => {
           >
             {isOpen ? <IoMdClose className="size-5" /> : <IoMdMenu className="size-5" />}
           </Button>
-        </div>
+        </nav>
 
         {/* Mobile menu */}
         {isOpen && (
