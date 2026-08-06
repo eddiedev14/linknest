@@ -15,6 +15,7 @@ interface Props {
   type?: InputType;
   placeholder?: string;
   autoComplete?: React.ComponentProps<"input">["autoComplete"];
+  autoFocus?: boolean;
   disabled?: boolean;
   errorMsg?: string;
   hint?: string;
@@ -29,6 +30,7 @@ export const InputField = ({
   placeholder,
   disabled = false,
   autoComplete = "on",
+  autoFocus = false,
   errorMsg,
   hint = "",
   registration,
@@ -45,6 +47,7 @@ export const InputField = ({
           id={id}
           type={inputType}
           autoComplete={autoComplete}
+          autoFocus={autoFocus}
           disabled={disabled}
           placeholder={placeholder}
           className={cn(errorMsg && "border-destructive", className)}
