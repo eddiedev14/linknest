@@ -15,7 +15,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(to right, oklch(0.9 0 0 / 0.6) 1px, transparent 1px), linear-gradient(to bottom, oklch(0.9 0 0 / 0.6) 1px, transparent 1px)",
+            "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
           backgroundSize: "40px 40px",
         }}
         aria-hidden="true"
@@ -25,7 +25,7 @@ export default function Hero() {
         {/* Left: Copy */}
         <div className="flex flex-col gap-6">
           {/* Badge */}
-          <Badge className="inline-flex items-center gap-2 self-start bg-white text-accent-foreground text-xs font-semibold p-3 rounded-full border border-primary/70">
+          <Badge className="inline-flex items-center gap-2 self-start bg-background text-accent-foreground text-xs font-semibold p-3 rounded-full border border-primary/70">
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
             Built for developers
           </Badge>
@@ -81,11 +81,11 @@ export default function Hero() {
         <div className="relative flex justify-center">
           {/* Phone frame */}
           <div
-            className="relative w-64 rounded-[2.5rem] border-2 border-border bg-white shadow-2xl overflow-hidden"
+            className="relative w-64 rounded-[2.5rem] border-2 border-border bg-background shadow-2xl overflow-hidden"
             style={{
               minHeight: "520px",
               boxShadow:
-                "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px oklch(0.9 0 0)",
+                "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px var(--border)",
             }}
             aria-label="Product preview"
           >
@@ -113,7 +113,7 @@ export default function Hero() {
                   return (
                     <div
                       key={link.label}
-                      className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-border bg-white hover:border-primary/40 transition-colors cursor-pointer group"
+                      className="flex items-center justify-between px-3 py-2.5 rounded-xl border border-border bg-background hover:border-primary/40 transition-colors cursor-pointer group"
                     >
                       <div className="flex items-center gap-2">
                         <Icon className="text-primary" />
@@ -133,7 +133,7 @@ export default function Hero() {
 
           {/* Floating analytics card */}
           <div
-            className="absolute -right-4 top-1/3 w-36 bg-white rounded-2xl shadow-xl border border-border p-3 flex flex-col gap-2"
+            className="absolute -right-4 top-1/3 w-36 bg-background rounded-2xl shadow-xl border border-border p-3 flex flex-col gap-2"
             style={{ boxShadow: "0 8px 32px -4px oklch(0 0 0 / 0.1)" }}
             aria-hidden="true"
           >
@@ -155,7 +155,7 @@ export default function Hero() {
           </div>
 
           {/* Floating badge */}
-          <Badge className="absolute -left-4 bottom-1/4 bg-white rounded-xl shadow-lg border border-border p-3 flex items-center gap-2">
+          <Badge className="absolute -left-4 bottom-1/4 bg-background rounded-xl shadow-lg border border-border p-3 flex items-center gap-2">
             <FaLink className="text-primary" />
             <span className="text-[10px] font-semibold text-foreground">
               getlinknest.vercel.app/u/alex

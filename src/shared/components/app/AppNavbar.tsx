@@ -2,8 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 import Logo from "@/assets/logo.png";
+import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
 import { SearchBar } from "../SearchBar";
+import { ThemeToggle } from "../ThemeToggle";
 import { AppNavbarContent } from "./AppNavbarContent";
 import { useNavbar } from "@/shared/hooks/useNavbar";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -37,12 +39,13 @@ export const AppNavbar = () => {
             </span>
           </a>
 
-          {/* Search (Desktop) */}
+          {/* Desktop Nav */}
           <div className="hidden md:block">
             <SearchBar />
           </div>
 
           <div className="hidden items-center gap-4 lg:flex">
+            <ThemeToggle />
             <AppNavbarContent
               isAuthenticated={isAuthenticated}
               onLogout={() => setConfirmOpen(true)}
@@ -51,29 +54,34 @@ export const AppNavbar = () => {
 
           {/* Mobile buttons */}
           <div className="flex items-center gap-1 lg:hidden">
-            <button
+            <ThemeToggle />
+
+            <Button
               type="button"
+              size="icon"
+              variant="ghost"
               onClick={toggleSearch}
-              className="p-2 rounded-lg hover:bg-muted transition-colors md:hidden"
+              className="rounded-lg transition-colors md:hidden"
               aria-label="Search"
             >
               {searchOpen ? <IoMdClose /> : <IoSearch />}
-            </button>
-
-            <button
+            </Button>
+            <Button
               type="button"
+              size="icon"
+              variant="ghost"
               onClick={toggleMenu}
-              className="p-2 rounded-lg hover:bg-muted transition-colors"
+              className="rounded-lg transition-colors"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
               {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
-            </button>
+            </Button>
           </div>
         </nav>
 
         {/* Mobile Search */}
         {searchOpen && (
-          <div className="md:hidden border-t border-border bg-white px-6 py-4">
+          <div className="md:hidden border-t border-border bg-background px-6 py-4">
             <SearchBar autoFocus />
           </div>
         )}

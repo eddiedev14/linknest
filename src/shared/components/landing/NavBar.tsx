@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp, IoSearch } from "react-icons/io5";
 import Logo from "@/assets/logo.png";
+import { Button } from "../shadcn/button";
 import { navMenuItems } from "@/data/landing.data";
+import { ThemeToggle } from "../ThemeToggle";
 import { SearchBar } from "../SearchBar";
 import { useNavbar } from "@/shared/hooks/useNavbar";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -21,7 +23,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
@@ -31,13 +33,14 @@ export default function Navbar() {
           <span className="font-bold text-lg">Link Nest</span>
         </a>
 
-        {/* Search (Desktop) */}
+        {/* Desktop Nav */}
         <div className="hidden md:block">
           <SearchBar />
         </div>
 
-        {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+
           {!user && (
             <a
               href="/login"
@@ -57,36 +60,42 @@ export default function Navbar() {
 
         {/* Mobile buttons */}
         <div className="flex items-center gap-1 md:hidden">
-          <button
+          <ThemeToggle />
+
+          <Button
             type="button"
+            size="icon"
+            variant="ghost"
             onClick={toggleSearch}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            className="rounded-lg transition-colors"
             aria-label="Search"
           >
             {searchOpen ? <IoMdClose /> : <IoSearch />}
-          </button>
+          </Button>
 
-          <button
+          <Button
             type="button"
+            size="icon"
+            variant="ghost"
             onClick={toggleMenu}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            className="rounded-lg transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
-          </button>
+          </Button>
         </div>
       </nav>
 
       {/* Mobile Search */}
       {searchOpen && (
-        <div className="md:hidden border-t border-border bg-white px-6 py-4">
+        <div className="md:hidden border-t border-border bg-background px-6 py-4">
           <SearchBar autoFocus />
         </div>
       )}
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-border px-6 pb-6 pt-4 flex flex-col gap-4 shadow-lg">
+        <div className="md:hidden bg-background border-t border-border px-6 pb-6 pt-4 flex flex-col gap-4 shadow-lg">
           {navMenuItems.map((item) => (
             <a
               key={item}

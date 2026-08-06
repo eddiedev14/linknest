@@ -31,7 +31,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
     <>
       <Button
         onClick={handleFileClick}
-        className="group relative bg-white w-full h-40 my-2 flex flex-col justify-center gap-2 items-center rounded-md border-2 border-dashed border-primary cursor-pointer hover:bg-white"
+        className="group relative bg-background w-full h-40 my-2 flex flex-col justify-center gap-2 items-center rounded-md border-2 border-dashed border-primary cursor-pointer hover:bg-background"
       >
         <div className="size-16 bg-primary/20 text-primary text-xl flex items-center justify-center rounded-full transition-transform group-hover:-translate-y-2">
           {avatarPreviewURL ? (

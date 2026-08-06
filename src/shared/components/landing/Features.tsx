@@ -3,7 +3,7 @@ import { FeatureCard } from "./FeatureCard";
 
 export default function Features() {
   return (
-    <section id="features" className="py-28 bg-white" aria-label="Features">
+    <section id="features" className="py-28 bg-background" aria-label="Features">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 flex flex-col items-center gap-3">

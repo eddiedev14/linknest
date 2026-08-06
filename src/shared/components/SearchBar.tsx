@@ -18,7 +18,7 @@ export const SearchBar = ({ autoFocus }: Props) => {
         placeholder="Search for a profile by username"
         autoComplete="off"
         autoFocus={autoFocus}
-        className="bg-white md:w-80"
+        className="bg-background md:w-80"
         registration={register("search")}
       />
     </form>
