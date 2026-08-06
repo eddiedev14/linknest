@@ -89,6 +89,7 @@ export const LinkForm = ({ onSuccess }: Props) => {
         <InputField
           Icon={FiExternalLink}
           id="url"
+          type="url"
           placeholder="https://"
           registration={register("url")}
           errorMsg={errors.url?.message}

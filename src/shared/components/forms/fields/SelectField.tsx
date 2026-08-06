@@ -1,5 +1,5 @@
-import type { UseFormRegisterReturn } from "react-hook-form";
 import type { IconType } from "react-icons";
+import { cn } from "@/lib/utils";
 import { NativeSelect, NativeSelectOption } from "../../shadcn/native-select";
 import { FormFieldError } from "../FieldError";
 
@@ -16,8 +16,8 @@ interface Props {
   errorMsg?: string;
   hint?: string;
   options: SelectOption[];
-  registration?: UseFormRegisterReturn;
   value: string;
+  classname?: string;
   onChange: (value: string) => void;
 }
 
@@ -28,9 +28,10 @@ export const SelectField = ({
   disabled = false,
   errorMsg,
   hint = "",
-  value,
-  onChange,
   options,
+  value,
+  classname,
+  onChange,
 }: Props) => {
   return (
     <>
@@ -41,6 +42,7 @@ export const SelectField = ({
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
+          className={cn(errorMsg && "border-destructive", classname)}
         >
           {(!value || value === "") && (
             <NativeSelectOption value="" disabled>

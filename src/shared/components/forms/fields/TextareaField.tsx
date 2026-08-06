@@ -1,4 +1,5 @@
 import type { UseFormRegisterReturn } from "react-hook-form";
+import { cn } from "@/lib/utils";
 import { Textarea } from "../../shadcn/textarea";
 import { FormFieldError } from "../FieldError";
 
@@ -9,6 +10,7 @@ interface Props {
   errorMsg?: string;
   hint?: string;
   registration?: UseFormRegisterReturn;
+  classname?: string;
 }
 
 export const TextareaField = ({
@@ -18,6 +20,7 @@ export const TextareaField = ({
   errorMsg,
   hint = "",
   registration,
+  classname,
 }: Props) => {
   return (
     <>
@@ -26,7 +29,7 @@ export const TextareaField = ({
           id={id}
           disabled={disabled}
           placeholder={placeholder}
-          className={errorMsg ? "border-destructive" : ""}
+          className={cn(errorMsg && "border-destructive", classname)}
           {...registration}
         />
       </div>

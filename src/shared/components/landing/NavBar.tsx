@@ -1,7 +1,8 @@
-import Logo from "@/assets/logo.png";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp } from "react-icons/io5";
+import Logo from "@/assets/logo.png";
+import { SearchBar } from "../SearchBar";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { navMenuItems } from "@/data/landing.data";
 
@@ -25,7 +26,7 @@ export default function Navbar() {
         scrolled ? "bg-white/90 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+      <nav className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 group">
           <img src={Logo} alt="Linknest Logo" className="size-8" />
@@ -34,18 +35,8 @@ export default function Navbar() {
           </span>
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-          {navMenuItems.map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/ /g, "-")}`}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
+        {/* Search bar */}
+        <SearchBar />
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
@@ -75,7 +66,7 @@ export default function Navbar() {
         >
           {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
         </button>
-      </div>
+      </nav>
 
       {/* Mobile menu */}
       {menuOpen && (
