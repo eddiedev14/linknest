@@ -20,7 +20,7 @@ export default function Features() {
         </div>
 
         {/* Feature grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {features.map((feat) => (
             <FeatureCard feature={feat} key={feat.id} />
           ))}

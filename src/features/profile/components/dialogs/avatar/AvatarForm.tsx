@@ -56,7 +56,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
         </p>
       )}
 
-      <form className="flex" onSubmit={(e) => handleAvatarSubmit(e, onSuccess)}>
+      <form className="flex flex-col sm:flex-row gap-2 sm:gap-3" onSubmit={(e) => handleAvatarSubmit(e, onSuccess)}>
         <input
           ref={fileInputRef}
           onChange={handleFileChange}
@@ -72,7 +72,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
               disabled={isDeleting}
               type="button"
               variant="destructive"
-              className="flex-1 mr-2"
+              className="w-full sm:w-auto sm:flex-1"
             >
               <FaTrash /> Remove your photo
             </Button>
@@ -86,7 +86,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
             />
           </>
         )}
-        <Button type="submit" disabled={isUploading} className="flex-1">
+        <Button type="submit" disabled={isUploading} className="w-full sm:w-auto sm:flex-1">
           {isUploading ? <Loader size="sm" /> : "Save"}
         </Button>
       </form>

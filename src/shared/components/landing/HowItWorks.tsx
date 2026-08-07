@@ -18,10 +18,10 @@ export default function HowItWorks() {
         </div>
 
         {/* Steps */}
-        <div className="relative grid md:grid-cols-4 gap-8">
+        <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-x-6 lg:gap-x-8">
           {/* Connector line (desktop) */}
           <div
-            className="hidden md:block absolute top-7 left-[calc(12.5%)] right-[calc(12.5%)] h-px bg-border z-0"
+            className="hidden lg:block absolute top-7 left-[calc(12.5%)] right-[calc(12.5%)] h-px bg-border z-0"
             aria-hidden="true"
           />
 

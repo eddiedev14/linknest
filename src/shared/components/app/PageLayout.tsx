@@ -7,7 +7,7 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 export const PageLayout = () => {
   const { user } = useAuth();
   const publicURL = getPublicURL(user?.username);
-  const isPublicProfile = useMatch("/u/:username"); // Don't show the share button if is an user profile page.
+  const isPublicProfile = useMatch("/u/:username") || useMatch("/404"); // Don't show the share button if is an user profile or error page.
 
   return (
     <div className="min-h-screen bg-muted/40 flex flex-col">

@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {navMenuItems.map((item) => (
               <a
                 key={item}

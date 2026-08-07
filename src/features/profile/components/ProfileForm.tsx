@@ -187,7 +187,7 @@ export const ProfileForm = () => {
         <Button
           type="submit"
           size="lg"
-          className="h-11 px-8 rounded-xl font-semibold text-sm gap-2"
+          className="w-full sm:w-auto h-11 px-8 rounded-xl font-semibold text-sm gap-2"
         >
           Save Changes
         </Button>
