@@ -12,7 +12,7 @@ import {
   signOut,
   type AuthProvider,
 } from "firebase/auth";
-import { where } from "firebase/firestore";
+import { endAt, limit, orderBy, startAt, where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 
 // * Types & utils
@@ -51,7 +51,7 @@ export default function useAuthState() {
   const isCreatingUserDoc = useRef(false);
 
   //* Custom hooks
-  const { setById, suscribeById, find, update } = useCollection<User>("users");
+  const { setById, suscribeById, find, getAll, update } = useCollection<User>("users");
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects
@@ -167,6 +167,20 @@ export default function useAuthState() {
     [find],
   );
 
+  const filterUsersByUsername = useCallback(
+    async (search: string): Promise<string[]> => {
+      const users = await getAll([
+        startAt(search),
+        endAt(search + "\uf8ff"),
+        orderBy("username"),
+        limit(5),
+      ]);
+
+      return users.map((user) => user.username);
+    },
+    [getAll],
+  );
+
   return {
     user,
     userLoading,
@@ -174,8 +188,9 @@ export default function useAuthState() {
     loginWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
+    logout,
     updateUserProfile,
     findUser,
-    logout,
+    filterUsersByUsername,
   };
 }

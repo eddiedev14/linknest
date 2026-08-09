@@ -9,7 +9,6 @@ import {
   deleteDoc,
   doc,
   serverTimestamp,
-  getDoc,
   setDoc,
   getDocs,
   writeBatch,
@@ -97,35 +96,6 @@ export const useCollection = <T extends DocumentData>(table: string) => {
       );
 
       return unsubscribe;
-    },
-    [table],
-  );
-
-  //* 1. R -> READ
-  const getById = useCallback(
-    async (id: string): Promise<FirestoreDoc<T> | null> => {
-      setIsPending(true);
-
-      try {
-        const docRef = doc(db, table, id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          const result: FirestoreDoc<T> = {
-            id: docSnap.id,
-            ...(docSnap.data() as T),
-          };
-
-          setIsPending(false);
-          return result;
-        } else {
-          setIsPending(false);
-          return null;
-        }
-      } catch {
-        setIsPending(false);
-        return null;
-      }
     },
     [table],
   );
@@ -319,7 +289,6 @@ export const useCollection = <T extends DocumentData>(table: string) => {
     isPending,
     suscribe,
     suscribeById,
-    getById,
     find,
     getAll,
     add,

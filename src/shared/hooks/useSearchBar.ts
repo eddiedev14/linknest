@@ -8,22 +8,28 @@ interface FormData {
 }
 
 export const useSearchBar = () => {
+  //* States
+
   //* React Hook Form
   const { register, handleSubmit } = useForm<FormData>();
 
   //* React Router
   const navigate = useNavigate();
 
-  const onSubmit = (data: FormData) => {
-    const { search } = data;
-
-    // Only search when is a valid username
+  //* Functions
+  const goToProfile = (search: string) => {
+    // Only go to the profile when is a valid username
     if (!USERNAME_REGEX.test(search)) {
       toast.error("Your search is not a valid username");
       return;
     }
 
     navigate(`/u/${search}`);
+  };
+
+  //* Handlers
+  const onSubmit = (data: FormData) => {
+    goToProfile(data.search);
   };
 
   return {
