@@ -8,45 +8,28 @@ export interface SelectOption {
   value: string;
 }
 
-interface Props {
+interface Props extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onChange" | "size"> {
   Icon: IconType;
-  id: string;
-  placeholder?: string;
-  disabled?: boolean;
+  placeholder: string;
   errorMsg?: string;
   hint?: string;
   options: SelectOption[];
-  value: string;
-  classname?: string;
   onChange: (value: string) => void;
 }
 
-export const SelectField = ({
-  Icon,
-  id,
-  placeholder,
-  disabled = false,
-  errorMsg,
-  hint = "",
-  options,
-  value,
-  classname,
-  onChange,
-}: Props) => {
+export const SelectField = ({ Icon, errorMsg, hint, options, onChange, ...attrs }: Props) => {
   return (
     <>
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <NativeSelect
-          id={id}
-          value={value ?? ""}
+          className={cn(errorMsg && "border-destructive", attrs.className)}
           onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-          className={cn(errorMsg && "border-destructive", classname)}
+          {...attrs}
         >
-          {(!value || value === "") && (
+          {!attrs.value && (
             <NativeSelectOption value="" disabled>
-              {placeholder}
+              {attrs.placeholder}
             </NativeSelectOption>
           )}
           {options.map((option) => (
