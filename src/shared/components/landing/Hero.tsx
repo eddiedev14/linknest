@@ -50,7 +50,7 @@ export default function Hero() {
               type="text"
               defaultValue="yourname"
               aria-label="Choose your username"
-              className="p-0 h-fit border-none font-mono font-semibold text-sm text-primary shadow-none flex-1 min-w-0"
+              className="p-0 h-fit bg-transparent dark:bg-transparent border-none font-mono font-semibold text-sm text-primary shadow-none flex-1 min-w-0"
             />
             <a
               href="/signup"
@@ -84,8 +84,7 @@ export default function Hero() {
             className="relative w-64 rounded-[2.5rem] border-2 border-border bg-background shadow-2xl overflow-hidden"
             style={{
               minHeight: "520px",
-              boxShadow:
-                "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px var(--border)",
+              boxShadow: "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px var(--border)",
             }}
             aria-label="Product preview"
           >
