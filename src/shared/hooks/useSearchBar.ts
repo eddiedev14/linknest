@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -9,9 +10,14 @@ interface FormData {
 
 export const useSearchBar = () => {
   //* States
+  const [results] = useState<string[]>([]);
 
   //* React Hook Form
-  const { register, handleSubmit } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<FormData>({
+    defaultValues: {
+      search: "",
+    },
+  });
 
   //* React Router
   const navigate = useNavigate();
@@ -29,11 +35,13 @@ export const useSearchBar = () => {
 
   //* Handlers
   const onSubmit = (data: FormData) => {
+    console.log("Submitiando...", data);
     goToProfile(data.search);
   };
 
   return {
-    register,
+    results,
+    control,
     handleSearch: handleSubmit(onSubmit),
   };
 };
