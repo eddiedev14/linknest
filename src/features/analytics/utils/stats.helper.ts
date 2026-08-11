@@ -23,9 +23,9 @@ const buildStats = (totalLinks: number, weekAnalytics: DailyAnalytics[]): Stats 
   let totalClicksToday = 0;
   let totalClicksYesterday = 0;
 
-  let clicksPerDay: ClicksPerDayChart[] = [];
-  let clicksByPlatform: ClicksByPlatformChart[] = [];
-  let clicksByLink: ClicksByLinkChart[] = [];
+  const clicksPerDay: ClicksPerDayChart[] = [];
+  const clicksByPlatform: ClicksByPlatformChart[] = [];
+  const clicksByLink: ClicksByLinkChart[] = [];
 
   // 2. Iterate over weekAnalytics to calculate all the stats
   weekAnalytics

@@ -25,7 +25,7 @@ export const AuthPage = ({ isSignup = false }: Props) => {
   return (
     <main className="min-h-screen bg-background flex" aria-label="Create your account">
       {/* ── Left panel: form ── */}
-      <div className="flex-1 flex flex-col px-8 py-10 md:px-16 lg:px-20 max-w-xl">
+      <div className="flex-1 flex flex-col px-6 py-10 sm:px-8 md:px-16 lg:px-20 max-w-xl">
         <a href="/" className="flex items-center gap-2 group" aria-label="Linknest Home">
           <img src={Logo} alt="Linknest Logo" className="size-8" />
           <span className="font-heading font-bold text-xl text-foreground tracking-tight">

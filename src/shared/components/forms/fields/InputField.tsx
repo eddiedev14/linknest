@@ -7,55 +7,31 @@ import { Input } from "../../shadcn/input";
 import { Button } from "../../shadcn/button";
 import { FormFieldError } from "../FieldError";
 
-type InputType = React.HTMLInputTypeAttribute;
-
-interface Props {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   Icon: IconType;
-  id: string;
-  type?: InputType;
-  placeholder?: string;
-  autoComplete?: React.ComponentProps<"input">["autoComplete"];
-  autoFocus?: boolean;
-  disabled?: boolean;
   errorMsg?: string;
   hint?: string;
   registration?: UseFormRegisterReturn;
-  className?: string;
 }
 
-export const InputField = ({
-  Icon,
-  id,
-  type = "text",
-  placeholder,
-  disabled = false,
-  autoComplete = "on",
-  autoFocus = false,
-  errorMsg,
-  hint = "",
-  registration,
-  className,
-}: Props) => {
+export const InputField = ({ Icon, errorMsg, hint, registration, ...attrs }: Props) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const inputType: InputType = type !== "password" ? type : isPasswordVisible ? "text" : "password";
+  const inputType =
+    attrs.type !== "password" ? attrs.type : isPasswordVisible ? "text" : "password";
 
   return (
     <>
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <Input
-          id={id}
           type={inputType}
-          autoComplete={autoComplete}
-          autoFocus={autoFocus}
-          disabled={disabled}
-          placeholder={placeholder}
-          className={cn(errorMsg && "border-destructive", className)}
+          className={cn(errorMsg && "border-destructive", attrs.className)}
+          {...attrs}
           {...registration}
         />
 
         {/* Button to show password */}
-        {type === "password" && (
+        {inputType === "password" && (
           <Button
             type="button"
             variant="ghost"

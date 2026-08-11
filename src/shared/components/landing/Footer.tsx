@@ -6,7 +6,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-border py-12" aria-label="Footer">
+    <footer className="bg-background border-t border-border py-12" aria-label="Footer">
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex flex-col items-center gap-6 mb-6">
           <div className="flex flex-col items-center text-center gap-4">
@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {navMenuItems.map((item) => (
               <a
                 key={item}
@@ -50,7 +50,7 @@ export default function Footer() {
             <a
               href="https://github.com/eddiedev14/linknest"
               target="_blank"
-              className="hover:text-black"
+              className="hover:text-foreground"
               aria-label="My Github"
             >
               <BsGithub />

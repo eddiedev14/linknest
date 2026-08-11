@@ -10,7 +10,7 @@ export const Loader = ({ size = "md", className }: LoaderProps) => {
     <div role="status" className={cn("flex items-center justify-center w-full h-full", className)}>
       <svg
         aria-hidden="true"
-        className={cn("animate-spin fill-primary text-gray-200", {
+        className={cn("animate-spin fill-primary text-muted", {
           "h-6 w-6": size === "sm",
           "h-10 w-10": size === "md",
           "h-16 w-16": size === "lg",

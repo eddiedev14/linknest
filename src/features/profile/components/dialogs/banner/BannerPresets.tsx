@@ -21,7 +21,7 @@ export const BannerPresets = ({ onSuccess }: Props) => {
 
   return (
     <>
-      <div className="grid grid-cols-6 gap-4 justify-items-center">
+      <div className="grid grid-cols-5 sm:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
         {BANNER_PRESETS.map((preset) => (
           <Button
             key={preset}

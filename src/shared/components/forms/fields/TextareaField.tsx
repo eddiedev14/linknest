@@ -3,33 +3,19 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "../../shadcn/textarea";
 import { FormFieldError } from "../FieldError";
 
-interface Props {
-  id: string;
-  placeholder?: string;
-  disabled?: boolean;
+interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   errorMsg?: string;
   hint?: string;
   registration?: UseFormRegisterReturn;
-  classname?: string;
 }
 
-export const TextareaField = ({
-  id,
-  placeholder,
-  disabled = false,
-  errorMsg,
-  hint = "",
-  registration,
-  classname,
-}: Props) => {
+export const TextareaField = ({ errorMsg, hint, registration, ...attrs }: Props) => {
   return (
     <>
       <div className="relative">
         <Textarea
-          id={id}
-          disabled={disabled}
-          placeholder={placeholder}
-          className={cn(errorMsg && "border-destructive", classname)}
+          className={cn(errorMsg && "border-destructive", attrs.className)}
+          {...attrs}
           {...registration}
         />
       </div>
