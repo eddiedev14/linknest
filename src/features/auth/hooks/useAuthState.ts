@@ -170,9 +170,9 @@ export default function useAuthState() {
   const filterUsersByUsername = useCallback(
     async (search: string): Promise<string[]> => {
       const users = await getAll([
+        orderBy("username"),
         startAt(search),
         endAt(search + "\uf8ff"),
-        orderBy("username"),
         limit(5),
       ]);
 
