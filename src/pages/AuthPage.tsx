@@ -1,5 +1,5 @@
 import { Link, Navigate } from "react-router-dom";
-import Logo from "@/assets/logo.png";
+import Logo from "/logo.png";
 import GoogleIcon from "@/assets/google-icon.svg";
 import GithubIcon from "@/assets/github-icon.svg";
 import SignupIllustration from "@/assets/signup-illustration.png";

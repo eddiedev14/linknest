@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
-import Logo from "@/assets/logo.png";
+import Logo from "/logo.png";
 import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
 import { SearchBar } from "../SearchBar";
