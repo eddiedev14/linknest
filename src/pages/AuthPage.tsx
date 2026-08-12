@@ -77,8 +77,9 @@ export const AuthPage = ({ isSignup = false }: Props) => {
           </div>
 
           <AuthForm isSignup={isSignup} />
-          <div className="text-center">
-            <span className="text-sm text-muted-foreground">
+
+          <div className="flex flex-col gap-1 text-center *:text-sm *:text-muted-foreground">
+            <span>
               {isSignup ? "Already have an account? " : "Don't have an account? "}
               <Link
                 to={isSignup ? "/login" : "/signup"}
@@ -86,6 +87,12 @@ export const AuthPage = ({ isSignup = false }: Props) => {
               >
                 {isSignup ? "Sign in" : "Create one"}
               </Link>
+            </span>
+            <span>
+              Did you forget your password? {""}
+              <Button variant="link" size="sm" className="p-0">
+                Reset Password
+              </Button>
             </span>
           </div>
         </div>
