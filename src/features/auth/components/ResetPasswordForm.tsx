@@ -3,10 +3,15 @@ import { CiLock } from "react-icons/ci";
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
 import { InputField } from "@/shared/components/forms/fields";
+import { Loader } from "@/shared/components/app/Loader";
 import { useResetPasswordForm } from "../hooks/useResetPasswordForm";
 
 export const ResetPasswordForm = () => {
-  const { errors, register, onSubmit } = useResetPasswordForm();
+  const { isValidating, errors, register, onSubmit } = useResetPasswordForm();
+
+  if (isValidating) {
+    return <Loader />;
+  }
 
   return (
     <form

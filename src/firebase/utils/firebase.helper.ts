@@ -25,6 +25,12 @@ const getAuthErrorMessage = (error: unknown): string => {
       case "auth/popup-closed-by-user":
         return "The authentication window was closed";
 
+      case "auth/expired-action-code":
+        return "Reset link has expired. Please request a new one.";
+
+      case "auth/invalid-action-code":
+        return "Reset link is invalid or has already been used.";
+
       case "auth/network-request-failed":
         return "Connection error. Please check your internet connection";
 

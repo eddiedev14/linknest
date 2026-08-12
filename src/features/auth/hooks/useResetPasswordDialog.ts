@@ -8,12 +8,13 @@ import { resetPasswordDialogScheme } from "../validations/resetPassword.scheme";
 type FormData = z.input<typeof resetPasswordDialogScheme>;
 
 export const useResetPasswordDialog = (closeDialog: () => void) => {
-  const { resetPassword } = useAuth();
+  const { sendRecoveryPasswordEmail } = useAuth();
 
   //* RHF
   const {
     formState: { errors },
     register,
+    reset,
     handleSubmit,
   } = useForm<FormData>({
     resolver: zodResolver(resetPasswordDialogScheme),
@@ -22,7 +23,7 @@ export const useResetPasswordDialog = (closeDialog: () => void) => {
 
   //* Handlers
   const handleResetPasswordDialogSubmit = async (data: FormData) => {
-    const errorMessage = await resetPassword(data.resetEmail);
+    const errorMessage = await sendRecoveryPasswordEmail(data.resetEmail);
 
     if (errorMessage) {
       toast.error(errorMessage);
@@ -30,6 +31,7 @@ export const useResetPasswordDialog = (closeDialog: () => void) => {
     }
 
     toast.success(`¡Email sent! Check your inbox.`);
+    reset();
     closeDialog();
   };
 
