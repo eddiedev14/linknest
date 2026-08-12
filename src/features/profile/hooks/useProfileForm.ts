@@ -9,6 +9,8 @@ import { useAuth } from "@/features/auth/hooks/useAuth";
 import { getAllCountries, getCitiesFromCountry } from "../actions/countriesNow.actions";
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 
+type FormData = z.input<typeof profileFormScheme>;
+
 export const useProfileForm = () => {
   //* States
   const [countriesOptions, setCountriesOptions] = useState<SelectOption[]>([]);
@@ -21,8 +23,6 @@ export const useProfileForm = () => {
   const navigate = useNavigate();
 
   //* React Hook Form
-  type FormData = z.input<typeof profileFormScheme>;
-
   const {
     formState: { errors },
     control,

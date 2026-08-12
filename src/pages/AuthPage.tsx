@@ -1,23 +1,26 @@
 import { Link, Navigate } from "react-router-dom";
-import { Button } from "@/shared/components/shadcn/button";
-import { Separator } from "@/shared/components/shadcn/separator";
 import Logo from "@/assets/logo.png";
 import GoogleIcon from "@/assets/google-icon.svg";
 import GithubIcon from "@/assets/github-icon.svg";
-import { AuthForm } from "@/features/auth/components/AuthForm";
-import { Loader } from "@/shared/components/app/Loader";
-import { useAuthProviders } from "@/features/auth/hooks/useAuthProviders";
-import { useAuth } from "@/features/auth/hooks/useAuth";
 import SignupIllustration from "@/assets/signup-illustration.png";
 import SigninIllustration from "@/assets/signin-illustration.png";
+import { Button } from "@/shared/components/shadcn/button";
+import { Separator } from "@/shared/components/shadcn/separator";
+import { Loader } from "@/shared/components/app/Loader";
+import { AuthForm } from "@/features/auth/components/AuthForm";
+import { useDialog } from "@/shared/hooks/useDialog";
+import { useAuthProviders } from "@/features/auth/hooks/useAuthProviders";
+import { useAuth } from "@/features/auth/hooks/useAuth";
+import { ResetPasswordDialog } from "@/features/auth/components/ResetPasswordDialog";
 
 interface Props {
   isSignup?: boolean;
 }
 
 export const AuthPage = ({ isSignup = false }: Props) => {
-  const { handleGoogleAuth, handleGithubAuth } = useAuthProviders();
   const { user, userLoading } = useAuth();
+  const { handleProviderAuth } = useAuthProviders();
+  const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
 
   if (userLoading) return <Loader />;
   if (user) return <Navigate to="/profile" replace />;
@@ -44,14 +47,13 @@ export const AuthPage = ({ isSignup = false }: Props) => {
                 : "Sign in to access your profile, update your links, and manage your developer presence."}
             </p>
           </div>
-
           <div className="flex flex-col gap-4 *:w-full *:h-11 *:rounded-xl *:font-medium *:text-foreground *:border-border *:gap-3">
             <Button
               variant="outline"
               size="lg"
               className=""
               aria-label="Sign in with Google"
-              onClick={handleGoogleAuth}
+              onClick={() => handleProviderAuth("google")}
             >
               <img src={GoogleIcon} alt="Google Icon" />
               {isSignup ? "Continue with Google" : "Sign in with Google"}
@@ -61,13 +63,12 @@ export const AuthPage = ({ isSignup = false }: Props) => {
               variant="outline"
               size="lg"
               aria-label="Sign in with Github"
-              onClick={handleGithubAuth}
+              onClick={() => handleProviderAuth("github")}
             >
               <img src={GithubIcon} alt="Github Icon" />
               {isSignup ? "Continue with GitHub" : "Sign in with GitHub"}
             </Button>
           </div>
-
           <div className="flex items-center gap-3">
             <Separator className="flex-1" />
             <span className="text-xs text-muted-foreground font-medium px-1 select-none">
@@ -75,9 +76,17 @@ export const AuthPage = ({ isSignup = false }: Props) => {
             </span>
             <Separator className="flex-1" />
           </div>
-
+          {/* Auth Form */}
           <AuthForm isSignup={isSignup} />
 
+          {/* Reset Password Dialog */}
+          <ResetPasswordDialog
+            openDialog={open}
+            onOpenDialog={onOpenChange}
+            handleCloseDialog={handleCloseDialog}
+          />
+
+          {/* Other actions */}
           <div className="flex flex-col gap-1 text-center *:text-sm *:text-muted-foreground">
             <span>
               {isSignup ? "Already have an account? " : "Don't have an account? "}
@@ -88,12 +97,14 @@ export const AuthPage = ({ isSignup = false }: Props) => {
                 {isSignup ? "Sign in" : "Create one"}
               </Link>
             </span>
-            <span>
-              Did you forget your password? {""}
-              <Button variant="link" size="sm" className="p-0">
-                Reset Password
-              </Button>
-            </span>
+            {!isSignup && (
+              <span>
+                Did you forget your password? {""}
+                <Button variant="link" size="sm" onClick={handleOpenDialog} className="p-0">
+                  Reset Password
+                </Button>
+              </span>
+            )}
           </div>
         </div>
       </div>
