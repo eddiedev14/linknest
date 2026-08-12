@@ -24,14 +24,14 @@ export const InputField = ({ Icon, errorMsg, hint, registration, ...attrs }: Pro
       <div className="relative">
         <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
         <Input
-          type={inputType}
-          className={cn(errorMsg && "border-destructive", attrs.className)}
           {...attrs}
           {...registration}
+          type={inputType}
+          className={cn(errorMsg && "border-destructive", attrs.className)}
         />
 
         {/* Button to show password */}
-        {inputType === "password" && (
+        {attrs.type === "password" && (
           <Button
             type="button"
             variant="ghost"

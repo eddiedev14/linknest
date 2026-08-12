@@ -8,8 +8,8 @@ import { Button } from "@/shared/components/shadcn/button";
 import { Separator } from "@/shared/components/shadcn/separator";
 import { Loader } from "@/shared/components/app/Loader";
 import { AuthForm } from "@/features/auth/components/AuthForm";
-import { useDialog } from "@/shared/hooks/useDialog";
 import { useAuthProviders } from "@/features/auth/hooks/useAuthProviders";
+import { useDialog } from "@/shared/hooks/useDialog";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { ResetPasswordDialog } from "@/features/auth/components/ResetPasswordDialog";
 

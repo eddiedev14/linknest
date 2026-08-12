@@ -3,11 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAuth } from "./useAuth";
-import { resetPasswordScheme } from "../validations/resetPassword.scheme";
+import { resetPasswordDialogScheme } from "../validations/resetPassword.scheme";
 
-type FormData = z.input<typeof resetPasswordScheme>;
+type FormData = z.input<typeof resetPasswordDialogScheme>;
 
-export const useResetPassword = (closeDialog: () => void) => {
+export const useResetPasswordDialog = (closeDialog: () => void) => {
   const { resetPassword } = useAuth();
 
   //* RHF
@@ -16,12 +16,12 @@ export const useResetPassword = (closeDialog: () => void) => {
     register,
     handleSubmit,
   } = useForm<FormData>({
-    resolver: zodResolver(resetPasswordScheme),
+    resolver: zodResolver(resetPasswordDialogScheme),
     mode: "onBlur",
   });
 
   //* Handlers
-  const handleResetPasswordSubmit = async (data: FormData) => {
+  const handleResetPasswordDialogSubmit = async (data: FormData) => {
     const errorMessage = await resetPassword(data.resetEmail);
 
     if (errorMessage) {
@@ -36,6 +36,6 @@ export const useResetPassword = (closeDialog: () => void) => {
   return {
     errors,
     register,
-    onSubmit: handleSubmit(handleResetPasswordSubmit),
+    onSubmit: handleSubmit(handleResetPasswordDialogSubmit),
   };
 };

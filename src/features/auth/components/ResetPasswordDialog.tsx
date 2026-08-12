@@ -9,7 +9,7 @@ import {
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
 import { InputField } from "@/shared/components/forms/fields";
-import { useResetPassword } from "../hooks/useResetPassword";
+import { useResetPasswordDialog } from "../hooks/useResetPasswordDialog";
 
 interface Props {
   openDialog: boolean;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const ResetPasswordDialog = ({ openDialog, onOpenDialog, handleCloseDialog }: Props) => {
-  const { errors, register, onSubmit } = useResetPassword(handleCloseDialog);
+  const { errors, register, onSubmit } = useResetPasswordDialog(handleCloseDialog);
 
   return (
     <Dialog open={openDialog} onOpenChange={onOpenDialog}>
@@ -30,7 +30,7 @@ export const ResetPasswordDialog = ({ openDialog, onOpenDialog, handleCloseDialo
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} noValidate aria-label="Form to request a Password Reset Email">
           <div className="flex flex-col gap-3">
             <Label htmlFor="reset-email">Email</Label>
             <InputField

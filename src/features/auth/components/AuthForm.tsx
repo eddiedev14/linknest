@@ -1,7 +1,7 @@
+import { FaArrowRight } from "react-icons/fa6";
+import { CiLock, CiMail, CiUser } from "react-icons/ci";
 import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
-import { CiLock, CiMail, CiUser } from "react-icons/ci";
-import { FaArrowRight } from "react-icons/fa6";
 import { InputField } from "@/shared/components/forms/fields";
 import { useAuthForm } from "../hooks/useAuthForm";
 
