@@ -12,16 +12,17 @@ interface Props {
 }
 
 export const LinkForm = ({ onSuccess }: Props) => {
-  const { errors, isSaving, selectedPlatform, isEditing, register, setValue, onSubmit } =
-    useLinkForm(onSuccess);
-
-  const saveMessage = isSaving
-    ? isEditing
-      ? "Updating..."
-      : "Adding..."
-    : isEditing
-      ? "Update Link"
-      : "Add Link";
+  const {
+    errors,
+    isSaving,
+    selectedPlatform,
+    isEditing,
+    saveMessage,
+    register,
+    setValue,
+    handlePlatformKeyDown,
+    onSubmit,
+  } = useLinkForm(onSuccess);
 
   return (
     <form
@@ -37,10 +38,12 @@ export const LinkForm = ({ onSuccess }: Props) => {
           className="grid grid-cols-4 sm:grid-cols-5 gap-1.5"
           role="radiogroup"
           aria-label="Select a platform"
+          onKeyDown={handlePlatformKeyDown}
         >
           {PLATFORM_ENTRIES.map(([id, { name, Icon, bgColor }]) => (
             <Button
               key={id}
+              id={`platform-${id}`}
               variant="outline"
               type="button"
               role="radio"

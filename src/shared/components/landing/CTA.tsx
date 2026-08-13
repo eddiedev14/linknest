@@ -26,6 +26,7 @@ export default function CTA() {
           <Input
             type="text"
             defaultValue="yourname"
+            readOnly
             aria-label="Choose your username"
             className="p-0 h-fit bg-transparent dark:bg-transparent border-none font-mono font-semibold text-sm text-primary shadow-none flex-1 min-w-0"
           />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import type { UseFormRegisterReturn } from "react-hook-form";
 import type { IconType } from "react-icons";
 import { FiEyeOff, FiEye } from "react-icons/fi";
@@ -19,14 +19,24 @@ export const InputField = ({ Icon, errorMsg, hint, registration, ...attrs }: Pro
   const inputType =
     attrs.type !== "password" ? attrs.type : isPasswordVisible ? "text" : "password";
 
+  const errorId = useId();
+  const hintId = useId();
+  const describedBy =
+    [errorMsg ? errorId : null, hint ? hintId : null].filter(Boolean).join(" ") || undefined;
+
   return (
     <>
       <div className="relative">
-        <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
+        <Icon
+          className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none"
+          aria-hidden="true"
+        />
         <Input
           {...attrs}
           {...registration}
           type={inputType}
+          aria-invalid={errorMsg ? true : undefined}
+          aria-describedby={describedBy}
           className={cn(errorMsg && "border-destructive", attrs.className)}
         />
 
@@ -37,16 +47,21 @@ export const InputField = ({ Icon, errorMsg, hint, registration, ...attrs }: Pro
             variant="ghost"
             size="icon"
             className="absolute right-3 top-1/2 -translate-y-1/2"
+            aria-label={isPasswordVisible ? "Hide password" : "Show password"}
             onClick={() => setIsPasswordVisible((prev) => !prev)}
           >
-            {isPasswordVisible ? <FiEyeOff /> : <FiEye />}
+            {isPasswordVisible ? <FiEyeOff aria-hidden="true" /> : <FiEye aria-hidden="true" />}
           </Button>
         )}
       </div>
 
       {/* Error message and hint */}
-      {errorMsg && <FormFieldError message={errorMsg} />}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {errorMsg && <FormFieldError id={errorId} message={errorMsg} />}
+      {hint && (
+        <p id={hintId} className="text-xs text-muted-foreground">
+          {hint}
+        </p>
+      )}
     </>
   );
 };

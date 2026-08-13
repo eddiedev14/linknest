@@ -35,7 +35,7 @@ export const ResetPasswordDialog = ({ openDialog, onOpenDialog }: Props) => {
             <Label htmlFor="reset-email">Email</Label>
             <InputField
               Icon={CiMail}
-              id="reset-password"
+              id="reset-email"
               type="email"
               placeholder="you@example.com"
               autoComplete="email"
@@ -43,8 +43,8 @@ export const ResetPasswordDialog = ({ openDialog, onOpenDialog }: Props) => {
               errorMsg={errors.resetEmail?.message}
             />
             {emailState === "sent" && (
-              <div className="flex gap-2 items-center text-sm text-muted-foreground">
-                <IoMdMailUnread /> Be sure to check your spam folder
+              <div role="status" className="flex gap-2 items-center text-sm text-muted-foreground">
+                <IoMdMailUnread aria-hidden="true" /> Be sure to check your spam folder
               </div>
             )}
           </div>

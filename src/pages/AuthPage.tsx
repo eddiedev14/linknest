@@ -26,11 +26,11 @@ export const AuthPage = ({ isSignup = false }: Props) => {
   if (user) return <Navigate to="/profile" replace />;
 
   return (
-    <main className="min-h-screen bg-background flex" aria-label="Create your account">
+    <main className="min-h-screen bg-background flex" aria-label={isSignup ? "Create your account" : "Sign in to LinkNest"}>
       {/* ── Left panel: form ── */}
       <div className="flex-1 flex flex-col px-6 py-10 sm:px-8 md:px-16 lg:px-20 max-w-xl">
         <a href="/" className="flex items-center gap-2 group" aria-label="Linknest Home">
-          <img src={Logo} alt="Linknest Logo" className="size-8" />
+          <img src={Logo} alt="" aria-hidden="true" className="size-8" />
           <span className="font-heading font-bold text-xl text-foreground tracking-tight">
             Link <span className="text-primary">Nest</span>
           </span>
@@ -52,20 +52,20 @@ export const AuthPage = ({ isSignup = false }: Props) => {
               variant="outline"
               size="lg"
               className=""
-              aria-label="Sign in with Google"
+              aria-label={`${isSignup ? "Continue" : "Sign in"} with Google`}
               onClick={() => handleProviderAuth("google")}
             >
-              <img src={GoogleIcon} alt="Google Icon" />
+              <img src={GoogleIcon} alt="" aria-hidden="true" />
               {isSignup ? "Continue with Google" : "Sign in with Google"}
             </Button>
 
             <Button
               variant="outline"
               size="lg"
-              aria-label="Sign in with Github"
+              aria-label={`${isSignup ? "Continue" : "Sign in"} with GitHub`}
               onClick={() => handleProviderAuth("github")}
             >
-              <img src={GithubIcon} alt="Github Icon" />
+              <img src={GithubIcon} alt="" aria-hidden="true" />
               {isSignup ? "Continue with GitHub" : "Sign in with GitHub"}
             </Button>
           </div>

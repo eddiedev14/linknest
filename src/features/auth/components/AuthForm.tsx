@@ -56,7 +56,7 @@ export const AuthForm = ({ isSignup }: Props) => {
           Icon={CiLock}
           id="password"
           type="password"
-          autoComplete="current-password"
+          autoComplete={isSignup ? "new-password" : "current-password"}
           errorMsg={errors.password?.message}
           registration={register("password")}
         />

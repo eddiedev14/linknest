@@ -21,7 +21,7 @@ export const UserLinkItem = ({ link, onLinkClick }: Props) => {
         onClick={handleLinkClick}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Open ${label}`}
+        aria-label={`Open ${label} in a new tab`}
       >
         <div className="group flex items-center gap-3 bg-background rounded-2xl border border-border px-4 py-4 shadow-sm transition-shadow">
           {/* Platform icon badge */}

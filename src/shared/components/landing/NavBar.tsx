@@ -29,7 +29,7 @@ export default function Navbar() {
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 shrink-0">
-          <img src={Logo} alt="LinkNest" className="h-8 w-8" />
+          <img src={Logo} alt="" aria-hidden="true" className="h-8 w-8" />
           <span className="font-bold text-lg">Link Nest</span>
         </a>
 
@@ -69,8 +69,10 @@ export default function Navbar() {
             onClick={toggleSearch}
             className="rounded-lg transition-colors"
             aria-label="Search"
+            aria-expanded={searchOpen}
+            aria-controls="mobile-search"
           >
-            {searchOpen ? <IoMdClose /> : <IoSearch />}
+            {searchOpen ? <IoMdClose aria-hidden="true" /> : <IoSearch aria-hidden="true" />}
           </Button>
 
           <Button
@@ -80,22 +82,29 @@ export default function Navbar() {
             onClick={toggleMenu}
             className="rounded-lg transition-colors"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
           >
-            {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
+            {menuOpen ? <IoMdClose aria-hidden="true" /> : <IoMenuSharp aria-hidden="true" />}
           </Button>
         </div>
       </nav>
 
       {/* Mobile Search */}
       {searchOpen && (
-        <div className="md:hidden border-t border-border bg-background px-6 py-4">
+        <div id="mobile-search" className="md:hidden border-t border-border bg-background px-6 py-4">
           <SearchBar autoFocus />
         </div>
       )}
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-background border-t border-border px-6 pb-6 pt-4 flex flex-col gap-4 shadow-lg">
+        <nav
+          id="mobile-menu"
+          role="navigation"
+          aria-label="Mobile menu"
+          className="md:hidden bg-background border-t border-border px-6 pb-6 pt-4 flex flex-col gap-4 shadow-lg"
+        >
           {navMenuItems.map((item) => (
             <a
               key={item}
@@ -121,7 +130,7 @@ export default function Navbar() {
           >
             {user ? "Continue to LinkNest" : "Get started free"}
           </a>
-        </div>
+        </nav>
       )}
     </header>
   );

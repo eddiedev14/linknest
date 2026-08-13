@@ -12,9 +12,9 @@ interface Props {
 export const AppNavbarContent = ({ mobile = false, isAuthenticated, onLogout }: Props) => {
   if (!isAuthenticated) {
     return (
-      <NavLink to="/signup">
-        <Button className={mobile ? "w-full" : undefined}>Create your public page</Button>
-      </NavLink>
+      <Button asChild className={mobile ? "w-full" : undefined}>
+        <NavLink to="/signup">Create your public page</NavLink>
+      </Button>
     );
   }
 

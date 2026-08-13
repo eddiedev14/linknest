@@ -28,7 +28,7 @@ const chartConfig = {
 
 export const WeeklyClicksChart = ({ data }: Props) => {
   return (
-    <Card className="p-5">
+    <Card className="p-5" aria-label="Chart showing the number of clicks over the last 7 days">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <IoTrendingUp size={16} className="text-primary" aria-hidden="true" />

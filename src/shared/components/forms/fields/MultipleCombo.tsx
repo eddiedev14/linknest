@@ -1,3 +1,4 @@
+import { useId } from "react";
 import type { SelectOption } from "@/shared/components/forms/fields/SelectField";
 import {
   Combobox,
@@ -26,18 +27,18 @@ interface Props {
 export function MultipleCombo({ id, items, value, maxSelections, hint, onValueChange }: Props) {
   const anchor = useComboboxAnchor();
   const isLimitReached = maxSelections !== undefined && value.length >= maxSelections;
+  const hintId = useId();
 
   return (
     <>
       <Combobox
         multiple
         autoHighlight
-        id={id}
         items={items}
         value={value}
         onValueChange={onValueChange}
       >
-        <ComboboxChips ref={anchor} className="w-full max-w-xs">
+        <ComboboxChips ref={anchor} aria-labelledby={id} className="w-full max-w-xs">
           <ComboboxValue>
             {(values: string[]) => {
               const visible = values.slice(0, MAX_VISIBLE_CHIPS);
@@ -52,7 +53,10 @@ export function MultipleCombo({ id, items, value, maxSelections, hint, onValueCh
                   })}
 
                   {remaining > 0 && <ComboboxChip showRemove={false}>+{remaining}</ComboboxChip>}
-                  <ComboboxChipsInput />
+                  <ComboboxChipsInput
+                    aria-labelledby={id}
+                    aria-describedby={hint ? hintId : undefined}
+                  />
                 </>
               );
             }}
@@ -78,7 +82,11 @@ export function MultipleCombo({ id, items, value, maxSelections, hint, onValueCh
         </ComboboxContent>
       </Combobox>
 
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {hint && (
+        <p id={hintId} className="text-xs text-muted-foreground">
+          {hint}
+        </p>
+      )}
     </>
   );
 }

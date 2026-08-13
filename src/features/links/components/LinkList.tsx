@@ -21,7 +21,7 @@ export const LinkList = () => {
       <div>
         <Button onClick={handleSaveOrderClick} disabled={!hasOrderChanged || isUpdatingOrder}>
           {isUpdatingOrder ? "Updating order..." : "Update order"}
-          <IoReload />
+          <IoReload aria-hidden="true" />
         </Button>
       </div>
     </>

@@ -29,7 +29,7 @@ export const ShareButton = ({ url }: Props) => {
       title="Share your public profile URL"
     >
       {/* Share icon */}
-      <div className="flex h-16 w-16 shrink-0 items-center justify-center">
+      <div className="flex h-16 w-16 shrink-0 items-center justify-center" aria-hidden="true">
         <FaShareFromSquare className="w-6 h-6 text-primary" />
       </div>
 
