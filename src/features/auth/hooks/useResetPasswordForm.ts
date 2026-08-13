@@ -33,6 +33,8 @@ export const useResetPasswordForm = () => {
 
   //* Effects
   useEffect(() => {
+    let cancelled = false;
+
     const validateResetCode = async () => {
       // 1. Verify query params
       if (!oobCode) {
@@ -42,17 +44,27 @@ export const useResetPasswordForm = () => {
       }
 
       // 2. Verify with useAuth the oobCode
-      const error = await validatePasswordResetCode(oobCode);
-      if (error) {
-        navigate("/login", { replace: true });
-        toast.error(error);
-        return;
-      }
+      try {
+        const error = await validatePasswordResetCode(oobCode);
+        if (cancelled) return;
 
-      setIsValidating(false);
+        if (error) {
+          navigate("/login", { replace: true });
+          toast.error(error);
+          return;
+        }
+      } finally {
+        if (!cancelled) {
+          setIsValidating(false);
+        }
+      }
     };
 
     validateResetCode();
+
+    return () => {
+      cancelled = true;
+    };
   }, [oobCode, navigate, validatePasswordResetCode]);
 
   // * Functions

@@ -48,6 +48,7 @@ export const useBannerDialog = () => {
     onSuccess?: () => void,
   ) => {
     e.preventDefault();
+
     if (!user) {
       onSuccess?.();
       return;
@@ -65,15 +66,14 @@ export const useBannerDialog = () => {
 
       if (error) {
         toast.error(error);
-        setIsSaving(false);
         return;
       }
 
       toast.success("Your banner style was updated");
       onSuccess?.();
-      setIsSaving(false);
     } catch {
       toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsSaving(false);
     }
   };

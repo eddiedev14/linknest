@@ -84,19 +84,16 @@ export const useLinkForm = (onSuccess: () => void) => {
 
       if (error) {
         toast.error(error);
-        setIsSaving(false);
         return;
       }
 
       toast.success(isEditing ? "Link updated successfully" : "Link added successfully");
-
       reset();
       onSuccess();
-
       if (isEditing) handleSetLinkToEdit(null);
-      setIsSaving(false);
     } catch {
       toast.error("Something went wrong. Please try again.");
+    } finally {
       setIsSaving(false);
     }
   };

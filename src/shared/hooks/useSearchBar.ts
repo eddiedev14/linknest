@@ -36,13 +36,18 @@ export const useSearchBar = () => {
 
   useEffect(() => {
     if (debouncedSearch.trim() === "") return;
+    let cancelled = false;
 
     const filterSearch = async () => {
       const results = await filterUsersByUsername(debouncedSearch);
-      setFilteredResults(results);
+      if (!cancelled) setFilteredResults(results);
     };
 
     filterSearch();
+
+    return () => {
+      cancelled = true;
+    };
   }, [debouncedSearch, filterUsersByUsername]);
 
   //* Handlers

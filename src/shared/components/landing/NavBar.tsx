@@ -92,7 +92,10 @@ export default function Navbar() {
 
       {/* Mobile Search */}
       {searchOpen && (
-        <div id="mobile-search" className="md:hidden border-t border-border bg-background px-6 py-4">
+        <div
+          id="mobile-search"
+          className="md:hidden border-t border-border bg-background px-6 py-4"
+        >
           <SearchBar autoFocus />
         </div>
       )}
@@ -101,7 +104,6 @@ export default function Navbar() {
       {menuOpen && (
         <nav
           id="mobile-menu"
-          role="navigation"
           aria-label="Mobile menu"
           className="md:hidden bg-background border-t border-border px-6 pb-6 pt-4 flex flex-col gap-4 shadow-lg"
         >
