@@ -28,7 +28,7 @@ const chartConfig = {
 
 export const WeeklyLinksChart = ({ data }: Props) => {
   return (
-    <Card className="p-5">
+    <Card className="p-5" aria-label="Bar chart showing the number of clicks for each link over the last 7 days">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <LuMousePointer size={16} className="text-primary" aria-hidden="true" />

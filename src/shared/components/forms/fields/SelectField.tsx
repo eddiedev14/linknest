@@ -1,3 +1,4 @@
+import { useId } from "react";
 import type { IconType } from "react-icons";
 import { cn } from "@/lib/utils";
 import { NativeSelect, NativeSelectOption } from "../../shadcn/native-select";
@@ -18,13 +19,23 @@ interface Props extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "onC
 }
 
 export const SelectField = ({ Icon, errorMsg, hint, options, onChange, ...attrs }: Props) => {
+  const errorId = useId();
+  const hintId = useId();
+  const describedBy =
+    [errorMsg ? errorId : null, hint ? hintId : null].filter(Boolean).join(" ") || undefined;
+
   return (
     <>
       <div className="relative">
-        <Icon className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none" />
+        <Icon
+          className="absolute left-3 top-3.75 text-muted-foreground pointer-events-none"
+          aria-hidden="true"
+        />
         <NativeSelect
           className={cn(errorMsg && "border-destructive", attrs.className)}
           onChange={(e) => onChange(e.target.value)}
+          aria-invalid={errorMsg ? true : undefined}
+          aria-describedby={describedBy}
           {...attrs}
         >
           {!attrs.value && (
@@ -41,8 +52,12 @@ export const SelectField = ({ Icon, errorMsg, hint, options, onChange, ...attrs 
       </div>
 
       {/* Error message and hint */}
-      {errorMsg && <FormFieldError message={errorMsg} />}
-      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+      {errorMsg && <FormFieldError id={errorId} message={errorMsg} />}
+      {hint && (
+        <p id={hintId} className="text-xs text-muted-foreground">
+          {hint}
+        </p>
+      )}
     </>
   );
 };

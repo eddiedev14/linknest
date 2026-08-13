@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="flex flex-col items-center gap-6 mb-6">
           <div className="flex flex-col items-center text-center gap-4">
             <div className="flex items-center gap-2">
-              <img src={Logo} alt="Linknest Logo" className="size-8" />
+              <img src={Logo} alt="" aria-hidden="true" className="size-8" />
               <span className="font-heading font-bold text-xl text-foreground">
                 Link<span className="text-primary">Nest</span>
               </span>

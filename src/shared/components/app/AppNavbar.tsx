@@ -33,7 +33,7 @@ export const AppNavbar = () => {
       <header className="sticky top-0 z-20 border-b border-border bg-background">
         <nav className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 lg:px-6">
           <a href="/" className="flex items-center gap-2">
-            <img src={Logo} alt="Linknest Logo" className="size-8" />
+            <img src={Logo} alt="" aria-hidden="true" className="size-8" />
             <span className="font-heading text-lg font-bold tracking-tight">
               Link <span className="text-primary">Nest</span>
             </span>
@@ -63,8 +63,14 @@ export const AppNavbar = () => {
               onClick={toggleSearch}
               className="rounded-lg transition-colors md:hidden"
               aria-label="Search"
+              aria-expanded={searchOpen}
+              aria-controls="mobile-search"
             >
-              {searchOpen ? <IoMdClose /> : <IoSearch />}
+              {searchOpen ? (
+                <IoMdClose aria-hidden="true" />
+              ) : (
+                <IoSearch aria-hidden="true" />
+              )}
             </Button>
             <Button
               type="button"
@@ -73,22 +79,32 @@ export const AppNavbar = () => {
               onClick={toggleMenu}
               className="rounded-lg transition-colors"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
-              {menuOpen ? <IoMdClose /> : <IoMenuSharp />}
+              {menuOpen ? (
+                <IoMdClose aria-hidden="true" />
+              ) : (
+                <IoMenuSharp aria-hidden="true" />
+              )}
             </Button>
           </div>
         </nav>
 
         {/* Mobile Search */}
         {searchOpen && (
-          <div className="md:hidden border-t border-border bg-background px-6 py-4">
+          <div id="mobile-search" className="md:hidden border-t border-border bg-background px-6 py-4">
             <SearchBar autoFocus />
           </div>
         )}
 
         {/* Mobile menu */}
         {menuOpen && (
-          <nav className="absolute left-0 top-14 z-50 w-full border-t border-border bg-background shadow-lg lg:hidden">
+          <nav
+            id="mobile-menu"
+            aria-label="Mobile navigation"
+            className="absolute left-0 top-14 z-50 w-full border-t border-border bg-background shadow-lg lg:hidden"
+          >
             <div className="flex flex-col gap-2 p-4">
               <AppNavbarContent
                 mobile

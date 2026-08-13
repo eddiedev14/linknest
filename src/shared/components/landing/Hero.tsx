@@ -49,6 +49,7 @@ export default function Hero() {
             <Input
               type="text"
               defaultValue="yourname"
+              readOnly
               aria-label="Choose your username"
               className="p-0 h-fit bg-transparent dark:bg-transparent border-none font-mono font-semibold text-sm text-primary shadow-none flex-1 min-w-0"
             />
@@ -86,7 +87,8 @@ export default function Hero() {
               minHeight: "520px",
               boxShadow: "0 32px 80px -12px oklch(0.564 0.21 270.5 / 0.2), 0 0 0 1px var(--border)",
             }}
-            aria-label="Product preview"
+            role="img"
+            aria-label="Product preview of a developer profile page"
           >
             {/* Phone notch */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-16 h-1.5 rounded-full bg-border z-10" />
@@ -95,6 +97,7 @@ export default function Hero() {
             <div
               className="h-28 w-full relative"
               style={{ background: "oklch(0.564 0.21 270.5)" }}
+              aria-hidden="true"
             ></div>
             {/* Avatar */}
             <div className="flex flex-col items-center mt-14 px-5 pb-6">
@@ -154,7 +157,7 @@ export default function Hero() {
           </div>
 
           {/* Floating badge */}
-          <Badge className="absolute -left-3 sm:-left-4 bottom-1/4 bg-background rounded-xl shadow-lg border border-border p-3 flex items-center gap-2">
+          <Badge className="absolute -left-3 sm:-left-4 bottom-1/4 bg-background rounded-xl shadow-lg border border-border p-3 flex items-center gap-2" aria-hidden="true">
             <FaLink className="text-primary" />
             <span className="text-[10px] font-semibold text-foreground">
               getlinknest.vercel.app/u/alex
@@ -162,7 +165,7 @@ export default function Hero() {
           </Badge>
 
           {/* Floating customise badge */}
-          <Badge className="absolute -left-3 sm:-left-6 top-16 bg-primary text-primary-foreground rounded-xl shadow-lg p-3 flex items-center gap-2">
+          <Badge className="absolute -left-3 sm:-left-6 top-16 bg-primary text-primary-foreground rounded-xl shadow-lg p-3 flex items-center gap-2" aria-hidden="true">
             <FaPalette />
             <span className="text-[10px] font-semibold">Fully customizable</span>
           </Badge>

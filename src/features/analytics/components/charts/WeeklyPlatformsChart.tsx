@@ -48,7 +48,7 @@ export const WeeklyPlatformsChart = ({ data }: Props) => {
   }, {} as PieChartConfig);
 
   return (
-    <Card className="p-5">
+    <Card className="p-5" aria-label="Pie chart showing the distribution of clicks by platform over the last 7 days">
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <FaChartPie size={16} className="text-primary" aria-hidden="true" />

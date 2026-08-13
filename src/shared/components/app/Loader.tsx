@@ -7,7 +7,7 @@ type LoaderProps = {
 
 export const Loader = ({ size = "md", className }: LoaderProps) => {
   return (
-    <div role="status" className={cn("flex items-center justify-center w-full h-full", className)}>
+    <div role="status" aria-live="polite" className={cn("flex items-center justify-center w-full h-full", className)}>
       <svg
         aria-hidden="true"
         className={cn("animate-spin fill-primary text-muted", {
@@ -29,7 +29,7 @@ export const Loader = ({ size = "md", className }: LoaderProps) => {
         />
       </svg>
 
-      <span className="sr-only">Cargando...</span>
+      <span className="sr-only">Loading...</span>
     </div>
   );
 };

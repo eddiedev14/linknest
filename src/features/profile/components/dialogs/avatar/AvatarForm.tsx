@@ -44,7 +44,7 @@ export const AvatarForm = ({ onSuccess }: Props) => {
             <FaImage className="size-7" />
           )}
         </div>
-        <h3 className="text-foreground font-medium text-base">¡Click here to upload your image!</h3>
+        <h3 className="text-foreground font-medium text-base">Click here to upload your image!</h3>
         <span className="text-muted-foreground -mt-1 text-sm">
           Supported file formats: JPG, PNG, JPEG
         </span>

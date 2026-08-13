@@ -12,7 +12,8 @@ export const UserAvatar = ({ avatarURL, username }: Props) => {
   return (
     <div
       className="size-28 rounded-full border-4 border-background bg-muted flex items-center justify-center overflow-hidden shadow-md"
-      aria-label="Profile photo"
+      role="img"
+      aria-label={username ? `${username}'s profile photo` : "Default profile photo"}
     >
       {avatarURL ? (
         <Image

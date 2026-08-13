@@ -12,8 +12,8 @@ export const UserBanner = ({ children, className, style }: Props) => {
     <div
       className={cn("relative h-32 w-full", className)}
       style={style}
-      role="img"
-      aria-label="Profile banner"
+      role={children ? undefined : "img"}
+      aria-label={children ? undefined : "Profile banner"}
     >
       {/* Subtle pattern */}
       <div

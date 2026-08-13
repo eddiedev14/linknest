@@ -33,7 +33,8 @@ export const BannerPresets = ({ onSuccess }: Props) => {
               preset === selectedColor &&
                 "scale-105 border-primary-foreground/80 ring-2 ring-primary ring-offset-2 shadow-lg",
             )}
-            aria-label={preset}
+            aria-label={`Banner color ${preset.replace("banner-", "").replaceAll("-", " ")}`}
+            aria-pressed={preset === selectedColor}
           ></Button>
         ))}
 
@@ -50,9 +51,10 @@ export const BannerPresets = ({ onSuccess }: Props) => {
             style={{
               backgroundColor: isCustomColor ? selectedColor : undefined,
             }}
-            aria-label="Custom Color"
+            aria-label="Custom banner color"
+            aria-pressed={isCustomColor}
           >
-            <FaPencil />
+            <FaPencil aria-hidden="true" />
           </Button>
         </div>
       </div>
@@ -62,7 +64,7 @@ export const BannerPresets = ({ onSuccess }: Props) => {
           ref={colorInputRef}
           type="color"
           className="sr-only"
-          aria-label="Upload banner image"
+          aria-label="Pick a custom banner color"
         />
         <Button type="submit" disabled={isSaving} className="flex-1 mt-2">
           {isSaving ? "Saving..." : "Save"}

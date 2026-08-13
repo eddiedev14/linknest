@@ -4,11 +4,11 @@ import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm"
 
 export const ResetPassword = () => {
   return (
-    <main className="min-h-screen bg-background flex" aria-label="Create your account">
+    <main className="min-h-screen bg-background flex" aria-label="Reset your password">
       {/* ── Left panel: form ── */}
       <div className="flex-1 flex flex-col px-6 py-10 sm:px-8 md:px-16 lg:px-20 max-w-xl">
         <a href="/" className="flex items-center gap-2 group" aria-label="Linknest Home">
-          <img src={Logo} alt="Linknest Logo" className="size-8" />
+          <img src={Logo} alt="" aria-hidden="true" className="size-8" />
           <span className="font-heading font-bold text-xl text-foreground tracking-tight">
             Link <span className="text-primary">Nest</span>
           </span>
