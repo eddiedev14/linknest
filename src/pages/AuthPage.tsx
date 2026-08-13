@@ -20,7 +20,7 @@ interface Props {
 export const AuthPage = ({ isSignup = false }: Props) => {
   const { user, userLoading } = useAuth();
   const { handleProviderAuth } = useAuthProviders();
-  const { open, onOpenChange, handleOpenDialog, handleCloseDialog } = useDialog();
+  const { open, onOpenChange, handleOpenDialog } = useDialog();
 
   if (userLoading) return <Loader />;
   if (user) return <Navigate to="/profile" replace />;
