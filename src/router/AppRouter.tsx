@@ -1,5 +1,14 @@
 import { Navigate, Route, Routes } from "react-router";
-import { Analytics, AuthPage, Landing, Links, NotFound, Profile, PublicPage } from "@/pages";
+import {
+  Analytics,
+  AuthPage,
+  Landing,
+  Links,
+  NotFound,
+  Profile,
+  PublicPage,
+  ResetPassword,
+} from "@/pages";
 import { PrivateRoute } from "./PrivateRoute";
 import { GuestOnlyRoute } from "./GuestOnlyRoute";
 import { MyLinksContextProvider } from "@/features/links/context/MyLinksContext";
@@ -28,6 +37,7 @@ export const AppRouter = () => {
       <Route element={<GuestOnlyRoute />}>
         <Route path="/signup" element={<AuthPage isSignup />} />
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
 
       {/* Private Pages */}

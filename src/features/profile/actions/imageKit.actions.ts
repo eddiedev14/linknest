@@ -1,4 +1,4 @@
-import { imageKitApi } from "../api/imageKit.api";
+import { linknestApi } from "@/shared/api/linknest.api";
 import { getFirebaseToken } from "@/firebase/utils/firebase.helper";
 import type { AuthResponse } from "../types/imageKit.response.type";
 import type { Avatar } from "@/features/auth/types";
@@ -8,7 +8,7 @@ const getAuth = async (): Promise<AuthResponse> => {
   const idToken = await getFirebaseToken();
   if (!idToken) throw new Error("The Firebase token could not be obtained");
 
-  const response = await imageKitApi.get("/imagekit-auth", {
+  const response = await linknestApi.get("/imagekit-auth", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
@@ -23,7 +23,7 @@ const uploadFromProvider = async (photoURL: string) => {
     throw new Error("The Firebase token could not be obtained");
   }
 
-  const response = await imageKitApi.post<Avatar>(
+  const response = await linknestApi.post<Avatar>(
     "/upload-provider-photo",
     { photoURL },
     {
@@ -42,7 +42,7 @@ const deleteImageKitFile = async (fileId: string) => {
     throw new Error("The Firebase token could not be obtained");
   }
 
-  await imageKitApi.delete("/imagekit-file", {
+  await linknestApi.delete("/imagekit-file", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

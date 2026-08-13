@@ -4,12 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 //* Firebase
 import { auth, githubProvider, googleProvider } from "@/firebase/config";
 import {
+  confirmPasswordReset,
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  verifyPasswordResetCode,
   type AuthProvider,
 } from "firebase/auth";
 import { endAt, limit, orderBy, startAt, where } from "firebase/firestore";
@@ -23,10 +25,46 @@ import {
   getUserId,
 } from "@/firebase/utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
+import { linknestApi } from "@/shared/api/linknest.api";
+import axios from "axios";
 
 const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
   try {
     await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+    return null;
+  } catch (err) {
+    return getAuthErrorMessage(err);
+  }
+};
+
+const sendRecoveryPasswordEmail = async (email: string): Promise<string | null> => {
+  try {
+    await linknestApi.post("/reset-password", { email });
+    return null;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Status:", error.response?.status);
+      console.error("Data:", error.response?.data);
+
+      return error.response?.data?.message ?? "Something went wrong.";
+    }
+
+    return "Something went wrong. Please try again.";
+  }
+};
+
+const validatePasswordResetCode = async (oobCode: string) => {
+  try {
+    await verifyPasswordResetCode(auth, oobCode);
+    return null;
+  } catch (err) {
+    return getAuthErrorMessage(err);
+  }
+};
+
+const completePasswordReset = async (oobCode: string, newPassword: string) => {
+  try {
+    await confirmPasswordReset(auth, oobCode, newPassword);
     return null;
   } catch (err) {
     return getAuthErrorMessage(err);
@@ -188,6 +226,9 @@ export default function useAuthState() {
     loginWithEmailAndPassword,
     authWithGoogle: () => authWithProvider(googleProvider),
     authWithGithub: () => authWithProvider(githubProvider),
+    sendRecoveryPasswordEmail,
+    validatePasswordResetCode,
+    completePasswordReset,
     logout,
     updateUserProfile,
     findUser,

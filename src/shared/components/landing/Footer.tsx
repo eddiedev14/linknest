@@ -1,4 +1,4 @@
-import Logo from "@/assets/logo.png";
+import Logo from "/logo.png";
 import { navMenuItems } from "@/data/landing.data";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
