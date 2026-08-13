@@ -84,24 +84,27 @@ export const useAnalytics = (userId?: string) => {
     if (!userId) return;
     setAnalyticsLoading(true);
 
-    // 1. Count how many links the user have and get week analytics
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setHours(0, 0, 0, 0);
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    try {
+      // 1. Count how many links the user have and get week analytics
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setHours(0, 0, 0, 0);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
 
-    const [totalLinks, weekAnalytics] = await Promise.all([
-      countLinks(),
-      getAllAnalytics([
-        where("date", ">=", Timestamp.fromDate(sevenDaysAgo)),
-        orderBy("date", "desc"),
-        limit(7),
-      ]),
-    ]);
+      const [totalLinks, weekAnalytics] = await Promise.all([
+        countLinks(),
+        getAllAnalytics([
+          where("date", ">=", Timestamp.fromDate(sevenDaysAgo)),
+          orderBy("date", "desc"),
+          limit(7),
+        ]),
+      ]);
 
-    // 2. Calculate the stats with the helper function.
-    const stats = buildStats(totalLinks, weekAnalytics);
-    setAnalyticsLoading(false);
-    setStats(stats);
+      // 2. Calculate the stats with the helper function.
+      const stats = buildStats(totalLinks, weekAnalytics);
+      setStats(stats);
+    } finally {
+      setAnalyticsLoading(false);
+    }
   };
 
   return {
