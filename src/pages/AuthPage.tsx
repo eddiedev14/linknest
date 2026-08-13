@@ -80,11 +80,7 @@ export const AuthPage = ({ isSignup = false }: Props) => {
           <AuthForm isSignup={isSignup} />
 
           {/* Reset Password Dialog */}
-          <ResetPasswordDialog
-            openDialog={open}
-            onOpenDialog={onOpenChange}
-            handleCloseDialog={handleCloseDialog}
-          />
+          <ResetPasswordDialog openDialog={open} onOpenDialog={onOpenChange} />
 
           {/* Other actions */}
           <div className="flex flex-col gap-1 text-center *:text-sm *:text-muted-foreground">

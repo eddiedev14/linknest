@@ -1,14 +1,13 @@
+import * as React from "react";
 import {
   Body,
   Button,
-  Column,
   Container,
   Head,
   Heading,
   Html,
   Img,
   Preview,
-  Row,
   Section,
   Tailwind,
   Text,
@@ -20,7 +19,7 @@ interface PasswordResetEmailProps {
 }
 
 // TODO: Update the LOGO_URL in production
-const LOGO_URL = `http://localhost:5173/logo.png`;
+const LOGO_URL = `http://localhost:3000/logo.png`;
 
 const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps) => (
   <Tailwind>
@@ -32,23 +31,6 @@ const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps) => (
         <Container className="mobile:mt-0 mx-auto mt-8 w-full max-w-160">
           <Section>
             <Section className="bg-bg mobile:px-2 px-6 py-4">
-              <Section className="mb-3 px-6">
-                <Row>
-                  <Column className="w-1/2 py-1.75 align-middle">
-                    <Row>
-                      <Column className="w-8 align-middle">
-                        <Img src={LOGO_URL} alt="Linknest logo" width={23} className="block" />
-                      </Column>
-                    </Row>
-                  </Column>
-                  <Column align="right" className="w-1/2 py-1.75 align-middle">
-                    <Text className="font-13 -mt-0 text-right font-sans">
-                      <span className="text-fg-3 font-semibold">{companyName}</span>
-                    </Text>
-                  </Column>
-                </Row>
-              </Section>
-
               <Section className="bg-bg-2 mobile:px-6 mobile:py-12 rounded-[8px] px-10 py-16 text-center">
                 <Section className="mb-3">
                   <Img
@@ -63,18 +45,17 @@ const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps) => (
                 </Section>
 
                 <Text className="font-16 text-fg-2 mx-auto mt-0 mb-8 max-w-95 text-center font-sans">
-                  Someone has requested a link to change your password, and you can do this through
-                  the link below.
+                  Someone has requested a link to change your password in{" "}
+                  <span className="font-bold">{companyName}</span>, and you can do this through the
+                  link below.
                 </Text>
 
-                <Section className="mb-6 text-center">
-                  <Button
-                    href={url}
-                    className="bg-fg font-16 text-fg-inverted inline-block rounded-lg px-7 py-4 text-center font-sans leading-6"
-                  >
-                    Change password
-                  </Button>
-                </Section>
+                <Button
+                  className="box-border w-full rounded-[8px] bg-indigo-600 p-3 text-center font-semibold text-white"
+                  href={url}
+                >
+                  Change your password
+                </Button>
 
                 <Text className="font-13 text-fg-3 mx-auto mt-8 mb-0 max-w-100 text-center font-sans">
                   If you didn&apos;t request this, please ignore this email. Your password

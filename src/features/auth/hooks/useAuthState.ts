@@ -8,12 +8,10 @@ import {
   createUserWithEmailAndPassword,
   getAdditionalUserInfo,
   onAuthStateChanged,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   verifyPasswordResetCode,
-  type ActionCodeSettings,
   type AuthProvider,
 } from "firebase/auth";
 import { endAt, limit, orderBy, startAt, where } from "firebase/firestore";
@@ -27,6 +25,8 @@ import {
   getUserId,
 } from "@/firebase/utils/firebase.helper";
 import { useImageKit } from "@/features/profile/hooks/useImageKit";
+import { linknestApi } from "@/shared/api/linknest.api";
+import axios from "axios";
 
 const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string | null> => {
   try {
@@ -37,16 +37,19 @@ const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string
   }
 };
 
-const sendRecoveryPasswordEmail = async (email: string) => {
-  const actionCodeSettings: ActionCodeSettings = {
-    url: `${window.location.origin}/reset-password`,
-  };
-
+const sendRecoveryPasswordEmail = async (email: string): Promise<string | null> => {
   try {
-    await sendPasswordResetEmail(auth, email, actionCodeSettings);
+    await linknestApi.post("/reset-password", { email });
     return null;
-  } catch (err) {
-    return getAuthErrorMessage(err);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("Status:", error.response?.status);
+      console.error("Data:", error.response?.data);
+
+      return error.response?.data?.message ?? "Something went wrong.";
+    }
+
+    return "Something went wrong. Please try again.";
   }
 };
 

@@ -19,9 +19,7 @@ export const useResetPasswordForm = () => {
   //* React Router Dom
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
   const oobCode = searchParams.get("oobCode");
-  const mode = searchParams.get("mode");
 
   //* React Hook Form
   const {
@@ -37,7 +35,7 @@ export const useResetPasswordForm = () => {
   useEffect(() => {
     const validateResetCode = async () => {
       // 1. Verify query params
-      if (!oobCode || mode != "resetPassword") {
+      if (!oobCode) {
         navigate("/login", { replace: true });
         toast.error("The password reset link is incorrect");
         return;
@@ -55,7 +53,7 @@ export const useResetPasswordForm = () => {
     };
 
     validateResetCode();
-  }, [oobCode, mode, navigate, validatePasswordResetCode]);
+  }, [oobCode, navigate, validatePasswordResetCode]);
 
   // * Functions
   const handleResetPasswordFormSubmit = async (data: FormData) => {
@@ -70,6 +68,7 @@ export const useResetPasswordForm = () => {
     }
 
     toast.success(`¡Password successfully reset!`);
+    navigate("/login", { replace: true });
   };
 
   return {

@@ -10,15 +10,15 @@ import { Button } from "@/shared/components/shadcn/button";
 import { Label } from "@/shared/components/shadcn/label";
 import { InputField } from "@/shared/components/forms/fields";
 import { useResetPasswordDialog } from "../hooks/useResetPasswordDialog";
+import { IoMdMailUnread } from "react-icons/io";
 
 interface Props {
   openDialog: boolean;
   onOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  handleCloseDialog: () => void;
 }
 
-export const ResetPasswordDialog = ({ openDialog, onOpenDialog, handleCloseDialog }: Props) => {
-  const { errors, register, onSubmit } = useResetPasswordDialog(handleCloseDialog);
+export const ResetPasswordDialog = ({ openDialog, onOpenDialog }: Props) => {
+  const { emailState, errors, register, onSubmit } = useResetPasswordDialog();
 
   return (
     <Dialog open={openDialog} onOpenChange={onOpenDialog}>
@@ -42,10 +42,17 @@ export const ResetPasswordDialog = ({ openDialog, onOpenDialog, handleCloseDialo
               registration={register("resetEmail")}
               errorMsg={errors.resetEmail?.message}
             />
+            {emailState === "sent" && (
+              <div className="flex gap-2 items-center text-sm text-muted-foreground">
+                <IoMdMailUnread /> Be sure to check your spam folder
+              </div>
+            )}
           </div>
 
           <div className="mt-4 flex justify-end">
-            <Button type="submit">Send Recovery Email</Button>
+            <Button type="submit" disabled={emailState === "sending"}>
+              {emailState === "sending" ? "Sending..." : "Send Recovery Email"}
+            </Button>
           </div>
         </form>
       </DialogContent>

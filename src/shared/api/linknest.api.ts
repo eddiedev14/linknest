@@ -1,5 +1,5 @@
 import axios from "axios";
 
-export const imageKitApi = axios.create({
+export const linknestApi = axios.create({
   baseURL: "/api",
 });
