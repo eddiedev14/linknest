@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
-import Logo from "/logo.png";
+import Logo from "/logo.webp";
 import { Button } from "../shadcn/button";
 import { ConfirmDialog } from "../forms/ConfirmDialog";
 import { SearchBar } from "../SearchBar";
@@ -66,11 +66,7 @@ export const AppNavbar = () => {
               aria-expanded={searchOpen}
               aria-controls="mobile-search"
             >
-              {searchOpen ? (
-                <IoMdClose aria-hidden="true" />
-              ) : (
-                <IoSearch aria-hidden="true" />
-              )}
+              {searchOpen ? <IoMdClose aria-hidden="true" /> : <IoSearch aria-hidden="true" />}
             </Button>
             <Button
               type="button"
@@ -82,18 +78,17 @@ export const AppNavbar = () => {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
             >
-              {menuOpen ? (
-                <IoMdClose aria-hidden="true" />
-              ) : (
-                <IoMenuSharp aria-hidden="true" />
-              )}
+              {menuOpen ? <IoMdClose aria-hidden="true" /> : <IoMenuSharp aria-hidden="true" />}
             </Button>
           </div>
         </nav>
 
         {/* Mobile Search */}
         {searchOpen && (
-          <div id="mobile-search" className="md:hidden border-t border-border bg-background px-6 py-4">
+          <div
+            id="mobile-search"
+            className="md:hidden border-t border-border bg-background px-6 py-4"
+          >
             <SearchBar autoFocus />
           </div>
         )}

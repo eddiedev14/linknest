@@ -1,4 +1,4 @@
-import Logo from "/logo.png";
+import Logo from "/logo.webp";
 import ResetPasswordIllustration from "@/assets/reset-password-illustration.webp";
 import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
 
