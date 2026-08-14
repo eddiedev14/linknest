@@ -44,14 +44,15 @@ export const AppRouter = () => {
 
         {/* Private Pages */}
         <Route element={<PrivateRoute />}>
-          <Route
-            element={
-              <MyLinksContextProvider>
-                <PageLayout />
-              </MyLinksContextProvider>
-            }
-          >
-            <Route path="/links" element={<Links />} />
+          <Route element={<PageLayout />}>
+            <Route
+              path="/links"
+              element={
+                <MyLinksContextProvider>
+                  <Links />
+                </MyLinksContextProvider>
+              }
+            />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
