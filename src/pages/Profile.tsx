@@ -6,7 +6,7 @@ import { UserAvatar } from "@/shared/components/app/user/UserAvatar";
 import { AvatarDialog } from "@/features/profile/components/dialogs/avatar/AvatarDialog";
 import { ProfileForm } from "@/features/profile/components/ProfileForm";
 
-export function Profile() {
+const Profile = () => {
   const { user } = useAuth();
   const { bannerClassname, bannerCSS } = getUserBannerProps(user?.bannerStyle);
 
@@ -43,4 +43,6 @@ export function Profile() {
       </div>
     </main>
   );
-}
+};
+
+export default Profile;

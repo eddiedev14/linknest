@@ -2,7 +2,7 @@ import Logo from "/logo.png";
 import ResetPasswordIllustration from "@/assets/reset-password-illustration.png";
 import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   return (
     <main className="min-h-screen bg-background flex" aria-label="Reset your password">
       {/* ── Left panel: form ── */}
@@ -62,3 +62,5 @@ export const ResetPassword = () => {
     </main>
   );
 };
+
+export default ResetPassword;

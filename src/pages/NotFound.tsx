@@ -2,7 +2,7 @@ import NotFoundIllustration from "@/assets/404-scene.png";
 import { FaArrowLeft } from "react-icons/fa6";
 import { LuSparkles } from "react-icons/lu";
 
-export function NotFound() {
+const NotFound = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <main className="flex-1 flex flex-col items-center justify-center px-6 pb-12 text-center">
@@ -48,4 +48,6 @@ export function NotFound() {
       </main>
     </div>
   );
-}
+};
+
+export default NotFound;

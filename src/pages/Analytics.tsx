@@ -8,7 +8,7 @@ import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
 import { WeeklyPlatformsChart } from "@/features/analytics/components/charts/WeeklyPlatformsChart";
 import { WeeklyLinksChart } from "@/features/analytics/components/charts/WeeklyLinksChart";
 
-export const Analytics = () => {
+const Analytics = () => {
   const userId = getUserId();
   const { analyticsLoading, stats, getUserStats } = useAnalytics(userId);
 
@@ -53,3 +53,5 @@ export const Analytics = () => {
     </main>
   );
 };
+
+export default Analytics;

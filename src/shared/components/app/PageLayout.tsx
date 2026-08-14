@@ -16,7 +16,7 @@ export const PageLayout = () => {
     <div className="min-h-screen bg-muted/40 flex flex-col">
       <AppNavbar />
       <Outlet />
-      {!shouldShowShareButton && <ShareButton url={publicURL} />}
+      {shouldShowShareButton && <ShareButton url={publicURL} />}
     </div>
   );
 };

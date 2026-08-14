@@ -23,7 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
+# Vercel
 .env*
 .vercel/
 .vercel
+
+# Generated Files
 repomix-output.xml
+stats.html

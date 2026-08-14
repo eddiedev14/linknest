@@ -5,7 +5,7 @@ import HowItWorks from "@/shared/components/landing/HowItWorks";
 import CTA from "@/shared/components/landing/CTA";
 import Footer from "@/shared/components/landing/Footer";
 
-export const Landing = () => {
+const Landing = () => {
   return (
     <>
       <Navbar />
@@ -17,3 +17,5 @@ export const Landing = () => {
     </>
   );
 };
+
+export default Landing;
