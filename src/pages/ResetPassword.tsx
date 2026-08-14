@@ -1,5 +1,5 @@
 import Logo from "/logo.png";
-import ResetPasswordIllustration from "@/assets/reset-password-illustration.png";
+import ResetPasswordIllustration from "@/assets/reset-password-illustration.webp";
 import { ResetPasswordForm } from "@/features/auth/components/ResetPasswordForm";
 
 const ResetPassword = () => {

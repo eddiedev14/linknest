@@ -1,4 +1,4 @@
-import NotFoundIllustration from "@/assets/404-scene.png";
+import NotFoundIllustration from "@/assets/404-scene.webp";
 import { FaArrowLeft } from "react-icons/fa6";
 import { LuSparkles } from "react-icons/lu";
 

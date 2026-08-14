@@ -1,5 +1,5 @@
 import { Image } from "@imagekit/react";
-import AnonymousProfile from "@/assets/anonymous.png";
+import AnonymousProfile from "@/assets/anonymous.webp";
 
 interface Props {
   avatarURL?: string;
@@ -32,7 +32,13 @@ export const UserAvatar = ({ avatarURL, username }: Props) => {
           alt={`${username}'s profile`}
         />
       ) : (
-        <img src={AnonymousProfile} className="object-cover" alt="Default profile" />
+        <img
+          src={AnonymousProfile}
+          className="object-cover aspect-square"
+          loading="lazy"
+          decoding="async"
+          alt="Default profile"
+        />
       )}
     </div>
   );
