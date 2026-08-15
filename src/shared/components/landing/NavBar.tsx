@@ -9,7 +9,7 @@ import { SearchBar } from "../SearchBar";
 import { useNavbar } from "@/shared/hooks/useNavbar";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-export default function Navbar() {
+export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const { menuOpen, searchOpen, toggleMenu, toggleSearch, closeMenu } = useNavbar();
   const { user } = useAuth();
@@ -136,4 +136,4 @@ export default function Navbar() {
       )}
     </header>
   );
-}
+};
