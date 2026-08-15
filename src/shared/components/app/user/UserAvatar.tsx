@@ -28,14 +28,16 @@ export const UserAvatar = ({ avatarURL, username }: Props) => {
               format: "webp",
             },
           ]}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           alt={`${username}'s profile`}
         />
       ) : (
         <img
           src={AnonymousProfile}
           className="object-cover aspect-square"
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
           decoding="async"
           alt="Default profile"
         />
