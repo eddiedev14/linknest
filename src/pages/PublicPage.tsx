@@ -12,7 +12,7 @@ import { NoLinksPlaceholder } from "@/features/links/components/NoLinksPlacehold
 import { FooterAttribution } from "@/shared/components/app/FooterAttribution";
 import { usePublicPage } from "@/features/public-page/hooks/usePublicPage";
 
-export function PublicPage() {
+const PublicPage = () => {
   const {
     username,
     userProfile,
@@ -170,4 +170,6 @@ export function PublicPage() {
       </main>
     </div>
   );
-}
+};
+
+export default PublicPage;

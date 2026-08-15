@@ -5,7 +5,7 @@ import { LinkList } from "@/features/links/components/LinkList";
 import { NoLinksPlaceholder } from "@/features/links/components/NoLinksPlaceholder";
 import { useMyLinks } from "@/features/links/hooks/useMyLinks";
 
-export const Links = () => {
+const Links = () => {
   const { loadingLinks, linksCount, handleOpenDialog } = useMyLinks();
 
   return (
@@ -36,3 +36,5 @@ export const Links = () => {
     </main>
   );
 };
+
+export default Links;

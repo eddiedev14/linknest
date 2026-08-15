@@ -6,28 +6,19 @@ import { getUserBannerProps } from "@/shared/utils/userBanner.helper";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
 import type { UserDoc } from "@/features/auth/types/user.type";
-import type { Link } from "@/features/links/types/link.type";
+import type { Link, LinkDoc } from "@/features/links/types/link.type";
 
 export const usePublicPage = () => {
-  //* States
-  const [userProfileLoading, setUserProfileLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<UserDoc | null>(null);
+  const [links, setLinks] = useState<LinkDoc[]>([]);
+  const [loadingUserProfile, setLoadingUserProfile] = useState(true);
+  const [loadingLinks, setLoadingLinks] = useState(true);
 
   const userId = userProfile?.id;
   const { bannerClassname, bannerCSS } = getUserBannerProps(userProfile?.bannerStyle);
-
-  //* React Router
   const { username } = useParams();
-
-  //* Context
   const { findUser } = useAuth();
-
-  //* Custom hooks
-  const {
-    results: links,
-    isPending: loadingLinks,
-    suscribe: suscribeLinks,
-  } = useCollection<Link>(`users/${userId}/links`);
+  const { getAll: getAllLinks } = useCollection<Link>(`users/${userId}/links`);
   const { registerClick } = useAnalytics(userId);
 
   //* Effects
@@ -39,7 +30,7 @@ export const usePublicPage = () => {
       const user = await findUser(username);
       if (!ignore) {
         setUserProfile(user);
-        setUserProfileLoading(false);
+        setLoadingUserProfile(false);
       }
     };
 
@@ -52,14 +43,27 @@ export const usePublicPage = () => {
 
   useEffect(() => {
     if (!userId) return;
-    return suscribeLinks([orderBy("position")]);
-  }, [userId, suscribeLinks]);
+    let ignore = false;
+
+    const loadLinks = async () => {
+      const links = await getAllLinks([orderBy("position")]);
+      if (!ignore) {
+        setLinks(links);
+        setLoadingLinks(false);
+      }
+    };
+
+    loadLinks();
+    return () => {
+      ignore = true;
+    };
+  }, [userId, getAllLinks]);
 
   return {
     username,
     userProfile,
     links,
-    loading: userProfileLoading,
+    loading: loadingUserProfile,
     loadingLinks,
     bannerClassname,
     bannerCSS,

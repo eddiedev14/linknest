@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp, IoSearch } from "react-icons/io5";
-import Logo from "/logo.png";
+import Logo from "/logo.webp";
 import { Button } from "../shadcn/button";
 import { navMenuItems } from "@/data/landing.data";
 import { ThemeToggle } from "../ThemeToggle";

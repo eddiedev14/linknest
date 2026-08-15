@@ -19,7 +19,7 @@ interface PasswordResetEmailProps {
 }
 
 // TODO: Update the LOGO_URL in production
-const LOGO_URL = `http://localhost:3000/logo.png`;
+const LOGO_URL = `http://localhost:3000/logo.webp`;
 
 const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps): React.ReactElement => (
   <Tailwind>
