@@ -22,6 +22,8 @@ const PublicPage = () => {
     loadingLinks,
     bannerClassname,
     bannerCSS,
+    metaDescription,
+    personJSONLD,
     onLinkClick,
   } = usePublicPage();
 
@@ -32,10 +34,6 @@ const PublicPage = () => {
   if (!userProfile) {
     return <Navigate to="/404" replace />;
   }
-
-  const description =
-    userProfile.bio?.trim() ||
-    `${userProfile.displayName} on LinkNest — ${userProfile.professionalRole}`;
 
   const {
     avatar: { url },
@@ -52,10 +50,11 @@ const PublicPage = () => {
     <>
       <SEO
         title={`${userProfile.displayName} (@${userProfile.username})`}
-        description={description}
+        description={metaDescription}
         path={`/u/${userProfile.username}`}
         image={userProfile.avatar?.url}
       />
+      <script type="application/ld+json">{JSON.stringify(personJSONLD)}</script>
 
       <div className="min-h-screen bg-muted/30 flex flex-col items-center">
         <main

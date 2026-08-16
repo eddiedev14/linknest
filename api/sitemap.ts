@@ -8,7 +8,7 @@ const STATIC_ROUTES = [
   { path: "/signup", changefreq: "yearly", priority: "0.3" },
 ];
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(_req: VercelRequest, res: VercelResponse) {
   try {
     // Get all the usernames from linknest users at the moment
     const usersSnapshot = await db.collection("users").select("username").get();
