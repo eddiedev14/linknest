@@ -21,6 +21,26 @@ export const usePublicPage = () => {
   const { getAll: getAllLinks } = useCollection<Link>(`users/${userId}/links`);
   const { registerClick } = useAnalytics(userId);
 
+  //* Computed values
+  const metaDescription = userProfile
+    ? userProfile.bio?.trim() ||
+      `${userProfile.displayName} on LinkNest — ${userProfile.professionalRole}`
+    : "";
+
+  const personJSONLD = Object.fromEntries(
+    Object.entries({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: userProfile?.displayName ?? "",
+      alternateName: userProfile?.username ?? "",
+      description: userProfile?.bio ?? "",
+      jobTitle: userProfile?.professionalRole ?? "",
+      image: userProfile?.avatar.url ?? "",
+      url: userProfile?.username ? `https://getlinknest.vercel.app/u/${userProfile.username}` : "",
+      sameAs: links.map((link) => link.url),
+    }).filter(([, value]) => value !== ""), // Filter by only keys with values
+  );
+
   //* Effects
   useEffect(() => {
     if (!username) return;
@@ -67,6 +87,8 @@ export const usePublicPage = () => {
     loadingLinks,
     bannerClassname,
     bannerCSS,
+    metaDescription,
+    personJSONLD,
     onLinkClick: registerClick,
   };
 };

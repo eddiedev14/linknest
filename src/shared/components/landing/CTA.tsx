@@ -1,7 +1,7 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { Input } from "../shadcn/input";
 
-export default function CTA() {
+export const CTA = () => {
   return (
     <section className="pt-16 pb-24 bg-muted/40" aria-label="Call to action">
       <div className="max-w-6xl mx-auto px-6 flex flex-col items-center text-center gap-8">
@@ -42,4 +42,4 @@ export default function CTA() {
       </div>
     </section>
   );
-}
+};

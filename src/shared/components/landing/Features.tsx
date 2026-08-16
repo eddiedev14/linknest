@@ -1,7 +1,7 @@
 import { features } from "@/data/landing.data";
 import { FeatureCard } from "./FeatureCard";
 
-export default function Features() {
+export const Features = () => {
   return (
     <section id="features" className="py-28 bg-background" aria-label="Features">
       <div className="max-w-6xl mx-auto px-6">
@@ -28,4 +28,4 @@ export default function Features() {
       </div>
     </section>
   );
-}
+};

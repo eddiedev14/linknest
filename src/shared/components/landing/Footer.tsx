@@ -4,7 +4,7 @@ import { BsGithub, BsLinkedin } from "react-icons/bs";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <footer className="bg-background border-t border-border py-12" aria-label="Footer">
       <div className="max-w-6xl mx-auto px-6">
@@ -63,4 +63,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};

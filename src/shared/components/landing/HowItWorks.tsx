@@ -1,7 +1,7 @@
 import { steps } from "@/data/landing.data";
 import { StepItem } from "./StepItem";
 
-export default function HowItWorks() {
+export const HowItWorks = () => {
   return (
     <section id="how-it-works" className="py-28 bg-muted/40" aria-label="How it works">
       <div className="max-w-6xl mx-auto px-6">
@@ -32,4 +32,4 @@ export default function HowItWorks() {
       </div>
     </section>
   );
-}
+};

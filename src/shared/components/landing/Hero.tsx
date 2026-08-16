@@ -4,7 +4,7 @@ import { Badge } from "../shadcn/badge";
 import { mockAnalytics, mockLinks } from "@/data/landing.data";
 import { Input } from "../shadcn/input";
 
-export default function Hero() {
+export const Hero = () => {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
@@ -157,7 +157,10 @@ export default function Hero() {
           </div>
 
           {/* Floating badge */}
-          <Badge className="absolute -left-3 sm:-left-4 bottom-1/4 bg-background rounded-xl shadow-lg border border-border p-3 flex items-center gap-2" aria-hidden="true">
+          <Badge
+            className="absolute -left-3 sm:-left-4 bottom-1/4 bg-background rounded-xl shadow-lg border border-border p-3 flex items-center gap-2"
+            aria-hidden="true"
+          >
             <FaLink className="text-primary" />
             <span className="text-[10px] font-semibold text-foreground">
               getlinknest.vercel.app/u/alex
@@ -165,7 +168,10 @@ export default function Hero() {
           </Badge>
 
           {/* Floating customise badge */}
-          <Badge className="absolute -left-3 sm:-left-6 top-16 bg-primary text-primary-foreground rounded-xl shadow-lg p-3 flex items-center gap-2" aria-hidden="true">
+          <Badge
+            className="absolute -left-3 sm:-left-6 top-16 bg-primary text-primary-foreground rounded-xl shadow-lg p-3 flex items-center gap-2"
+            aria-hidden="true"
+          >
             <FaPalette />
             <span className="text-[10px] font-semibold">Fully customizable</span>
           </Badge>
@@ -173,4 +179,4 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+};

@@ -24,20 +24,14 @@ interface Props {
   onValueChange: (value: string[]) => void;
 }
 
-export function MultipleCombo({ id, items, value, maxSelections, hint, onValueChange }: Props) {
+export const MultipleCombo = ({ id, items, value, maxSelections, hint, onValueChange }: Props) => {
   const anchor = useComboboxAnchor();
   const isLimitReached = maxSelections !== undefined && value.length >= maxSelections;
   const hintId = useId();
 
   return (
     <>
-      <Combobox
-        multiple
-        autoHighlight
-        items={items}
-        value={value}
-        onValueChange={onValueChange}
-      >
+      <Combobox multiple autoHighlight items={items} value={value} onValueChange={onValueChange}>
         <ComboboxChips ref={anchor} aria-labelledby={id} className="w-full max-w-xs">
           <ComboboxValue>
             {(values: string[]) => {
@@ -89,4 +83,4 @@ export function MultipleCombo({ id, items, value, maxSelections, hint, onValueCh
       )}
     </>
   );
-}
+};

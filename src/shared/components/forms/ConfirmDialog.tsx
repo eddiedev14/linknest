@@ -18,14 +18,14 @@ interface Props {
   onOpenChange: (open: boolean) => void;
 }
 
-export function ConfirmDialog({
+export const ConfirmDialog = ({
   open,
   title,
   text,
   actionText = "Remove",
   onConfirm,
   onOpenChange,
-}: Props) {
+}: Props) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
@@ -49,4 +49,4 @@ export function ConfirmDialog({
       </AlertDialogContent>
     </AlertDialog>
   );
-}
+};

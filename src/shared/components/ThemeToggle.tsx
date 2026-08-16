@@ -2,7 +2,7 @@ import { FaMoon, FaSun } from "react-icons/fa6";
 import { Button } from "./shadcn/button";
 import { useTheme } from "../hooks/useTheme";
 
-export function ThemeToggle() {
+export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -17,4 +17,4 @@ export function ThemeToggle() {
       {theme === "dark" ? <FaSun aria-hidden="true" /> : <FaMoon aria-hidden="true" />}
     </Button>
   );
-}
+};
