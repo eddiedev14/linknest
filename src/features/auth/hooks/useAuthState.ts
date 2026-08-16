@@ -43,9 +43,6 @@ const sendRecoveryPasswordEmail = async (email: string): Promise<string | null> 
     return null;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error("Status:", error.response?.status);
-      console.error("Data:", error.response?.data);
-
       return error.response?.data?.message ?? "Something went wrong.";
     }
 

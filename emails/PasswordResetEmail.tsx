@@ -18,8 +18,7 @@ interface PasswordResetEmailProps {
   url: string;
 }
 
-// TODO: Update the LOGO_URL in production
-const LOGO_URL = `http://localhost:3000/logo.webp`;
+const LOGO_URL = `http://getlinknest.vercel.app/logo.webp`;
 
 const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps): React.ReactElement => (
   <Tailwind>
