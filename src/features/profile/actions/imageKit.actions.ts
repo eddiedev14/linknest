@@ -42,7 +42,7 @@ const deleteImageKitFile = async (fileId: string) => {
     throw new Error("The Firebase token could not be obtained");
   }
 
-  await linknestApi.delete("/imagekit-file", {
+  await linknestApi.delete("/remove-photo", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
