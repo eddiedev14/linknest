@@ -1,4 +1,4 @@
-import { features } from "@/data/landing.data";
+import { features } from "@/shared/data/landing.data";
 import { FeatureCard } from "./FeatureCard";
 
 export const Features = () => {

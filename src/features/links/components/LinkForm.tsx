@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { LINK_PLATFORMS_MAP, PLATFORM_ENTRIES } from "@/data/links.data";
+import { LINK_PLATFORMS_MAP, PLATFORM_ENTRIES } from "@/shared/data/links.data";
 import { FaLink } from "react-icons/fa6";
 import { FiExternalLink } from "react-icons/fi";
 import { Label } from "@/shared/components/shadcn/label";

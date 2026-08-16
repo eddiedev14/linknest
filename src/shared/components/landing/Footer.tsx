@@ -1,5 +1,5 @@
 import Logo from "/logo.webp";
-import { navMenuItems } from "@/data/landing.data";
+import { navMenuItems } from "@/shared/data/landing.data";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
 const CURRENT_YEAR = new Date().getFullYear();

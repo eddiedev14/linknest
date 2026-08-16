@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { PLATFORM_ENTRIES } from "@/data/links.data";
+import { PLATFORM_ENTRIES } from "@/shared/data/links.data";
 import { linkFormScheme } from "../validations/link.scheme";
 import type { LinkFormData } from "../types/link.type";
 import { useMyLinks } from "./useMyLinks";

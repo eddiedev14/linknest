@@ -10,7 +10,7 @@ import {
   LANGUAGES_OPTIONS,
   PROFESSIONAL_STATUS_OPTIONS,
   TECH_STACK_OPTIONS,
-} from "@/data/profile.data";
+} from "@/shared/data/profile.data";
 
 export const ProfileForm = () => {
   const {

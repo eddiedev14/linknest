@@ -16,7 +16,7 @@ import {
 import { PieChart, Pie } from "recharts";
 import type { PlatformId } from "@/features/links/types/platform.type";
 import type { ClicksByPlatformChart } from "../../types/stats.type";
-import { LINK_PLATFORMS_MAP } from "@/data/links.data";
+import { LINK_PLATFORMS_MAP } from "@/shared/data/links.data";
 
 interface ChartConfigValue {
   label: string;
@@ -48,7 +48,10 @@ export const WeeklyPlatformsChart = ({ data }: Props) => {
   }, {} as PieChartConfig);
 
   return (
-    <Card className="p-5" aria-label="Pie chart showing the distribution of clicks by platform over the last 7 days">
+    <Card
+      className="p-5"
+      aria-label="Pie chart showing the distribution of clicks by platform over the last 7 days"
+    >
       <CardHeader className="pb-2">
         <div className="flex items-center gap-2">
           <FaChartPie size={16} className="text-primary" aria-hidden="true" />

@@ -1,7 +1,7 @@
 import { TygerAvatar } from "tyger-avatar";
 import { FaArrowRight, FaLink, FaChartBar, FaPalette } from "react-icons/fa6";
 import { Badge } from "../shadcn/badge";
-import { mockAnalytics, mockLinks } from "@/data/landing.data";
+import { mockAnalytics, mockLinks } from "@/shared/data/landing.data";
 import { Input } from "../shadcn/input";
 
 export const Hero = () => {

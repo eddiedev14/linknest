@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { PLATFORM_IDS } from "../constants/platforms.constant";
-import { LINK_PLATFORMS_MAP } from "@/data/links.data";
+import { LINK_PLATFORMS_MAP } from "@/shared/data/links.data";
 import { normalizeUrl } from "../utils/links.helper";
 
 const linkFormScheme = z

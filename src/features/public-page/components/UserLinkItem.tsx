@@ -1,4 +1,4 @@
-import { LINK_PLATFORMS_MAP } from "@/data/links.data";
+import { LINK_PLATFORMS_MAP } from "@/shared/data/links.data";
 import type { LinkDoc } from "@/features/links/types/link.type";
 
 interface Props {

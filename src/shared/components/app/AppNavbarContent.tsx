@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 import { Button } from "../shadcn/button";
-import { NAV_ITEMS } from "@/data/app.data";
+import { NAV_ITEMS } from "@/shared/data/app.data";
 
 interface Props {
   mobile?: boolean;

@@ -1,4 +1,4 @@
-import { steps } from "@/data/landing.data";
+import { steps } from "@/shared/data/landing.data";
 import { StepItem } from "./StepItem";
 
 export const HowItWorks = () => {

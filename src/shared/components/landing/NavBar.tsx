@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import { IoMenuSharp, IoSearch } from "react-icons/io5";
 import Logo from "/logo.webp";
 import { Button } from "../shadcn/button";
-import { navMenuItems } from "@/data/landing.data";
+import { navMenuItems } from "@/shared/data/landing.data";
 import { ThemeToggle } from "../ThemeToggle";
 import { SearchBar } from "../SearchBar";
 import { useNavbar } from "@/shared/hooks/useNavbar";
