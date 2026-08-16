@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { increment, limit, orderBy, Timestamp, where } from "firebase/firestore";
 import { useCollection } from "@/firebase/hooks/useCollection";
 import type { Link, LinkDoc } from "@/features/links/types/link.type";
@@ -80,7 +80,7 @@ export const useAnalytics = (userId?: string) => {
   };
 
   // Function to get all the stats for the Analytics page
-  const getUserStats = async () => {
+  const getUserStats = useCallback(async () => {
     if (!userId) return;
     setAnalyticsLoading(true);
 
@@ -105,7 +105,7 @@ export const useAnalytics = (userId?: string) => {
     } finally {
       setAnalyticsLoading(false);
     }
-  };
+  }, [userId, countLinks, getAllAnalytics]);
 
   return {
     analyticsLoading,
