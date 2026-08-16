@@ -1,5 +1,6 @@
 import { initializeApp, cert, getApps, getApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
 
 const { FIREBASE_PRIVATE_KEY, FIREBASE_CLIENT_EMAIL, FIREBASE_PROJECT_ID } = process.env;
 
@@ -18,3 +19,4 @@ const app = !getApps().length
   : getApp();
 
 export const auth = getAuth(app);
+export const db = getFirestore(app);
