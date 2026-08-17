@@ -26,19 +26,22 @@ export const useAnalytics = (userId?: string) => {
     if (!userId) return;
     const { id } = link;
 
-    // 1. Validate if the link should be register as a stat
+    // 1. Check if this click can be registered
     if (!canRegisterClick(id)) return;
 
-    // 2. Update the global analytics
-    const [updated, upserted] = await Promise.all([
-      updateLink(id, {
-        totalClicks: increment(1),
-      }),
-      upsertAnalytics(link),
-    ]);
+    try {
+      // 2. Register the analytics
+      await Promise.all([
+        updateLink(id, {
+          totalClicks: increment(1),
+        }),
+        upsertAnalytics(link),
+      ]);
 
-    if (updated && upserted) {
+      // 3. Save locally only if Firebase operations succeeded
       saveClickLocally(id);
+    } catch (error) {
+      console.error("[registerClick] Failed!", error);
     }
   };
 
