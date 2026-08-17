@@ -39,7 +39,7 @@ const loginWithEmailAndPassword = async (credentials: UserLogin): Promise<string
 
 const sendRecoveryPasswordEmail = async (email: string): Promise<string | null> => {
   try {
-    await linknestApi.post("/reset-password", { email });
+    await linknestApi.post("/mail/reset-password", { email });
     return null;
   } catch (error) {
     if (axios.isAxiosError(error)) {

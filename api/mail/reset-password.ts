@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createElement } from "react";
 import { render } from "react-email";
-import { auth } from "./firebaseAdmin.js";
+import { auth } from "../firebase/firebaseAdmin.js";
 import { transporter } from "./mailer.js";
-import PasswordResetEmail from "../emails/PasswordResetEmail.js";
+import PasswordResetEmail from "../../emails/PasswordResetEmail.js";
 
 const { APP_URL, GMAIL_USER } = process.env;
 

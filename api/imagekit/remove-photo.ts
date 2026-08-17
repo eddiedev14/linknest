@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: <> */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { auth } from "./firebaseAdmin.js";
+import { auth } from "../firebase/firebaseAdmin.js";
 import ImageKit from "imagekit";
 
 const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, IMAGEKIT_URL_ENDPOINT } = process.env;

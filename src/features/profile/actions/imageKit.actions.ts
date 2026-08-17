@@ -24,7 +24,7 @@ const uploadFromProvider = async (photoURL: string) => {
   }
 
   const response = await linknestApi.post<Avatar>(
-    "/upload-provider-photo",
+    "/imagekit/upload-provider-photo",
     { photoURL },
     {
       headers: {
@@ -42,7 +42,7 @@ const deleteImageKitFile = async (fileId: string) => {
     throw new Error("The Firebase token could not be obtained");
   }
 
-  await linknestApi.delete("/remove-photo", {
+  await linknestApi.delete("/imagekit/remove-photo", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

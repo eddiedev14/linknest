@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { db } from "./firebaseAdmin.js";
+import { db } from "../firebase/firebaseAdmin.js";
 
 const SITE_URL = "https://getlinknest.vercel.app";
 const STATIC_ROUTES = [
