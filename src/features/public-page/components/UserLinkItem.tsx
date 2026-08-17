@@ -3,15 +3,15 @@ import type { LinkDoc } from "@/features/links/types/link.type";
 
 interface Props {
   link: LinkDoc;
-  onLinkClick: (link: LinkDoc) => void;
+  onLinkClick: (link: LinkDoc) => Promise<void>;
 }
 
 export const UserLinkItem = ({ link, onLinkClick }: Props) => {
   const { label, platform, url } = link;
   const { Icon, bgColor } = LINK_PLATFORMS_MAP[platform];
 
-  const handleLinkClick = () => {
-    onLinkClick(link);
+  const handleLinkClick = async () => {
+    await onLinkClick(link);
   };
 
   return (
