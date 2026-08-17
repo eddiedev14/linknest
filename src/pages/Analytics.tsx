@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { getUserId } from "@/firebase/utils/firebase.helper";
-import { PageLoader } from "@/shared/components/app/PageLoader";
 import { SEO } from "@/shared/components/SEO";
 import { PageHeader } from "@/shared/components/app/PageHeader";
 import { StatCards } from "@/features/analytics/components/stats/StatCards";
 import { WeeklyClicksChart } from "@/features/analytics/components/charts/WeeklyClicksChart";
 import { useAnalytics } from "@/features/analytics/hooks/useAnalytics";
+import { AnalyticsSkeleton } from "@/features/analytics/components/AnalyticsSkeleton";
 import { WeeklyPlatformsChart } from "@/features/analytics/components/charts/WeeklyPlatformsChart";
 import { WeeklyLinksChart } from "@/features/analytics/components/charts/WeeklyLinksChart";
 
@@ -16,18 +16,6 @@ const Analytics = () => {
   useEffect(() => {
     getUserStats();
   }, [getUserStats]);
-
-  if (analyticsLoading) return <PageLoader />;
-  if (!stats) return;
-
-  const {
-    totalLinks,
-    totalClicksToday,
-    totalClicksYesterday,
-    clicksPerDay,
-    clicksByPlatform,
-    clicksByLink,
-  } = stats;
 
   return (
     <>
@@ -45,19 +33,25 @@ const Analytics = () => {
             description="Track how your audience interacts with your links over the last 7 days."
           />
 
-          <StatCards
-            totalLinks={totalLinks}
-            totalClicksYesterday={totalClicksYesterday}
-            totalClicksToday={totalClicksToday}
-          />
+          {analyticsLoading || !stats ? (
+            <AnalyticsSkeleton />
+          ) : (
+            <>
+              <StatCards
+                totalLinks={stats.totalLinks}
+                totalClicksYesterday={stats.totalClicksYesterday}
+                totalClicksToday={stats.totalClicksToday}
+              />
 
-          {/* Charts */}
-          {<WeeklyClicksChart data={clicksPerDay} />}
+              {/* Charts */}
+              <WeeklyClicksChart data={stats.clicksPerDay} />
 
-          <div className="grid md:grid-cols-2 gap-3">
-            <WeeklyPlatformsChart data={clicksByPlatform} />
-            <WeeklyLinksChart data={clicksByLink} />
-          </div>
+              <div className="grid md:grid-cols-2 gap-3">
+                <WeeklyPlatformsChart data={stats.clicksByPlatform} />
+                <WeeklyLinksChart data={stats.clicksByLink} />
+              </div>
+            </>
+          )}
         </div>
       </main>
     </>
