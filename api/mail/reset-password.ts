@@ -3,7 +3,7 @@ import { createElement } from "react";
 import { render } from "react-email";
 import { auth } from "../firebase/firebaseAdmin.js";
 import { transporter } from "./mailer.js";
-import PasswordResetEmail from "../../emails/PasswordResetEmail";
+import PasswordResetEmail from "../../emails/PasswordResetEmail.js";
 
 const { APP_URL, GMAIL_USER } = process.env;
 
