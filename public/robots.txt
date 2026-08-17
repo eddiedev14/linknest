@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+Allow: /u/
+
+Disallow: /links
+Disallow: /profile
+Disallow: /analytics
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /404
+
+Sitemap: https://linknest.app/sitemap.xml

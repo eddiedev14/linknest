@@ -1,9 +1,9 @@
-import { features } from "@/data/landing.data";
+import { features } from "@/shared/data/landing.data";
 import { FeatureCard } from "./FeatureCard";
 
-export default function Features() {
+export const Features = () => {
   return (
-    <section id="features" className="py-28 bg-white" aria-label="Features">
+    <section id="features" className="py-28 bg-background" aria-label="Features">
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16 flex flex-col items-center gap-3">
@@ -11,22 +11,21 @@ export default function Features() {
             Features
           </span>
           <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground text-balance">
-            Everything you need,{" "}
-            <span className="text-primary">in one place</span>
+            Everything developers need, <span className="text-primary">in one place</span>
           </h2>
-          <p className="text-muted-foreground max-w-md leading-relaxed text-balance">
-            Built for creators, freelancers, and anyone who wants to share their
-            online presence in one place.
+          <p className="text-muted-foreground max-w-lg leading-relaxed text-balance">
+            Centralize your professional links, coding platforms, content, and contact channels from
+            a single developer profile.
           </p>
         </div>
 
         {/* Feature grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feat, i) => (
-            <FeatureCard feature={feat} key={i} />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {features.map((feat) => (
+            <FeatureCard feature={feat} key={feat.id} />
           ))}
         </div>
       </div>
     </section>
   );
-}
+};

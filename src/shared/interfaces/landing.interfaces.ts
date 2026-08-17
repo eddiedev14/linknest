@@ -15,6 +15,7 @@ interface IHeroAnalytic {
 
 //* Features
 interface IFeatureItem {
+  id: string;
   icon: IconType;
   title: string;
   description: string;
@@ -22,6 +23,7 @@ interface IFeatureItem {
 
 //* How It Works
 interface IStepItem {
+  id: string;
   number: string;
   title: string;
   description: string;
