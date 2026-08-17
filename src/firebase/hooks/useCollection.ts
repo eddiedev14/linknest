@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import type {
   DocumentData,
+  PartialWithFieldValue,
   Query,
   QueryConstraint,
   Unsubscribe,
@@ -26,6 +27,7 @@ import type { FirestoreDoc } from "../types/firestore.types";
 type UpsertDocumentOptions = {
   withCreatedAt?: boolean;
   withUpdatedAt?: boolean;
+  merge?: boolean;
 };
 
 export const useCollection = <T extends DocumentData>(table: string) => {
@@ -172,8 +174,12 @@ export const useCollection = <T extends DocumentData>(table: string) => {
 
   //* 2. C -> CREATE
   const setById = useCallback(
-    async (id: string, data: T, options: UpsertDocumentOptions = {}): Promise<boolean> => {
-      const { withCreatedAt = true } = options;
+    async (
+      id: string,
+      data: PartialWithFieldValue<T>,
+      options: UpsertDocumentOptions = {},
+    ): Promise<boolean> => {
+      const { withCreatedAt = true, merge = false } = options;
 
       try {
         const docRef = doc(db, table, id);
@@ -186,6 +192,7 @@ export const useCollection = <T extends DocumentData>(table: string) => {
                 createdAt: serverTimestamp(),
               }
             : data,
+          { merge },
         );
 
         return true;

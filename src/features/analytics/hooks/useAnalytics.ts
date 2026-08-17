@@ -6,6 +6,7 @@ import type { DailyAnalytics } from "../types/analytics.type";
 import type { Stats } from "../types/stats.type";
 import { canRegisterClick, saveClickLocally } from "../utils/localStorage.helper";
 import { buildStats } from "../utils/stats.helper";
+import { getAnalyticsDay } from "../utils/analytics.helper";
 
 export const useAnalytics = (userId?: string) => {
   //* States
@@ -16,12 +17,9 @@ export const useAnalytics = (userId?: string) => {
   const { update: updateLink, count: countLinks } = useCollection<Link>(
     userId ? `users/${userId}/links` : "",
   );
-  const {
-    add: addAnalytics,
-    update: updateAnalytics,
-    find: findAnalytics,
-    getAll: getAllAnalytics,
-  } = useCollection<DailyAnalytics>(userId ? `users/${userId}/analytics` : "");
+  const { setById: setAnalyticsById, getAll: getAllAnalytics } = useCollection<DailyAnalytics>(
+    userId ? `users/${userId}/analytics` : "",
+  );
 
   //* Functions
   const registerClick = async (link: LinkDoc) => {
@@ -47,36 +45,25 @@ export const useAnalytics = (userId?: string) => {
   // Function to create a new daily analytics doc or update it.
   const upsertAnalytics = async (link: LinkDoc) => {
     const { label, platform } = link;
+    const { id: analyticsId, date } = getAnalyticsDay();
 
-    // 1. Validate if already exists an analytic doc for today
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const existingAnalytics = await findAnalytics([where("date", "==", Timestamp.fromDate(today))]);
-
-    // 2. Create payload
-    const payload: DailyAnalytics = {
-      date: Timestamp.fromDate(today),
-      totalClicks: (existingAnalytics?.totalClicks ?? 0) + 1,
-      byPlatform: {
-        ...existingAnalytics?.byPlatform,
-        [platform]: (existingAnalytics?.byPlatform?.[platform] ?? 0) + 1,
+    return setAnalyticsById(
+      analyticsId,
+      {
+        date,
+        totalClicks: increment(1),
+        byPlatform: {
+          [platform]: increment(1),
+        },
+        byLink: {
+          [label]: increment(1),
+        },
       },
-      byLink: {
-        ...existingAnalytics?.byLink,
-        [label]: (existingAnalytics?.byLink?.[label] ?? 0) + 1,
+      {
+        withCreatedAt: false,
+        merge: true,
       },
-    };
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { date, ...updatePayload } = payload;
-
-    // 2. Upsert the Analytics doc
-    const success = existingAnalytics
-      ? await updateAnalytics(existingAnalytics.id, updatePayload, { withUpdatedAt: false })
-      : await addAnalytics(payload, { withCreatedAt: false });
-
-    return success;
+    );
   };
 
   // Function to get all the stats for the Analytics page
