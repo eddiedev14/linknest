@@ -27,6 +27,6 @@
     "api/**/*.ts",
     "emails/**/*.tsx",
     "api/reset-password.ts",
-    "api/mail/PasswordResetEmail.tsx"
+    "emails/PasswordResetEmail.tsx"
   ]
 }
