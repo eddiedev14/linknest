@@ -6,7 +6,6 @@ import {
   Head,
   Heading,
   Html,
-  Img,
   Preview,
   Section,
   Tailwind,
@@ -17,8 +16,6 @@ interface PasswordResetEmailProps {
   companyName: string;
   url: string;
 }
-
-const LOGO_URL = `http://getlinknest.vercel.app/logo.webp`;
 
 const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps): React.ReactElement => (
   <Tailwind>
@@ -32,12 +29,6 @@ const PasswordResetEmail = ({ companyName, url }: PasswordResetEmailProps): Reac
             <Section className="bg-bg mobile:px-2 px-6 py-4">
               <Section className="bg-bg-2 mobile:px-6 mobile:py-12 rounded-[8px] px-10 py-16 text-center">
                 <Section className="mb-3">
-                  <Img
-                    src={LOGO_URL}
-                    alt="Linknest Logo"
-                    width={48}
-                    className="mx-auto mb-5 block"
-                  />
                   <Heading as="h1" className="font-28 text-fg m-0 font-sans">
                     Reset your password
                   </Heading>
