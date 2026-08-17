@@ -13,16 +13,20 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
     // Get all the usernames from linknest users at the moment
     const usersSnapshot = await db.collection("users").select("username").get();
     const userUrls = usersSnapshot.docs
-      .map((doc) => doc.data().username)
-      .filter(Boolean)
-      .map(
-        (username) => `
-            <url>
-                <loc>${SITE_URL}/u/${username}</loc>
-                <changefreq>weekly</changefreq>
-                <priority>0.7</priority>
-            </url>`,
-      )
+      .flatMap((doc) => {
+        const username = doc.data().username;
+
+        if (!username) return [];
+
+        return [
+          `
+        <url>
+          <loc>${SITE_URL}/u/${username}</loc>
+          <changefreq>weekly</changefreq>
+          <priority>0.7</priority>
+        </url>`,
+        ];
+      })
       .join("");
 
     const staticUrls = STATIC_ROUTES.map(
