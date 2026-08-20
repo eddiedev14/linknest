@@ -8,7 +8,7 @@ const getAuth = async (): Promise<AuthResponse> => {
   const idToken = await getFirebaseToken();
   if (!idToken) throw new Error("The Firebase token could not be obtained");
 
-  const response = await linknestApi.get("/imagekit-auth", {
+  const response = await linknestApi.get("/imagekit/imagekit-auth", {
     headers: {
       Authorization: `Bearer ${idToken}`,
     },

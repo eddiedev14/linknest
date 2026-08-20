@@ -31,3 +31,4 @@ dist-ssr
 # Generated Files
 repomix-output.xml
 stats.html
+emails/*.js

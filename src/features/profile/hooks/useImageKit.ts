@@ -33,7 +33,7 @@ export const useImageKit = () => {
         url: result.url || "",
         fileId: result.fileId || "",
       };
-    } catch {
+    } catch (err) {
       setIsUploading(false);
       return null;
     }

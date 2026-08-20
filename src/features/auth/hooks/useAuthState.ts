@@ -1,5 +1,5 @@
 //* React
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 //* Firebase
 import { auth, githubProvider, googleProvider } from "@/firebase/config";
@@ -82,9 +82,6 @@ export default function useAuthState() {
   const [user, setUser] = useState<UserDoc | null>(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  //* Refs
-  const isCreatingUserDoc = useRef(false);
-
   //* Custom hooks
   const { setById, suscribeById, find, getAll, update } = useCollection<User>("users");
   const { uploadProviderAvatar } = useImageKit();
@@ -107,7 +104,7 @@ export default function useAuthState() {
 
       // Subscribe to changes in the document to update the state
       unsubscribeDoc = suscribeById(firebaseUser.uid, (userDoc) => {
-        if (!userDoc && isCreatingUserDoc.current) return;
+        if (!userDoc) return;
         setUser(userDoc);
         setUserLoading(false);
       });
@@ -129,8 +126,6 @@ export default function useAuthState() {
     if (foundDocument) return "That username is already in use";
 
     // Proceed with the register in Firebase Auth
-    isCreatingUserDoc.current = true;
-
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await setById(userCredential.user.uid, createBaseNewUser(user));
@@ -138,7 +133,6 @@ export default function useAuthState() {
       error = getAuthErrorMessage(err);
     }
 
-    isCreatingUserDoc.current = false;
     return error;
   };
 
@@ -152,7 +146,6 @@ export default function useAuthState() {
       const isNewUser = additionalUserInfo?.isNewUser;
 
       if (isNewUser) {
-        isCreatingUserDoc.current = true;
         const avatarResponse = userCredential.photoURL
           ? await uploadProviderAvatar(userCredential.photoURL)
           : null;
@@ -172,7 +165,6 @@ export default function useAuthState() {
       error = getAuthErrorMessage(err);
     }
 
-    isCreatingUserDoc.current = false;
     return error;
   };
 

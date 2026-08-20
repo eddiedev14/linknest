@@ -75,7 +75,6 @@ export const useAvatarForm = () => {
       }
 
       const updatedUser = {
-        ...user,
         avatar: { url: "", fileId: "" },
       };
 
@@ -109,15 +108,12 @@ export const useAvatarForm = () => {
       return;
     }
 
-    const updatedUser = {
-      ...user,
+    const error = await updateUserProfile({
       avatar: { url: `${avatar.url}?v=${Date.now()}`, fileId: avatar.fileId },
-    };
-
-    const error = await updateUserProfile(updatedUser);
+    });
 
     if (error) {
-      toast.error(`Error while uploading the photo: ${error}`);
+      toast.error(error);
       return;
     }
 

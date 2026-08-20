@@ -54,15 +54,12 @@ export const useBannerDialog = () => {
       return;
     }
 
-    const updatedUser = {
-      ...user,
-      bannerStyle: selectedColor || "banner-primary",
-    };
-
     setIsSaving(true);
 
     try {
-      const error = await updateUserProfile(updatedUser);
+      const error = await updateUserProfile({
+        bannerStyle: selectedColor || "banner-primary",
+      });
 
       if (error) {
         toast.error(error);

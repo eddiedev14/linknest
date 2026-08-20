@@ -29,20 +29,16 @@ export const useAnalytics = (userId?: string) => {
     // 1. Check if this click can be registered
     if (!canRegisterClick(id)) return;
 
-    try {
-      // 2. Register the analytics
-      await Promise.all([
-        updateLink(id, {
-          totalClicks: increment(1),
-        }),
-        upsertAnalytics(link),
-      ]);
+    // 2. Register the analytics
+    await Promise.all([
+      updateLink(id, {
+        totalClicks: increment(1),
+      }),
+      upsertAnalytics(link),
+    ]);
 
-      // 3. Save locally only if Firebase operations succeeded
-      saveClickLocally(id);
-    } catch (error) {
-      console.error("[registerClick] Failed!", error);
-    }
+    // 3. Save locally only if Firebase operations succeeded
+    saveClickLocally(id);
   };
 
   // Function to create a new daily analytics doc or update it.
