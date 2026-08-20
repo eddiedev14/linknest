@@ -126,8 +126,16 @@ GMAIL_APP_PASSWORD=
 
 ### Run Locally
 
+In one terminal tab run (for Serverless Functions):
+
 ```bash
 vercel dev
+```
+
+In another terminal tab run (Vite Server):
+
+```bash
+bun run dev
 ```
 
 The app will be available at `http://localhost:3000`.
