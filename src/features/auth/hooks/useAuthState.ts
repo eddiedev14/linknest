@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 //* Firebase
-import { auth, githubProvider, googleProvider } from "@/firebase/config";
+import { auth, githubProvider, googleProvider, SESSION_MAX_AGE } from "@/firebase/config";
 import {
   confirmPasswordReset,
   createUserWithEmailAndPassword,
@@ -12,6 +12,7 @@ import {
   signInWithPopup,
   signOut,
   verifyPasswordResetCode,
+  type User as FirebaseUser,
   type AuthProvider,
 } from "firebase/auth";
 import { endAt, limit, orderBy, startAt, where } from "firebase/firestore";
@@ -79,6 +80,7 @@ const logout = async (): Promise<string | null> => {
 
 export default function useAuthState() {
   //* States
+  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [user, setUser] = useState<UserDoc | null>(null);
   const [userLoading, setUserLoading] = useState(true);
 
@@ -87,23 +89,22 @@ export default function useAuthState() {
   const { uploadProviderAvatar } = useImageKit();
 
   //* Effects
+  //? Authenticate the user when their session status changes
   useEffect(() => {
     let unsubscribeDoc = () => {};
 
-    const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser) => {
-      // If there was a subscription to a previous document, we cancel it first
+    const unsubscribeAuth = onAuthStateChanged(auth, (fbUser) => {
       unsubscribeDoc();
+      setFirebaseUser(fbUser);
 
-      if (!firebaseUser) {
+      if (!fbUser) {
         setUser(null);
         setUserLoading(false);
         return;
       }
 
       setUserLoading(true);
-
-      // Subscribe to changes in the document to update the state
-      unsubscribeDoc = suscribeById(firebaseUser.uid, (userDoc) => {
+      unsubscribeDoc = suscribeById(fbUser.uid, (userDoc) => {
         if (!userDoc) return;
         setUser(userDoc);
         setUserLoading(false);
@@ -115,6 +116,32 @@ export default function useAuthState() {
       unsubscribeAuth();
     };
   }, [suscribeById]);
+
+  //? Session expiration timer
+  useEffect(() => {
+    if (!firebaseUser) return;
+
+    let sessionTimer: ReturnType<typeof setTimeout>;
+
+    const scheduleSessionExpiry = async () => {
+      const { claims } = await firebaseUser.getIdTokenResult();
+      const authTime = Number(claims.auth_time) * 1000; // ms
+      const expiresAt = authTime + SESSION_MAX_AGE * 1000; // ms
+      const msRemaining = expiresAt - Date.now();
+
+      if (msRemaining <= 0) {
+        await logout();
+        return;
+      }
+
+      sessionTimer = setTimeout(() => {
+        logout();
+      }, msRemaining);
+    };
+
+    scheduleSessionExpiry();
+    return () => clearTimeout(sessionTimer);
+  }, [firebaseUser]);
 
   //* Functions
   const registerWithEmailAndPassword = async (user: UserRegister): Promise<string | null> => {

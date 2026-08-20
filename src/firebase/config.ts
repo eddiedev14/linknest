@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -21,4 +23,4 @@ const db = getFirestore();
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-export { app, auth, db, googleProvider, githubProvider };
+export { app, auth, db, googleProvider, githubProvider, SESSION_MAX_AGE };
